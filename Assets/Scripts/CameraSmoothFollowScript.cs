@@ -18,8 +18,6 @@ public class CameraSmoothFollowScript : MonoBehaviour {
 	
 		playerMovement = new Vector3(Player.transform.position.x, 0.0f, CameraHeightZ);
 		transform.position = playerMovement;
-		
-		ScreenMiddle = new Vector3(Camera.main.transform.position.x, Camera.main.transform.position.y, 0);
 
 		
 	}
@@ -33,7 +31,7 @@ public class CameraSmoothFollowScript : MonoBehaviour {
 	
 	void OnCollisionEnter(Collision other) {
 		
-		ContactDir = transform.position - other.transform.position;
+		ContactDir = other.transform.position - transform.position;
 		
 		//ContactDir = other.contacts[0].normal;
 		
@@ -56,12 +54,13 @@ public class CameraSmoothFollowScript : MonoBehaviour {
 			transform.position = playerMovement;
 		}
 		
-	
+		ScreenMiddle = new Vector3(Camera.main.transform.position.x, Camera.main.transform.position.y, 0);
+		
 		ScreenMiddleToPlayer = ScreenMiddle - Player.transform.position;
 		
-		Debug.Log("ScreenMiddleToPlayer: "+ScreenMiddleToPlayer.x);
-		Debug.Log("screen midle: "+ScreenMiddle.x);
-		
+		Debug.Log("ScreenMiddleToPlayer: "+ScreenMiddleToPlayer);
+		Debug.Log("ContactDir: "+ContactDir);
+	
 		if(ScreenMiddleToPlayer.x > 0 && ContactDir.x > 0){
 			
 			isColliding = false;
