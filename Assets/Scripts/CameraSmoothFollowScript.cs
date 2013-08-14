@@ -33,11 +33,11 @@ public class CameraSmoothFollowScript : MonoBehaviour {
 	
 	void OnCollisionEnter(Collision other) {
 		
-		ContactDir = transform.position - other.transform.position;
+		//ContactDir = transform.position - other.transform.position;
 		
 		//ContactDir = other.contacts[0].normal;
 		
-		Debug.Log("Collide");
+		//Debug.Log("Collide");
 		
 		isColliding = true;
 		
@@ -59,8 +59,7 @@ public class CameraSmoothFollowScript : MonoBehaviour {
 	
 		ScreenMiddleToPlayer = ScreenMiddle - Player.transform.position;
 		
-		Debug.Log("ScreenMiddleToPlayer: "+ScreenMiddleToPlayer.x);
-		Debug.Log("screen midle: "+ScreenMiddle.x);
+		Debug.Log(ScreenMiddleToPlayer);
 		
 		if(ScreenMiddleToPlayer.x > 0 && ContactDir.x > 0){
 			
