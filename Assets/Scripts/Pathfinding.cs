@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
+//Robin
+
 public class Pathfinding : MonoBehaviour {
 	
 	
@@ -70,6 +72,7 @@ public class Pathfinding : MonoBehaviour {
 			vec3path.Add(gridposToWorld(node.pos));
 			
 		}
+		vec3path.Reverse();
 		path.Clear();
 		return vec3path;
 		
@@ -142,7 +145,7 @@ public class Pathfinding : MonoBehaviour {
 		
 		while(cur != null){
 			path.Add(cur);
-			Debug.Log("x = " + cur.x + " y = " + cur.y);
+			//Debug.Log("x = " + cur.x + " y = " + cur.y);
 			Node curp = cur.parent;
 			cur.parent = null;
 			cur = curp;
@@ -156,7 +159,7 @@ public class Pathfinding : MonoBehaviour {
 	public Vector2 worldposToGridpos(Vector3 worldposition){
 		Vector3 offset = 10 * walkmesh.localScale / 2;
 		
-		Vector2 gridpos = new Vector2(worldposition.x + offset.x,worldposition.z + offset.z) * 2;
+		Vector2 gridpos = new Vector2(Mathf.Floor(worldposition.x + offset.x),Mathf.Floor(worldposition.z + offset.z)) * 2;
 		gridpos += new Vector2(walkmesh.position.x,walkmesh.position.y);
 		//Debug.Log("WtG -> " + " x " + worldposition.x + " y " + worldposition.z + " x -> " + gridpos.x + " y " + gridpos.y);
 		return gridpos;
@@ -164,8 +167,9 @@ public class Pathfinding : MonoBehaviour {
 	
 	public Vector3 gridposToWorld(Vector2 gridposition){
 		Vector3 offset = 10 * walkmesh.localScale;
+		float midpointoffset = 0.5f;
 
-		Vector3 worldpos = new Vector3(gridposition.x - offset.x,0 ,gridposition.y - offset.z) / 2;
+		Vector3 worldpos = new Vector3(gridposition.x - offset.x + midpointoffset ,0 ,gridposition.y - offset.z + midpointoffset) / 2;
 		worldpos += walkmesh.position;
 		//Debug.Log("GtW -> " + " x " + gridposition.x + " y " + gridposition.y + " x -> " + worldpos.x + " y " + worldpos.z);
 		return worldpos;
