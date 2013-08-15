@@ -3,13 +3,14 @@ using System.Collections;
 
 public class InputManager : MonoBehaviour {
 	
-	public MovementManager ptrMovementManager; 	//reference to pathfinding
+	public Transform player;
+	private MovementManager ptrMovementManager; 	//reference to pathfinding
 	private bool WorldInput = true;			//True if outside puzzle, false if in puzzle
 	//private Vector3 ObjectPosition;
 	
 	// Use this for initialization
 	void Start () {
-	
+		ptrMovementManager = player.GetComponent<MovementManager>();
 	}
 	
 	// Update is called once per frame
@@ -32,12 +33,15 @@ public class InputManager : MonoBehaviour {
 			RaycastHit hit;
 			if(Physics.Raycast(ray, out hit)){
 				
+				//Debug.Log(hit.transform.name);
+				
 				//Sends input to pathfinding
 				if(hit.transform.tag == "Floor"){
 					
-					Debug.Log("Floor");
+					//Debug.Log("Floor");
+					Debug.Log("input: "+hit.transform.position);
 					//transform eller position ? 
-					//ptrMovementManager.PathfindToPosition(hit.transform.position);
+					ptrMovementManager.pathfindToPosition(hit.point);
 					
 				}
 				//Puts object in Inventory
@@ -52,10 +56,8 @@ public class InputManager : MonoBehaviour {
 				if(hit.transform.tag == "Interactive"){
 					
 					//Debug.Log("Interactive");
-					hit.transform.gameObject.SendMessage("Interact");
-					//
-					//ptrMovementManager.findobjectandactiveate();
-					
+					StopCoroutine("InteractObject");
+					StartCoroutine(InteractObject(hit.transform));
 					
 				}
 				
@@ -67,7 +69,7 @@ public class InputManager : MonoBehaviour {
 	//pickup object
 	IEnumerator PickUpObject(Transform target){
 		
-		Vector3 targetPosition = ptrMovementManager.PathfindToObject(target);
+		Vector3 targetPosition = ptrMovementManager.pathfindToObject(target);
 		while(true){
 			if(ptrMovementManager.isAtPosition(targetPosition)){
 				
@@ -84,7 +86,7 @@ public class InputManager : MonoBehaviour {
 	//activate object
 	IEnumerator InteractObject(Transform target){
 		
-		Vector3 targetPosition = ptrMovementManager.PathfindToObject(target);
+		Vector3 targetPosition = ptrMovementManager.pathfindToObject(target);
 		while(true){
 			if(ptrMovementManager.isAtPosition(targetPosition)){
 				target.SendMessage("Interact");
