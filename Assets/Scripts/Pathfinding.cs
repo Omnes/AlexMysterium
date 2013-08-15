@@ -14,6 +14,7 @@ public class Pathfinding : MonoBehaviour {
 	
 	public Material debugMat1;
 	public GameObject debugNodePrefab;
+	public bool debug = false;
 	
 	public Node[,] map;
 	public List<Node> path;
@@ -30,7 +31,7 @@ public class Pathfinding : MonoBehaviour {
 		mapclosed = new List<Node>();
 		
 		initMap();
-		//drawNodes();
+		if(debug) drawNodes();
 	}
 	
 	public void drawNodes(){
