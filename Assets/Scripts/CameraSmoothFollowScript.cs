@@ -3,10 +3,13 @@ using System.Collections;
 
 public class CameraSmoothFollowScript : MonoBehaviour {
 	
+	//public
 	//Should be prefab and should initaiate new player each scene ***************************
 	public GameObject Player;
-	public float CameraHeightZ;
-	public float CameraHeightY;
+	public float CameraDistZ;
+	public float CameraDistY;
+	
+	//private
 	private Vector3 playerMovement;
 	private Vector3 ContactDir;
 	private bool isColliding = false;
@@ -17,7 +20,7 @@ public class CameraSmoothFollowScript : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		//startposition
-		playerMovement = new Vector3(Player.transform.position.x, CameraHeightY, CameraHeightZ);
+		playerMovement = new Vector3(Player.transform.position.x, CameraDistY, CameraDistZ);
 		transform.position = playerMovement;
 	}
 	
@@ -34,14 +37,17 @@ public class CameraSmoothFollowScript : MonoBehaviour {
 		ContactDir = other.transform.position - transform.position;
 		//is the camera colliding ?
 		isColliding = true;
-		
+		//disable collider
+		collider.enabled = false;
+		//set velocity to zero
+		transform.rigidbody.velocity = new Vector3(0f,0f,0f);
 	}
 	
 	void SmoothFollow(){
 		
 		//follow player
 		if(isColliding == false){
-			playerMovement = new Vector3(Player.transform.position.x, CameraHeightY, CameraHeightZ);
+			playerMovement = new Vector3(Player.transform.position.x, CameraDistY, CameraDistZ);
 			transform.position = playerMovement;
 		}
 		
@@ -54,8 +60,10 @@ public class CameraSmoothFollowScript : MonoBehaviour {
 		//if collision vector is same as vector(center to player) then player is moving away from the collision
 		if(cameraCenterToPlayer.x > 0 && ContactDir.x > 0){
 			isColliding = false;
+			collider.enabled = true;
 		}else if(cameraCenterToPlayer.x < 0 && ContactDir.x < 0){
 			isColliding = false;
+			collider.enabled = true;
 		};
 		
 		

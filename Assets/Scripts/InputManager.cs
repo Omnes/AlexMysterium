@@ -3,22 +3,29 @@ using System.Collections;
 
 public class InputManager : MonoBehaviour {
 	
-	public Transform player;
+	//public
+	public Transform playerTransform;
+	public float buttonDelay = 0.3f;
+	
+	//private
 	private MovementManager ptrMovementManager; 	//reference to pathfinding
-	private bool WorldInput = true;			//True if outside puzzle, false if in puzzle
-	//private Vector3 ObjectPosition;
+	private bool worldInput = true;					//True if outside puzzle, false if in puzzle
+	private float buttonDelayCounter;
 	
 	// Use this for initialization
-	void Start () {
-		ptrMovementManager = player.GetComponent<MovementManager>();
+	void Start (){
+		//get MovementmanagerScript for pathfinding
+		ptrMovementManager = playerTransform.GetComponent<MovementManager>();
+		
+		//Start button delay counter
+		buttonDelayCounter = Time.time;
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		
-		
-		//if in puzzle WorldInput == false
-		if(WorldInput){
+		//if in puzzle then WorldInput == false
+		if(worldInput && buttonDelayCounter + buttonDelay < Time.time){
 			FindInput ();
 		}
 		
@@ -29,35 +36,35 @@ public class InputManager : MonoBehaviour {
 		//mousebutton left pressed
 		if(Input.GetMouseButton(0)){
 			
+			//reset mousecounter
+			buttonDelayCounter = Time.time;
+			
+			//Input for where the user is pointing
 			Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 			RaycastHit hit;
 			if(Physics.Raycast(ray, out hit)){
-				
-				//Debug.Log(hit.transform.name);
-				
+
 				//Sends input to pathfinding
 				if(hit.transform.tag == "Floor"){
-					
-					//Debug.Log("Floor");
-					Debug.Log("input: "+hit.transform.position);
-					//transform eller position ? 
+					//move to position
 					ptrMovementManager.pathfindToPosition(hit.point);
 					
 				}
 				//Puts object in Inventory
 				if(hit.transform.tag == "Item"){
-					Debug.Log("Item");
+					//stop previous coroutine
 					StopCoroutine("PickUpObject");
-					StartCoroutine(PickUpObject(hit.transform));
+					//start new coroutine
+					StartCoroutine("PickUpObject", (hit.transform));
 					
 				}
 				
 				//Sends waypoint to pathfinding, and also gameobject
 				if(hit.transform.tag == "Interactive"){
-					
-					//Debug.Log("Interactive");
+					//stop previous coroutine
 					StopCoroutine("InteractObject");
-					StartCoroutine(InteractObject(hit.transform));
+					//start new coroutine
+					StartCoroutine("InteractObject", (hit.transform));
 					
 				}
 				
