@@ -1,9 +1,12 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\MovementManager.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\LevelInitation.cs">
     <Files>
       <File FileName="Assets\Scripts\MovementManager.cs" Line="83" Column="26" />
       <File FileName="Assets\Scripts\Pathfinding.cs" Line="52" Column="35" />
+      <File FileName="Assets\Scripts\Interact_Door.cs" Line="14" Column="25" />
+      <File FileName="Assets\Scripts\LevelInitation.cs" Line="33" Column="1" />
+      <File FileName="Assets\Scripts\InputManager.cs" Line="37" Column="33" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

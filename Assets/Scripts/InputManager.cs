@@ -3,13 +3,12 @@ using System.Collections;
 
 public class InputManager : MonoBehaviour {
 	
-	public Transform player;
+	//public Transform player;
 	private MovementManager ptrMovementManager; 	//reference to pathfinding
 	private bool WorldInput = true;			//True if outside puzzle, false if in puzzle
 	//private Vector3 ObjectPosition;
 	
-	// Use this for initialization
-	void Start () {
+	public void SetPlayer (Transform player) {
 		ptrMovementManager = player.GetComponent<MovementManager>();
 	}
 	
