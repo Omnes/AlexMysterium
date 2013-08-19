@@ -74,6 +74,7 @@ public class Pathfinding : MonoBehaviour {
 			
 		}
 		vec3path.Reverse();
+		vec3path.RemoveAt(0);
 		path.Clear();
 		return vec3path;
 		

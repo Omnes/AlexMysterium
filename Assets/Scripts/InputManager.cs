@@ -8,6 +8,7 @@ public class InputManager : MonoBehaviour {
 	public float buttonDelay = 0.3f;
 	
 	//private
+	//public Transform player;
 	private MovementManager ptrMovementManager; 	//reference to pathfinding
 	private bool worldInput = true;					//True if outside puzzle, false if in puzzle
 	private float buttonDelayCounter;
@@ -19,6 +20,10 @@ public class InputManager : MonoBehaviour {
 		
 		//Start button delay counter
 		buttonDelayCounter = Time.time;
+	}
+	
+	public void SetPlayer (Transform player) {
+		ptrMovementManager = player.GetComponent<MovementManager>();
 	}
 	
 	// Update is called once per frame
