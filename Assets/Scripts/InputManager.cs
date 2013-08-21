@@ -4,7 +4,7 @@ using System.Collections;
 public class InputManager : MonoBehaviour {
 	
 	//public
-	public Transform playerTransform;
+	//public Transform playerTransform;
 	public float buttonDelay = 0.3f;
 	
 	//private
@@ -16,7 +16,7 @@ public class InputManager : MonoBehaviour {
 	// Use this for initialization
 	void Start (){
 		//get MovementmanagerScript for pathfinding
-		ptrMovementManager = playerTransform.GetComponent<MovementManager>();
+		//ptrMovementManager = playerTransform.GetComponent<MovementManager>();
 		
 		//Start button delay counter
 		buttonDelayCounter = Time.time;
@@ -39,7 +39,7 @@ public class InputManager : MonoBehaviour {
 	void FindInput(){
 		
 		//mousebutton left pressed
-		if(Input.GetMouseButton(0)){
+		if(Input.GetMouseButtonDown(0)){
 			
 			//reset mousecounter
 			buttonDelayCounter = Time.time;

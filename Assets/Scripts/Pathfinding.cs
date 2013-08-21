@@ -34,6 +34,8 @@ public class Pathfinding : MonoBehaviour {
 		if(debug) drawNodes();
 	}
 	
+	
+	//debug funktion som skapar en kub på varje node position och byter färge på de som är closed
 	public void drawNodes(){
 		for(int y = 0; y < height; y++)
 			for(int x = 0; x < width; x++){
@@ -45,6 +47,7 @@ public class Pathfinding : MonoBehaviour {
 		
 	}
 	
+	//initerar alla nodes och läser av pixelmappen
 	private void initMap(){
 		map = new Node[width, height];
 		mapclosed.Clear();
@@ -53,16 +56,18 @@ public class Pathfinding : MonoBehaviour {
 			for(int x = 0; x < width; x++){
 				Color col = pixelMap.GetPixel(x,y);
 				//float w = 1 + 1-col.grayscale;
+				// w sätter 'weight' för varje node / kan användas för att få den att helst undvika vissa nodes om den kan
 				float w = 1;
 				bool c = col.g < 0.1;
 				map[x,y] = new Node{pos = new Vector2(x,y),Closed = c,weigth = w, parent = null};
-				if(c){
-					mapclosed.Add(map[x,y]);
-				}
+				//if(c){
+				//	mapclosed.Add(map[x,y]);
+				//}
 		}
 		Debug.Log("map initiated");
 	}
 	
+	//hittar en path och gör om den till worldkordinater
 	public List<Vector3> findpath(Vector3 start, Vector3 end){
 		findPath2d(worldposToGridpos(start),worldposToGridpos(end));
 		
@@ -80,6 +85,7 @@ public class Pathfinding : MonoBehaviour {
 		
 	}
 	
+	//A* implementationen
 	private void findPath2d(Vector2 start,Vector2 end){
 		initMap();
 		Debug.Log("Start x = " + (int)start.x + " y = " + (int)start.y);
@@ -87,13 +93,14 @@ public class Pathfinding : MonoBehaviour {
 		Node startNode = map[(int)start.x,(int)start.y];
 		Node endNode = map[(int)end.x,(int)end.y];
 		
+		//bryt ur om slutnoden inte går att nå
 		if(endNode.Closed){
 			Debug.Log("could not find path. end node closed");
 			return;
 		}
 		
 		SortedList<float, Node> openNodes = new SortedList<float, Node>();
-		List<Node> closedNodes = new List<Node>(mapclosed);
+		//List<Node> closedNodes = new List<Node>(mapclosed);
 		
 		Node cur = startNode;
 		cur.Closed = true;
@@ -105,6 +112,7 @@ public class Pathfinding : MonoBehaviour {
 		
 		while(true){
 			
+			//så den inte fastnar i ett försök att hitta till en path till en plats som inte går att nå 
 			tries++;
 			if(tries > 5000){
 				Debug.Log("failed");
@@ -124,9 +132,9 @@ public class Pathfinding : MonoBehaviour {
 							n.parent = cur;
 							openNodes.Add(n.G + n.H,n);
 						}else{
-							if(n.G > cur.G + (int)(sv*n.weigth)+ 0.1){
+							if(n.G > cur.G + (int)(sv*n.weigth)+ 0.1){ //FIXA SÅ DEN BYTER PARENT NÄR DEN HITTAR TILL EN POSITION MED HÖGRE VÄRDE
 								n.G = cur.G + (int)(sv*n.weigth) + (float)(Random.value*0.1);
-								//n.parent = cur;
+								//n.parent = cur; //fick spelet att hänga sig när 2 nodes blev parents till varandra
 								openNodes.RemoveAt(openNodes.IndexOfValue(n));
 								openNodes.Add(n.G + n.H,n);
 							}
@@ -145,6 +153,7 @@ public class Pathfinding : MonoBehaviour {
 		
 		Debug.Log("Path found! cells in open: " + openNodes.Count + " value on last node: " + cur.G + cur.H);
 		
+		//går baklänges igenom alla parents
 		while(cur != null){
 			path.Add(cur);
 			//Debug.Log("x = " + cur.x + " y = " + cur.y);
@@ -158,6 +167,7 @@ public class Pathfinding : MonoBehaviour {
 		
 	}
 	
+	//tar en vector3 med en världs kordinat och gör om den till nodegrid kordinater
 	public Vector2 worldposToGridpos(Vector3 worldposition){
 		Vector3 offset = 10 * walkmesh.localScale / 2;
 		
@@ -167,6 +177,7 @@ public class Pathfinding : MonoBehaviour {
 		return gridpos;
 	}
 	
+	//tar en vector2 med en nodegrid kordinat och gör om den till världs kordinater
 	public Vector3 gridposToWorld(Vector2 gridposition){
 		Vector3 offset = 10 * walkmesh.localScale;
 		float midpointoffset = 0.5f;
@@ -178,7 +189,7 @@ public class Pathfinding : MonoBehaviour {
 	}
 	
 	
-	
+	//Node klassen
 	public class Node{
 		public bool Closed;
 		public float H;
