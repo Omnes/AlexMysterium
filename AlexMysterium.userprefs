@@ -3,9 +3,11 @@
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Pathfinding.cs">
     <Files>
       <File FileName="Assets\Scripts\InputManager.cs" Line="65" Column="6" />
-      <File FileName="Assets\Scripts\LevelInitation.cs" Line="26" Column="3" />
+      <File FileName="Assets\Scripts\LevelInitation.cs" Line="15" Column="3" />
       <File FileName="Assets\Scripts\OrbitAndLookAt.cs" Line="17" Column="1" />
-      <File FileName="Assets\Scripts\Pathfinding.cs" Line="187" Column="121" />
+      <File FileName="Assets\Scripts\Pathfinding.cs" Line="34" Column="25" />
+      <File FileName="Assets\Scripts\InteractTest.cs" Line="12" Column="1" />
+      <File FileName="Assets\Scripts\CameraSmoothFollowScript.cs" Line="46" Column="22" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

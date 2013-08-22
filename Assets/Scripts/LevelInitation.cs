@@ -22,6 +22,7 @@ public class LevelInitation : MonoBehaviour {
 			
 		Transform player = (Transform)Instantiate(playerPrefab,spawnPosition,Quaternion.identity);
 		Camera.main.GetComponent<InputManager>().SetPlayer(player);
+		Camera.main.GetComponent<CameraSmoothFollowScript>().Player = player.gameObject;
 		player.GetComponent<Pathfinding>().walkmesh = GameObject.Find("floor").transform;
 	}
 	
