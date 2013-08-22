@@ -10,7 +10,7 @@ public class InputManager : MonoBehaviour {
 	//private
 	//public Transform player;
 	private MovementManager ptrMovementManager; 	//reference to pathfinding
-	private bool worldInput = true;					//True if outside puzzle, false if in puzzle
+	private bool isPuzzle = false;					//True if outside puzzle, false if in puzzle
 	private float buttonDelayCounter;
 	
 	// Use this for initialization
@@ -30,7 +30,7 @@ public class InputManager : MonoBehaviour {
 	void Update () {
 		
 		//if in puzzle then WorldInput == false
-		if(worldInput && buttonDelayCounter + buttonDelay < Time.time){
+		if(buttonDelayCounter + buttonDelay < Time.time){
 			FindInput ();
 		}
 		
@@ -48,28 +48,50 @@ public class InputManager : MonoBehaviour {
 			Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 			RaycastHit hit;
 			if(Physics.Raycast(ray, out hit)){
-
+				
 				//Sends input to pathfinding
 				if(hit.transform.tag == "Floor"){
 					//move to position
 					ptrMovementManager.pathfindToPosition(hit.point);
 					
 				}
+				
 				//Puts object in Inventory
 				if(hit.transform.tag == "Item"){
-					//stop previous coroutine
-					StopCoroutine("PickUpObject");
-					//start new coroutine
-					StartCoroutine("PickUpObject", (hit.transform));
+					
+					//if in puzzle
+					//without pathfinding
+					if(isPuzzle){
+						
+						hit.transform.SendMessage("Item");
+						
+					}else{//with pathfinding
+					
+						//stop previous coroutine
+						StopCoroutine("PickUpObject");
+						//start new coroutine
+						StartCoroutine("PickUpObject", (hit.transform));
+					}
 					
 				}
 				
 				//Sends waypoint to pathfinding, and also gameobject
 				if(hit.transform.tag == "Interactive"){
-					//stop previous coroutine
-					StopCoroutine("InteractObject");
-					//start new coroutine
-					StartCoroutine("InteractObject", (hit.transform));
+					
+					//if in puzzle
+					//without pathfinding
+					if(isPuzzle){
+						
+						hit.transform.SendMessage("Interact");
+						
+					}else{//with pathfinding
+						
+						//stop previous coroutine
+						StopCoroutine("InteractObject");
+						//start new coroutine
+						StartCoroutine("InteractObject", (hit.transform));
+						
+					}
 					
 				}
 				
@@ -107,6 +129,12 @@ public class InputManager : MonoBehaviour {
 			
 			yield return new WaitForSeconds(.1f);
 		}
+		
+	}
+	
+	void SetIsPuzzle(bool isPuzzleTrueOrFalse){
+		
+		isPuzzle = isPuzzleTrueOrFalse;
 		
 	}
 	
