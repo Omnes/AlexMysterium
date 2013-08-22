@@ -170,8 +170,9 @@ public class Pathfinding : MonoBehaviour {
 	//tar en vector3 med en världs kordinat och gör om den till nodegrid kordinater
 	public Vector2 worldposToGridpos(Vector3 worldposition){
 		Vector3 offset = 10 * walkmesh.localScale / 2;
+		Vector3 mapscale =  new Vector3(offset.x*4/(float)pixelMap.width,0,offset.z*4/(float)pixelMap.height);
 		
-		Vector2 gridpos = new Vector2(Mathf.Floor(worldposition.x + offset.x),Mathf.Floor(worldposition.z + offset.z)) * 2;
+		Vector2 gridpos = new Vector2(Mathf.Floor(worldposition.x + offset.x)*mapscale.x,Mathf.Floor(worldposition.z + offset.z)*mapscale.z) * 2;
 		gridpos += new Vector2(walkmesh.position.x,walkmesh.position.y);
 		//Debug.Log("WtG -> " + " x " + worldposition.x + " y " + worldposition.z + " x -> " + gridpos.x + " y " + gridpos.y);
 		return gridpos;
@@ -180,10 +181,15 @@ public class Pathfinding : MonoBehaviour {
 	//tar en vector2 med en nodegrid kordinat och gör om den till världs kordinater
 	public Vector3 gridposToWorld(Vector2 gridposition){
 		Vector3 offset = 10 * walkmesh.localScale;
+		Vector3 mapscale =  new Vector3(offset.x/(float)pixelMap.width,0,offset.z/(float)pixelMap.height)*2;
+		offset =  new Vector3(offset.x,0,offset.z);
+		
+
 		float midpointoffset = 0.5f;
 
-		Vector3 worldpos = new Vector3(gridposition.x - offset.x + midpointoffset ,0 ,gridposition.y - offset.z + midpointoffset) / 2;
+		Vector3 worldpos = new Vector3((gridposition.x - offset.x + midpointoffset) ,0 ,(gridposition.y - offset.z + midpointoffset))/2 ;
 		worldpos += walkmesh.position;
+		worldpos = new Vector3(worldpos.x*mapscale.x ,0,worldpos.z*mapscale.z);
 		//Debug.Log("GtW -> " + " x " + gridposition.x + " y " + gridposition.y + " x -> " + worldpos.x + " y " + worldpos.z);
 		return worldpos;
 	}
