@@ -15,19 +15,20 @@ public class CameraSmoothFollowScript : MonoBehaviour {
 	private bool isColliding = false;
 	private Vector3 cameraCenter;
 	private Vector3 cameraCenterToPlayer;
+	private bool isFollowing = true;
 	
 	
 	// Use this for initialization
 	void Start () {
 		//startposition
-		playerMovement = new Vector3(Player.transform.position.x, CameraDistY, CameraDistZ);
-		transform.position = playerMovement;
+		transform.position = new Vector3(5f,CameraDistY,CameraDistZ);  //defaultspawn
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		
-		SmoothFollow();
+		if(isFollowing){
+			SmoothFollow();
+		}
 		
 	}
 	
@@ -68,5 +69,20 @@ public class CameraSmoothFollowScript : MonoBehaviour {
 		
 		
 	}
+	
+	void SetPos(Vector3 pos, bool puzzle){
+		
+		transform.position = pos;
+		
+		//if puzzle = true then turn off smoothfollow
+		if(puzzle){
+			isFollowing = false;
+		}else{
+			isFollowing = true;
+		}
+		
+	}
+	
+	
 	
 }
