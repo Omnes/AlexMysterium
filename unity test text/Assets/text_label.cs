@@ -3,6 +3,7 @@ using System.Collections;
 
 public class text_label : MonoBehaviour {
 	
+	public bool activate = false;
 	public int guiDepth = 0;
 	public Font f;
 	public float xMin = 60f;	
@@ -28,10 +29,12 @@ public class text_label : MonoBehaviour {
 	}
 	
 	void OnGUI() {
-		
-		GUI.color = Color.black;
-		GUI.depth = guiDepth;
-		GUI.skin.font = f;
-        GUI.Label(new Rect(xMin, yMin, xMax, yMax), asset.text);
+		if(activate)
+		{
+			GUI.color = Color.black;
+			GUI.depth = guiDepth;
+			GUI.skin.font = f;
+        	GUI.Label(new Rect(xMin, yMin, xMax, yMax), asset.text);
+		}
     }
 }
