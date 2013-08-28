@@ -39,6 +39,10 @@ public class gui_button : MonoBehaviour {
 			{//, ScaleMode.ScaleToFit, true);
 				Debug.LogError("You pressed the button, VICTORY!!!!");
 			}
+			
+			GUI.depth = guiDepth+1;
+			
+			GUI.Label(new Rect(XPos, YPos, Width, Height), "a button has appeared!" , gui_style);
 		}
     }
 }

@@ -13,6 +13,7 @@ public class graphic_label : MonoBehaviour {
 	public float Width = 0f;
 	public float Height = 0f;
 	
+	public GUIStyle gui_style;
 	// Use this for initialization
 	void Start () {
 		if(useScreenHeight)
@@ -44,7 +45,35 @@ public class graphic_label : MonoBehaviour {
 			
 			GUI.depth = guiDepth;
 			
-	        GUI.DrawTexture(new Rect(XPos, YPos, Width, Height), aTexture);//, ScaleMode.ScaleToFit, true);
+	        GUI.DrawTexture(new Rect(XPos, YPos, Width, Height), aTexture);//, gui_style);//, ScaleMode.ScaleToFit, true);
 		}
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
