@@ -21,7 +21,8 @@ public class CameraSmoothFollowScript : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		//startposition
-		transform.position = new Vector3(5f,CameraDistY,CameraDistZ);  //defaultspawn
+		playerMovement = new Vector3(5f,CameraDistY,CameraDistZ);  //defaultspawn
+		
 	}
 	
 	// Update is called once per frame
@@ -34,7 +35,7 @@ public class CameraSmoothFollowScript : MonoBehaviour {
 	
 	void OnCollisionEnter(Collision other) {
 		
-		//collision vector.
+		//opposite direction of collision vector.
 		ContactDir = other.transform.position - transform.position;
 		//is the camera colliding ?
 		isColliding = true;
@@ -42,45 +43,53 @@ public class CameraSmoothFollowScript : MonoBehaviour {
 		collider.enabled = false;
 		//set velocity to zero
 		transform.rigidbody.velocity = new Vector3(0f,0f,0f);
+		
+		//Center of camera
+		cameraCenter = new Vector3(Camera.main.transform.position.x, Camera.main.transform.position.y, 0);
+		
+		
 	}
 	
 	void SmoothFollow(){
 		
 		//follow player
-		if(isColliding == false){
-			playerMovement = new Vector3(Player.transform.position.x, CameraDistY, CameraDistZ);
-			transform.position = playerMovement;
+		playerMovement.x = Player.transform.position.x;
+
+		//on colliding
+		if(isColliding){
+			
+			//vector between center and player
+			cameraCenterToPlayer = cameraCenter - Player.transform.position;
+			
+			//if collision vector is same as vector(center to player) then player is moving away from the collision
+			if(cameraCenterToPlayer.x > 0 && ContactDir.x > 0){
+				isColliding = false;
+				collider.enabled = true;
+			}else if(cameraCenterToPlayer.x < 0 && ContactDir.x < 0){
+				isColliding = false;
+				collider.enabled = true;
+			};
+			
+			playerMovement = transform.position;
 		}
 		
-		//Center of camera
-		cameraCenter = new Vector3(Camera.main.transform.position.x, Camera.main.transform.position.y, 0);
-		
-		//vector between center and player
-		cameraCenterToPlayer = cameraCenter - Player.transform.position;
-	
-		//if collision vector is same as vector(center to player) then player is moving away from the collision
-		if(cameraCenterToPlayer.x > 0 && ContactDir.x > 0){
-			isColliding = false;
-			collider.enabled = true;
-		}else if(cameraCenterToPlayer.x < 0 && ContactDir.x < 0){
-			isColliding = false;
-			collider.enabled = true;
-		};
-		
+		transform.position = playerMovement;
 		
 	}
 	
-	void SetPos(Vector3 pos, bool puzzle){
+	void SetPos(Vector3 pos){
 		
 		transform.position = pos;
 		
+	}
+	
+	void SetPuzzle(bool puzzle){
 		//if puzzle = true then turn off smoothfollow
 		if(puzzle){
 			isFollowing = false;
 		}else{
 			isFollowing = true;
 		}
-		
 	}
 	
 	
