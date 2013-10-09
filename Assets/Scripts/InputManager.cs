@@ -55,7 +55,7 @@ public class InputManager : MonoBehaviour {
 					ptrMovementManager.pathfindToPosition(hit.point);
 					
 				}
-				
+				//---------------------------------------------------------
 				//Puts object in Inventory
 				if(hit.transform.tag == "Item"){
 					
@@ -74,7 +74,7 @@ public class InputManager : MonoBehaviour {
 					}
 					
 				}
-				
+				//----------------------------------------------------------
 				//Sends waypoint to pathfinding, and also gameobject
 				if(hit.transform.tag == "Interactive"){
 					
@@ -94,6 +94,26 @@ public class InputManager : MonoBehaviour {
 					}
 					
 				}
+				//----------------------------------------------------------
+				if(hit.transform.tag == "Zoom_Interact"){
+					
+					//if in puzzle
+					//without pathfinding
+					if(isPuzzle){
+						
+						hit.transform.SendMessage("Activate");
+						
+					}else{//with pathfinding
+						
+						//stop previous coroutine
+						StopCoroutine("InteractObject");
+						//start new coroutine
+						StartCoroutine("InteractObject", (hit.transform));
+						
+					}
+					
+				}
+				//---------------------------------------------------------
 				
 			}
 			
@@ -123,7 +143,7 @@ public class InputManager : MonoBehaviour {
 		Vector3 targetPosition = ptrMovementManager.pathfindToObject(target);
 		while(true){
 			if(ptrMovementManager.isAtPosition(targetPosition)){
-				target.SendMessage("Interact");
+				target.SendMessage("Activate");
 				break;
 			}
 			

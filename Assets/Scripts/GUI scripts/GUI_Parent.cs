@@ -33,7 +33,7 @@ public class GUI_Parent : MonoBehaviour {
 	}
 	
 	public void Activate(bool currentState){// TypeOfElement var (to use) in ListOfElements
-		foreach(GUI_Element current_element in elements){
+		foreach(GUI_Element current_element in elements){ // either activates or deactivates all parented gui-scripts depending on imput to the function.
 			current_element.Activate(currentState);
 		}
 	}
