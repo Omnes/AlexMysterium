@@ -1,24 +1,15 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-<<<<<<< HEAD
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\InteractTest.cs">
-=======
-<<<<<<< HEAD
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Pathfinding.cs">
->>>>>>> d229e5fb4bfe96c04d8a3b3b8fc612b455485b70
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Inventory.cs">
     <Files>
-      <File FileName="Assets\Scripts\LevelInitation.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\InputManager.cs" Line="51" Column="5" />
-      <File FileName="Assets\Scripts\OrbitAndLookAt.cs" Line="17" Column="1" />
-      <File FileName="Assets\Scripts\Pathfinding.cs" Line="197" Column="2" />
-      <File FileName="Assets\Scripts\InteractTest.cs" Line="8" Column="24" />
-      <File FileName="Assets\Scripts\CameraSmoothFollowScript.cs" Line="46" Column="22" />
-=======
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\InputManager.cs">
-    <Files>
-      <File FileName="Assets\Scripts\InputManager.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\CameraSmoothFollowScript.cs" Line="1" Column="1" />
->>>>>>> sean
+      <File FileName="Assets\Scripts\InteractTest.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\MovementManager.cs" Line="3" Column="1" />
+      <File FileName="Assets\Scripts\Animationator.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\LevelInitation.cs" Line="26" Column="3" />
+      <File FileName="Assets\Scripts\Inventory.cs" Line="137" Column="1" />
+      <File FileName="Assets\Scripts\InputManager.cs" Line="39" Column="3" />
+      <File FileName="Assets\Scripts\Pathfinding.cs" Line="62" Column="68" />
+      <File FileName="Assets\Scripts\CombinableTest.cs" Line="8" Column="26" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

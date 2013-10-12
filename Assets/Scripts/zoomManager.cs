@@ -44,7 +44,7 @@ public class zoomManager : MonoBehaviour {
 	void Activate(){// activate current ZDB
 		if(zoomList.Count == 1){ // we only need to say we are in a puzzel the firt time we enter one, not when we go deeper into the puzzel/zoom
 			Debug.Log("You entered the zoom");
-			Camera.main.SendMessage("SetIsPuzzle", true);				// Let the input manager know we are in a puzzel.
+			GameObject.Find("MasterMind").SendMessage("SetIsPuzzle", true);				// Let the input manager know we are in a puzzel.
 		}
 		//ZDB temp = zoomQueue.Peek() as ZDB;// use the latest zoom
 				ZDB temp = zoomList[zoomList.Count - 1];
@@ -65,7 +65,7 @@ public class zoomManager : MonoBehaviour {
 			GameObject.Find(temp.name).GetComponent<GUI_Parent>().Activate(false);	// activates the GUI-components of the current zoom.
 			if(zoomList.Count == 1){
 				Debug.Log("You left the zoom");
-				Camera.main.SendMessage("SetIsPuzzle", false);				// Let the input manager know we are in a puzzel.
+				GameObject.Find("MasterMind").SendMessage("SetIsPuzzle", false);				// Let the input manager know we are in a puzzel.
 			}
 				
 			CameraChangePos messenger 	= new CameraChangePos();			/* Change the camera position and let it know we are in puzzel mode 	*/

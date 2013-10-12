@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
+
 public class InputManager : MonoBehaviour {
 	
 	//public
@@ -12,6 +13,7 @@ public class InputManager : MonoBehaviour {
 	private MovementManager ptrMovementManager; 	//reference to pathfinding
 	private bool isPuzzle = false;					//True if outside puzzle, false if in puzzle
 	private float buttonDelayCounter;
+	private Inventory ptrInventory;
 	
 	// Use this for initialization
 	void Start (){
@@ -20,6 +22,7 @@ public class InputManager : MonoBehaviour {
 		
 		//Start button delay counter
 		buttonDelayCounter = Time.time;
+		ptrInventory = GameObject.Find("MasterMind").GetComponent<Inventory>();
 	}
 	
 	public void SetPlayer (Transform player) {
@@ -120,6 +123,29 @@ public class InputManager : MonoBehaviour {
 		}
 		
 	}
+	
+	struct TargetAndItem{
+		public Transform target;
+		public Item item; 
+		
+		public TargetAndItem(Transform target,Item item){
+			this.target = target;
+			this.item = item;
+		}
+		
+	}
+	
+	
+	public void UseItemOnTarget(Transform target,Item item){
+		//stop previous coroutine
+		StopCoroutine("UseItemOn");
+		//start new coroutine
+		StartCoroutine("UseItemOn", new TargetAndItem(target,item));
+		
+	}
+	
+	
+	
 	//pickup object
 	IEnumerator PickUpObject(Transform target){
 		
@@ -127,8 +153,7 @@ public class InputManager : MonoBehaviour {
 		while(true){
 			if(ptrMovementManager.isAtPosition(targetPosition)){
 				
-				//doinventoryfunctionstuff
-				target.SendMessage("Interact");
+				ptrInventory.AddItem(target.gameObject);
 				break;
 			}
 			
@@ -144,6 +169,22 @@ public class InputManager : MonoBehaviour {
 		while(true){
 			if(ptrMovementManager.isAtPosition(targetPosition)){
 				target.SendMessage("Activate");
+				break;
+			}
+			
+			yield return new WaitForSeconds(.1f);
+		}
+		
+	}
+	
+	
+	
+	IEnumerator UseItemOn(TargetAndItem tai){
+		
+		Vector3 targetPosition = ptrMovementManager.pathfindToObject(tai.target);
+		while(true){
+			if(ptrMovementManager.isAtPosition(targetPosition)){
+				tai.target.SendMessage("UseItem",tai.item);
 				break;
 			}
 			
