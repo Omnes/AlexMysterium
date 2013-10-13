@@ -1,18 +1,13 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-<<<<<<< HEAD
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\MovementManager.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Mouse_Animation.cs">
     <Files>
-      <File FileName="Assets\Scripts\InteractTest.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\MovementManager.cs" Line="35" Column="5" />
-      <File FileName="Assets\Scripts\Animationator.cs" Line="64" Column="5" />
-=======
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\CameraSmoothFollowScript.cs">
-    <Files>
-      <File FileName="Assets\Scripts\CameraSmoothFollowScript.cs" Line="31" Column="19" />
-      <File FileName="Assets\Scripts\Item_1.cs" Line="11" Column="71" />
-      <File FileName="Assets\Scripts\InputManager.cs" Line="1" Column="1" />
->>>>>>> sean
+      <File FileName="Assets\Scripts\Mouse_Animation.cs" Line="34" Column="28" />
+      <File FileName="Assets\Scripts\InputManager.cs" Line="90" Column="1" />
+      <File FileName="Assets\Scripts\DrawLineTHINGYGYG.cs" Line="26" Column="31" />
+      <File FileName="Assets\Scripts\Interact_Door.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Animationator.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Pathfinding.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
