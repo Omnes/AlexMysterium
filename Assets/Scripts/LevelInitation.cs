@@ -17,13 +17,19 @@ public class LevelInitation : MonoBehaviour {
 	
 	void OnLevelWasLoaded(){
 		
+		Debug.Log ("Level Initiation worked!");
+		
 		GameObject spawn = GameObject.Find(spawnpointName);
 		Vector3 spawnPosition = spawn.transform.position;
 			
 		Transform player = (Transform)Instantiate(playerPrefab,spawnPosition,Quaternion.identity);
-		Camera.main.GetComponent<InputManager>().SetPlayer(player);
+		GetComponent<InputManager>().SetPlayer(player);
 		Camera.main.GetComponent<CameraSmoothFollowScript>().Player = player.gameObject;
-		player.GetComponent<Pathfinding>().walkmesh = GameObject.Find("floor").transform;
+		
+		Transform floor = GameObject.Find("floor").transform;
+		Debug.Log(floor);
+
+		player.GetComponent<Pathfinding>().walkmesh = floor;
 	}
 	
 	void setSpawnpoint(string spawnName){

@@ -11,54 +11,45 @@ public class MovementManager : MonoBehaviour {
     public float speed;
 	public List<Vector3> path;
 	private Pathfinding pathfinder;
-	private Animationator animatinator;
 
 
 	// Use this for initialization
 	void Start () {
 		path = new List<Vector3>();
 		pathfinder = GetComponent<Pathfinding>();
-		animatinator = GetComponent<Animationator>();
 	}
 	
 	// Update is called once per frame
 	void Update () {
- 		
-		//if we have a path calculated
-        if (path.Count > 0){
-			drawPath(); //debug stuff
-            moveTowards(path[0]); //move to next node
-            //transform.localScale = startScale * (3-transform.position.z);
-            if (Vector3.Distance(transform.position,path[0])< speed*Time.deltaTime+0.1){ //if we are at the next node
-                //moving = false;
-				path.RemoveAt(0); //remove the node we are at
-				
-				//set the new walk animation
-				if(path.Count > 0){
-					Vector3 direction = path[0] - transform.position;
-        			direction = direction.normalized;
-					animatinator.setWalkAnimation(new Vector2(direction.x,direction.z));
-				}
-				
+        /*
+		if (Input.GetMouseButtonDown(0)) {
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+            if (Physics.Raycast(ray,out hit) && hit.transform.tag == "Interactive") {
+                StartCoroutine(pathfindToObjectAndActivate(hit.transform));
             }
-        }else{
-			//if we arent moving set animation to still
-			animatinator.setStandAnimation();
-			
-		}
+        }
+		*/
+        if (path.Count > 0){
+			drawPath();
+            moveTowards(path[0]);
+            //transform.localScale = startScale * (3-transform.position.y);
+            if (Vector3.Distance(transform.position,path[0])< speed*Time.deltaTime+0.1){
+                //moving = false;
+				path.RemoveAt(0);
+            }
+        }
 
 	}
 	
 	bool compareVec3(Vector3 v1,Vector3 v2){
-		//if they are kinda the same (pretty inefficient)
 		return Vector3.Distance(v1,v2) < 0.6;
 		
 	}
 	
 	public void pathfindToPosition(Vector3 target){
-		// if the position we pathfind to isnt already calculated
+		
 		if(!compareVec3(target,getEndDestination())){
-			//get a new path
 			path = pathfinder.findpath(transform.position,target);
 		}
 		
@@ -69,18 +60,15 @@ public class MovementManager : MonoBehaviour {
 	public Vector3 pathfindToObject(Transform target){
 		Vector3 targetPosition = new Vector3();
 		bool foundWaypoint = false;
-		//look for the point we want to pathfind to in the object
 		foreach(Transform child in target){
 			if(child.CompareTag("Waypoint")){
 				targetPosition = child.position;
 				foundWaypoint = true;
 			}
 		}
-		//if we didnt find one print a error
 		if(!foundWaypoint){
 			Debug.LogError("Gameobject " + target.name + " is missing a child with a ´Waypoint´ tag"); //
 		}
-		//pathfind to the waypoint
 		pathfindToPosition(targetPosition);
 		return targetPosition;
 	
@@ -125,19 +113,14 @@ public class MovementManager : MonoBehaviour {
 	
 
     public void moveTowards(Vector3 target){
-		//move towards the vector
         Vector3 direction = target - transform.position;
         direction = direction.normalized;
-		
-		//animatinator.setWalkAnimation(new Vector2(direction.x,direction.z));
-		
         //rigidbody.position += new Vector3(direction.x * speed.x, direction.y * speed.y, direction.z * speed.z) * Time.deltaTime;
 		rigidbody.position += direction * speed * Time.deltaTime;
     
     }
 	
 	private void drawPath(){
-		//debug, draws a line along the path
 		for(int i = 0;i < path.Count-1;i++){
 			Debug.DrawLine(path[i]+Vector3.up,path[i+1]+Vector3.up,Color.black);
 		}
