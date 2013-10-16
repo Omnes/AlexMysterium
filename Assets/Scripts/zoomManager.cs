@@ -37,6 +37,10 @@ public class zoomManager : MonoBehaviour {
 		}
 	}
 	
+	void Interact(){
+		Activate ();
+	}
+	
 	/*void ShiftFocus(){// set focus to the current ZDB (set camera etc)
 			
 	}*/
