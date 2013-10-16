@@ -3,12 +3,13 @@ using System.Collections;
 
 public class Mouse_Animation : MonoBehaviour {
 	
-	private int cursorWidth = 32;
-	private int cursorHeight = 36; //blev bra ?
+	public int cursorWidth = 32;
+	public int cursorHeight = 32; //blev bra ?
 	public Texture2D cursorImage;
 	//array?
-	public Texture2D cursor1;
-	public Texture2D cursor2;
+	public Texture2D doorCursor;
+	public Texture2D interactiveCursor;
+	public Texture2D itemCursor;
 	public Texture2D standardCursor;
 	
 	private float currentTime;
@@ -31,9 +32,11 @@ public class Mouse_Animation : MonoBehaviour {
 			
 			if(Physics.Raycast(ray, out hit)){
 				if(hit.transform.gameObject.layer == 8){//8 == Door Layer
-					cursorImage = cursor1;
+					cursorImage = doorCursor;
 				}else if(hit.transform.gameObject.layer == 9){//9 == Interactive Layer
-					cursorImage = cursor2;
+					cursorImage = interactiveCursor;
+				}else if(hit.transform.gameObject.layer == 10){//10 == Item Layer
+					cursorImage = itemCursor;
 				}else{
 					cursorImage = standardCursor;
 				}
