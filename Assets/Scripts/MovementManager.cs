@@ -11,12 +11,14 @@ public class MovementManager : MonoBehaviour {
     public float speed;
 	public List<Vector3> path;
 	private Pathfinding pathfinder;
+	private Animationator animationator;
 
 
 	// Use this for initialization
 	void Start () {
 		path = new List<Vector3>();
 		pathfinder = GetComponent<Pathfinding>();
+		animationator = GetComponent<Animationator>();
 	}
 	
 	// Update is called once per frame
@@ -37,8 +39,19 @@ public class MovementManager : MonoBehaviour {
             if (Vector3.Distance(transform.position,path[0])< speed*Time.deltaTime+0.1){
                 //moving = false;
 				path.RemoveAt(0);
+				
+					//set the new walk animation
+				if(path.Count > 0){
+					Vector3 direction = path[0] - transform.position;
+        			direction = direction.normalized;
+					animationator.setWalkAnimation(new Vector2(direction.x,direction.z));
+				}
             }
-        }
+        } else{
+			//if we arent moving set animation to still
+			animationator.setStandAnimation();
+			
+		}
 
 	}
 	
@@ -117,6 +130,10 @@ public class MovementManager : MonoBehaviour {
         direction = direction.normalized;
         //rigidbody.position += new Vector3(direction.x * speed.x, direction.y * speed.y, direction.z * speed.z) * Time.deltaTime;
 		rigidbody.position += direction * speed * Time.deltaTime;
+
+		animationator.setWalkAnimation(new Vector2(direction.x,direction.z));
+		
+		
     
     }
 	
