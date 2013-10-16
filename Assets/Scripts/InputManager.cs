@@ -98,6 +98,7 @@ public class InputManager : MonoBehaviour {
 					
 				}
 				//----------------------------------------------------------
+				/*
 				if(hit.transform.tag == "Zoom_Interact"){
 					
 					//if in puzzle
@@ -116,6 +117,7 @@ public class InputManager : MonoBehaviour {
 					}
 					
 				}
+				*/
 				//---------------------------------------------------------
 				
 			}
@@ -137,10 +139,14 @@ public class InputManager : MonoBehaviour {
 	
 	
 	public void UseItemOnTarget(Transform target,Item item){
-		//stop previous coroutine
-		StopCoroutine("UseItemOn");
-		//start new coroutine
-		StartCoroutine("UseItemOn", new TargetAndItem(target,item));
+		
+		if(isPuzzle){
+			target.SendMessage("UseItem",item);
+		
+		}else{
+			StopCoroutine("UseItemOn");
+			StartCoroutine("UseItemOn", new TargetAndItem(target,item));
+		}
 		
 	}
 	
@@ -168,7 +174,7 @@ public class InputManager : MonoBehaviour {
 		Vector3 targetPosition = ptrMovementManager.pathfindToObject(target);
 		while(true){
 			if(ptrMovementManager.isAtPosition(targetPosition)){
-				target.SendMessage("Activate");
+				target.SendMessage("Interact");
 				break;
 			}
 			
