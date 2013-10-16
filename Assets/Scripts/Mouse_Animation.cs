@@ -9,11 +9,12 @@ public class Mouse_Animation : MonoBehaviour {
 	//array?
 	public Texture2D doorCursor;
 	public Texture2D interactiveCursor;
-	public Texture2D itemCursor;
 	public Texture2D standardCursor;
 	
 	private float currentTime;
 	private float maxTime = 0.05f;
+	
+	public bool isDrawing = true;
 	
 	
 	// Use this for initialization
@@ -35,8 +36,6 @@ public class Mouse_Animation : MonoBehaviour {
 					cursorImage = doorCursor;
 				}else if(hit.transform.gameObject.layer == 9){//9 == Interactive Layer
 					cursorImage = interactiveCursor;
-				}else if(hit.transform.gameObject.layer == 10){//10 == Item Layer
-					cursorImage = itemCursor;
 				}else{
 					cursorImage = standardCursor;
 				}
@@ -47,10 +46,10 @@ public class Mouse_Animation : MonoBehaviour {
 		
 	}
 	
-	void OnGUI()
+	public void OnGUI()
 	{
-
-		GUI.DrawTexture(new Rect(Input.mousePosition.x - 3, (Screen.height - Input.mousePosition.y) - 3, cursorWidth, cursorHeight), cursorImage, ScaleMode.ScaleAndCrop);
-		
+		if(isDrawing){
+			GUI.DrawTexture(new Rect(Input.mousePosition.x - 3, (Screen.height - Input.mousePosition.y) - 3, cursorWidth, cursorHeight), cursorImage, ScaleMode.ScaleAndCrop);
+		}
 	}
 }
