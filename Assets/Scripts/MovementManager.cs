@@ -11,12 +11,14 @@ public class MovementManager : MonoBehaviour {
     public float speed;
 	public List<Vector3> path;
 	private Pathfinding pathfinder;
+	Animationator ani;
 
 
 	// Use this for initialization
 	void Start () {
 		path = new List<Vector3>();
 		pathfinder = GetComponent<Pathfinding>();
+		ani = GetComponent<Animationator>();
 	}
 	
 	// Update is called once per frame
@@ -115,6 +117,7 @@ public class MovementManager : MonoBehaviour {
     public void moveTowards(Vector3 target){
         Vector3 direction = target - transform.position;
         direction = direction.normalized;
+		ani.setWalkAnimation(direction);
         //rigidbody.position += new Vector3(direction.x * speed.x, direction.y * speed.y, direction.z * speed.z) * Time.deltaTime;
 		rigidbody.position += direction * speed * Time.deltaTime;
     
