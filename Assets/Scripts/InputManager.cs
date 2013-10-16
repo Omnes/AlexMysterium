@@ -39,6 +39,13 @@ public class InputManager : MonoBehaviour {
 		
 	}
 	
+	void stopPreviousCoroutine(){
+		StopCoroutine("PickUpObject");
+		StopCoroutine("InteractObject");
+		StopCoroutine("UseItemOn");
+	}
+	
+	
 	void FindInput(){
 		
 		//mousebutton left pressed
@@ -49,15 +56,13 @@ public class InputManager : MonoBehaviour {
 			
 			//Input for where the user is pointing
 			Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-			RaycastHit hit;
-			if(Physics.Raycast(ray, out hit)){
+			RaycastHit[] hits;
+			hits = Physics.RaycastAll(ray);
+			int i = 0;
+			while(i < hits.Length){
+				RaycastHit hit = hits[i];
+				i++;
 				
-				//Sends input to pathfinding
-				if(hit.transform.tag == "Floor"){
-					//move to position
-					ptrMovementManager.pathfindToPosition(hit.point);
-					
-				}
 				//---------------------------------------------------------
 				//Puts object in Inventory
 				if(hit.transform.tag == "Item"){
@@ -71,10 +76,11 @@ public class InputManager : MonoBehaviour {
 					}else{//with pathfinding
 					
 						//stop previous coroutine
-						StopCoroutine("PickUpObject");
+						stopPreviousCoroutine();
 						//start new coroutine
 						StartCoroutine("PickUpObject", (hit.transform));
 					}
+					break;
 					
 				}
 				//----------------------------------------------------------
@@ -90,13 +96,23 @@ public class InputManager : MonoBehaviour {
 					}else{//with pathfinding
 						
 						//stop previous coroutine
-						StopCoroutine("InteractObject");
+						stopPreviousCoroutine();
 						//start new coroutine
 						StartCoroutine("InteractObject", (hit.transform));
 						
 					}
 					
+					
 				}
+				
+				//Sends input to pathfinding
+				if(hit.transform.tag == "Floor"){
+					//move to position
+					ptrMovementManager.pathfindToPosition(hit.point);
+					
+					
+				}
+				
 				//----------------------------------------------------------
 				if(hit.transform.tag == "Zoom_Interact"){
 					
@@ -114,6 +130,7 @@ public class InputManager : MonoBehaviour {
 						StartCoroutine("InteractObject", (hit.transform));
 						
 					}
+					
 					
 				}
 				//---------------------------------------------------------
@@ -142,7 +159,7 @@ public class InputManager : MonoBehaviour {
 			target.SendMessage("UseItem",item);
 		
 		}else{
-			StopCoroutine("UseItemOn");
+			stopPreviousCoroutine();
 			StartCoroutine("UseItemOn", new TargetAndItem(target,item));
 		}
 		
