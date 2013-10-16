@@ -6,16 +6,17 @@ using System.Linq;
 public class Inventory : MonoBehaviour {
 	
 	
-	private List<Item> inventoryList;
+	public List<Item> inventoryList;
 	private int startItem = 0;
-	public int displayCount = 3;
+	public int displayCount = 5;
 	
-	private bool showInventory = false;
+	public bool showInventory = false;
 	private bool drawInventory = false;
-	public float offset = 0;
+	private float offset = 0;
 	
-	private Vector2 spriteSize = new Vector2(50,50);
+	public Vector2 spriteSize = new Vector2(64,64);
 	private Vector2 startPosition = new Vector2(Screen.width,Screen.height);
+	public Vector2 paddingFromEdge;
 	
 	private Item holdingItem;
 	private Item nullItem;
@@ -23,6 +24,8 @@ public class Inventory : MonoBehaviour {
 	private int holdingItemNr = -1;
 	
 	private int ItemPickupCounter = 0;
+	
+	
 	
 	void Start () {
 		inventoryList = new List<Item>();
@@ -45,12 +48,12 @@ public class Inventory : MonoBehaviour {
 		return inventoryList;
 	}
 	
-	void OnGUI(){
+	public void DoGUI(){
 		
 		if(offset > 0){
 			for(int i = startItem; i < inventoryList.Count && i < startItem+displayCount; i++){
 				if(i != holdingItemNr){
-					Rect pos = new Rect(startPosition.x-spriteSize.x*(i-startItem+1)+spriteSize.x*inventoryList.Count-offset,startPosition.y-spriteSize.y,spriteSize.x,spriteSize.y);
+					Rect pos = new Rect(startPosition.x-spriteSize.x*(i-startItem+1)+spriteSize.x*inventoryList.Count-offset - paddingFromEdge.x,startPosition.y-spriteSize.y - paddingFromEdge.y,spriteSize.x,spriteSize.y);
 					GUI.DrawTexture(pos,inventoryList[i].sprite);
 				}
 			}
@@ -75,14 +78,13 @@ public class Inventory : MonoBehaviour {
 		inventoryArea = new Rect (startPosition.x,startPosition.y,-spriteSize.x*inventoryList.Count,-spriteSize.y);
 		
 		Vector2 mousePos = Input.mousePosition;
-		
-		//if(mousePos.y < spriteSize.y){
+		/*
 		if(mousePos.y < spriteSize.y){
 			showInventory = true;
 		}else{
 			showInventory = false;
 		}
-		
+		*/
 		if(holdingItem.id != nullItem.id){
 			showInventory = true;
 		}
@@ -100,9 +102,9 @@ public class Inventory : MonoBehaviour {
 		if(showInventory){
 			if(Input.GetMouseButtonDown(0)){
 				if(holdingItem.id == nullItem.id){
-					if(Screen.width-mousePos.x < inventoryList.Count*spriteSize.x && mousePos.y < spriteSize.y){
+					if(Screen.width-mousePos.x - paddingFromEdge.x < inventoryList.Count*spriteSize.x + paddingFromEdge.x && mousePos.y < spriteSize.y + paddingFromEdge.y){
 						//plocka upp
-						holdingItemNr = startItem + (int)Mathf.Floor((Screen.width-mousePos.x)/spriteSize.x);
+						holdingItemNr = startItem + (int)Mathf.Floor((Screen.width-mousePos.x  - paddingFromEdge.x)/spriteSize.x);
 						holdingItem = inventoryList[holdingItemNr];
 						Debug.Log("plockade upp: " + holdingItem.name);
 					}

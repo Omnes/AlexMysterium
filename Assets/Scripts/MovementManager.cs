@@ -19,6 +19,7 @@ public class MovementManager : MonoBehaviour {
 		path = new List<Vector3>();
 		pathfinder = GetComponent<Pathfinding>();
 		animationator = GetComponent<Animationator>();
+
 	}
 	
 	// Update is called once per frame

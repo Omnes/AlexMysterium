@@ -1,9 +1,25 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+<<<<<<< HEAD
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Mouse_Animation.cs">
     <Files>
       <File FileName="Assets\Scripts\LevelInitation.cs" Line="18" Column="23" />
       <File FileName="Assets\Scripts\Mouse_Animation.cs" Line="34" Column="48" />
+=======
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\InputManager.cs">
+    <Files>
+      <File FileName="Assets\Scripts\InputManager.cs" Line="107" Column="34" />
+      <File FileName="Assets\Scripts\zoom_TEST.cs" Line="36" Column="3" />
+      <File FileName="Assets\Scripts\InteractTest.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\MovementManager.cs" Line="69" Column="5" />
+      <File FileName="Assets\Scripts\Animationator.cs" Line="64" Column="25" />
+      <File FileName="Assets\Scripts\LevelInitation.cs" Line="26" Column="35" />
+      <File FileName="Assets\Scripts\Gui_Control.cs" Line="22" Column="42" />
+      <File FileName="Assets\Scripts\Inventory.cs" Line="48" Column="24" />
+      <File FileName="Assets\Scripts\Pathfinding.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\CombinableTest.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\zoomManager.cs" Line="49" Column="62" />
+>>>>>>> robin
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

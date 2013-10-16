@@ -137,10 +137,14 @@ public class InputManager : MonoBehaviour {
 	
 	
 	public void UseItemOnTarget(Transform target,Item item){
-		//stop previous coroutine
-		StopCoroutine("UseItemOn");
-		//start new coroutine
-		StartCoroutine("UseItemOn", new TargetAndItem(target,item));
+		
+		if(isPuzzle){
+			target.SendMessage("UseItem",item);
+		
+		}else{
+			StopCoroutine("UseItemOn");
+			StartCoroutine("UseItemOn", new TargetAndItem(target,item));
+		}
 		
 	}
 	
