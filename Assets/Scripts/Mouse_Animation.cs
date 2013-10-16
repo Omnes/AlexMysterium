@@ -22,6 +22,7 @@ public class Mouse_Animation : MonoBehaviour {
 		currentTime = Time.time;
 		
 		Screen.showCursor = false;
+		//Screen.lockCursor = true;
 	}
 	
 	// Update is called once per frame
