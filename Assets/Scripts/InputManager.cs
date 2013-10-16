@@ -114,6 +114,7 @@ public class InputManager : MonoBehaviour {
 				}
 				
 				//----------------------------------------------------------
+				/*
 				if(hit.transform.tag == "Zoom_Interact"){
 					
 					//if in puzzle
@@ -133,6 +134,7 @@ public class InputManager : MonoBehaviour {
 					
 					
 				}
+				*/
 				//---------------------------------------------------------
 				
 			}
@@ -189,7 +191,7 @@ public class InputManager : MonoBehaviour {
 		Vector3 targetPosition = ptrMovementManager.pathfindToObject(target);
 		while(true){
 			if(ptrMovementManager.isAtPosition(targetPosition)){
-				target.SendMessage("Activate");
+				target.SendMessage("Interact");
 				break;
 			}
 			

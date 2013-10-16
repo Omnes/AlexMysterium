@@ -25,12 +25,19 @@ public class Inventory : MonoBehaviour {
 	
 	private int ItemPickupCounter = 0;
 	
+	//seans holding item icon thingy
+	public Texture2D cursorImage;
+	Mouse_Animation mo_anim;
+	
 	
 	
 	void Start () {
 		inventoryList = new List<Item>();
 		nullItem = new Item("null",null,-1);
-		holdingItem = nullItem; 
+		holdingItem = nullItem;
+		
+		//seans holding item icon thingy
+		mo_anim = GetComponent<Mouse_Animation>();
 	}
 	
 	public void AddItem (GameObject itemPickup) {
@@ -60,6 +67,10 @@ public class Inventory : MonoBehaviour {
 		}
 		if(holdingItem.id != nullItem.id){
 			GUI.DrawTexture(new Rect(Input.mousePosition.x-spriteSize.x/2,Screen.height-Input.mousePosition.y-spriteSize.y/2,spriteSize.x,spriteSize.y),holdingItem.sprite);
+			
+			//seans holding item icon thingy
+			mo_anim.isDrawing = false;
+			GUI.DrawTexture(new Rect(Input.mousePosition.x - 3, (Screen.height - Input.mousePosition.y) - 3, 32, 32), cursorImage, ScaleMode.ScaleAndCrop);
 		}
 
 	}
@@ -124,6 +135,7 @@ public class Inventory : MonoBehaviour {
 					}	
 					
 					Debug.Log("släpper: " + holdingItem.name);
+					mo_anim.isDrawing = true;
 					holdingItem = nullItem;
 					holdingItemNr = -1;
 					//ta reda på vad vi släppte objektet över och skicka ett meddelande till det

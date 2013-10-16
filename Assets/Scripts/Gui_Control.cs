@@ -6,6 +6,7 @@ public class Gui_Control : MonoBehaviour {
 	public Texture2D gui_texture;
 	
 	Inventory inventory;
+	
 	private Vector2 startPosition = new Vector2(Screen.width,Screen.height);
 	Rect inventoryArea;
 	// Use this for initialization
