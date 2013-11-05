@@ -40,9 +40,6 @@ public class GUI_Return_Button : GUI_Button {
 				
 			}
 			
-			GUI.depth = guiDepth+1;
-			
-			GUI.Label(new Rect(XPos, YPos, Width, Height), "a button has appeared!" , gui_style);
 		}
     }
 	

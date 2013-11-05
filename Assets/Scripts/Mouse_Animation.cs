@@ -12,7 +12,7 @@ public class Mouse_Animation : MonoBehaviour {
 	public Texture2D standardCursor;
 	
 	private float currentTime;
-	private float maxTime = 0.05f;
+	public float maxTime = 0.05f;
 	
 	public bool isDrawing = true;
 	
@@ -27,23 +27,23 @@ public class Mouse_Animation : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
-		if(currentTime + maxTime < Time.time){
-			Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-			RaycastHit hit;
-			
-			if(Physics.Raycast(ray, out hit)){
-				if(hit.transform.gameObject.layer == 8){//8 == Door Layer
-					cursorImage = doorCursor;
-				}else if(hit.transform.gameObject.layer == 9){//9 == Interactive Layer
-					cursorImage = interactiveCursor;
-				}else{
-					cursorImage = standardCursor;
+		if(isDrawing){
+			if(currentTime + maxTime < Time.time){
+				Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+				RaycastHit hit;
+				
+				if(Physics.Raycast(ray, out hit)){
+					if(hit.transform.gameObject.layer == 8){//8 == Door Layer
+						cursorImage = doorCursor;
+					}else if(hit.transform.gameObject.layer == 9){//9 == Interactive Layer
+						cursorImage = interactiveCursor;
+					}else{
+						cursorImage = standardCursor;
+					}
 				}
+				currentTime = Time.time;
 			}
-			currentTime = Time.time;
 		}
-			
 		
 	}
 	

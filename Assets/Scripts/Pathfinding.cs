@@ -40,7 +40,7 @@ public class Pathfinding : MonoBehaviour {
 		for(int y = 0; y < height; y++)
 			for(int x = 0; x < width; x++){
 				GameObject cube = (GameObject)Instantiate(debugNodePrefab,gridposToWorld(map[x,y].pos),Quaternion.identity);
-				if(map[x,y].Closed){
+				if(map[x,y].Closed || map[x,y].Used){
 					cube.renderer.material = debugMat1;
 				}
 		}
@@ -110,7 +110,7 @@ public class Pathfinding : MonoBehaviour {
 		//List<Node> closedNodes = new List<Node>(mapclosed);
 		
 		Node cur = startNode;
-		cur.Closed = true;
+		cur.Used = true;
 		//closedNodes.Add(cur);
 		
 
