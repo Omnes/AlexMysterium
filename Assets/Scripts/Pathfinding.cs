@@ -40,7 +40,7 @@ public class Pathfinding : MonoBehaviour {
 		for(int y = 0; y < height; y++)
 			for(int x = 0; x < width; x++){
 				GameObject cube = (GameObject)Instantiate(debugNodePrefab,gridposToWorld(map[x,y].pos),Quaternion.identity);
-				if(map[x,y].Closed){
+				if(map[x,y].Closed || map[x,y].Used){
 					cube.renderer.material = debugMat1;
 				}
 		}
@@ -59,13 +59,20 @@ public class Pathfinding : MonoBehaviour {
 				// w sätter 'weight' för varje node / kan användas för att få den att helst undvika vissa nodes om den kan
 				float w = 1;
 				bool c = col.g < 0.1;
-				map[x,y] = new Node{pos = new Vector2(x,y),Closed = c,weigth = w, parent = null};
+				map[x,y] = new Node{pos = new Vector2(x,y),Closed = c,weigth = w,Used = false, parent = null};
 				//if(c){
 				//	mapclosed.Add(map[x,y]);
 				//}
 		}
-		Debug.Log("map initiated");
+		//Debug.Log("map initiated");
 	}
+	
+	void cleanmap(){
+		for(int y = 0; y < height; y++)
+			for(int x = 0; x < width; x++){
+			map[x,y].clean();
+		}
+	} 
 	
 	//hittar en path och gör om den till worldkordinater
 	public List<Vector3> findpath(Vector3 start, Vector3 end){
@@ -87,9 +94,9 @@ public class Pathfinding : MonoBehaviour {
 	
 	//A* implementationen
 	private void findPath2d(Vector2 start,Vector2 end){
-		initMap();
-		Debug.Log("Start x = " + (int)start.x + " y = " + (int)start.y);
-		Debug.Log("End x = " + (int)end.x + " y = " + (int)end.y);
+		cleanmap();
+		//Debug.Log("Start x = " + (int)start.x + " y = " + (int)start.y);
+		//Debug.Log("End x = " + (int)end.x + " y = " + (int)end.y);
 		Node startNode = map[(int)start.x,(int)start.y];
 		Node endNode = map[(int)end.x,(int)end.y];
 		
@@ -103,7 +110,7 @@ public class Pathfinding : MonoBehaviour {
 		//List<Node> closedNodes = new List<Node>(mapclosed);
 		
 		Node cur = startNode;
-		cur.Closed = true;
+		cur.Used = true;
 		//closedNodes.Add(cur);
 		
 
@@ -123,7 +130,7 @@ public class Pathfinding : MonoBehaviour {
 				for(int j = Mathf.Max(cur.y-1, 0); j < Mathf.Min(cur.y+2, height); j++){
 					Node n = map[i,j];
 					
-					if(!n.Closed){
+					if(!n.Closed && !n.Used){
 					//if(!closedNodes.Contains(n)){
 						int sv = (i == cur.x || j == cur.y ? 10 : 14);
 						if(!openNodes.ContainsValue(n)){
@@ -144,14 +151,14 @@ public class Pathfinding : MonoBehaviour {
 			
 			cur = openNodes.FirstOrDefault().Value;
 			openNodes.RemoveAt(0);
-			cur.Closed = true;
+			cur.Used = true;
 			//closedNodes.Add(cur);
 			if(cur == null || cur == endNode)
 				break;
 
 		}
 		
-		Debug.Log("Path found! cells in open: " + openNodes.Count + " value on last node: " + cur.G + cur.H);
+		//Debug.Log("Path found! cells in open: " + openNodes.Count + " value on last node: " + cur.G + cur.H);
 		
 		//går baklänges igenom alla parents
 		while(cur != null){
@@ -161,7 +168,7 @@ public class Pathfinding : MonoBehaviour {
 			cur.parent = null;
 			cur = curp;
 		}
-		Debug.Log("steps taken: " + path.Count);
+		//Debug.Log("steps taken: " + path.Count);
 		
 		
 		
@@ -198,6 +205,7 @@ public class Pathfinding : MonoBehaviour {
 	//Node klassen
 	public class Node{
 		public bool Closed;
+		public bool Used;
 		public float H;
 		public float G;
 		public Node parent;
@@ -208,6 +216,12 @@ public class Pathfinding : MonoBehaviour {
 		}
 		public int y{
 			get{return (int)pos.y;}
+		}
+		public void clean(){
+			this.parent = null;
+			this.Used = false;
+			this.H = 0;
+			this.G = 0;
 		}
 		
 	}
