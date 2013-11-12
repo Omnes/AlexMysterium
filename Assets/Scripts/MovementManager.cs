@@ -63,9 +63,9 @@ public class MovementManager : MonoBehaviour {
 	
 	public void pathfindToPosition(Vector3 target){
 		
-		if(!compareVec3(target,getEndDestination())){
+		//if(!compareVec3(target,getEndDestination())){
 			path = pathfinder.findpath(transform.position,target);
-		}
+		//}
 		
 	}
 	

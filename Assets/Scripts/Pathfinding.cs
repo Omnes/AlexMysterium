@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.IO;
 
 //Robin
 
@@ -23,6 +24,8 @@ public class Pathfinding : MonoBehaviour {
 	private int height;
 	private int width;
 	
+	//private List<GameObject> debugcubes;
+	
 	void Start () {
 		
 		height = pixelMap.height;
@@ -31,20 +34,41 @@ public class Pathfinding : MonoBehaviour {
 		mapclosed = new List<Node>();
 		
 		initMap();
-		if(debug) drawNodes();
+		if(debug) createDebugNodes();
 	}
 	
 	
 	//debug funktion som skapar en kub på varje node position och byter färge på de som är closed
-	public void drawNodes(){
+	public void createDebugNodes(){
 		for(int y = 0; y < height; y++)
 			for(int x = 0; x < width; x++){
-				GameObject cube = (GameObject)Instantiate(debugNodePrefab,gridposToWorld(map[x,y].pos),Quaternion.identity);
-				if(map[x,y].Closed || map[x,y].Used){
-					cube.renderer.material = debugMat1;
-				}
+				GameObject cube = Instantiate(debugNodePrefab,gridposToWorld(map[x,y].pos),Quaternion.identity) as GameObject;
+			 	cube.tag = "debugCubePathfinding";
+				pathfindingDebugInfoholder pdi = cube.AddComponent("pathfindingDebugInfoholder") as pathfindingDebugInfoholder;
+				pdi.place = new Vector2(x,y);
+				pdi.closed = map[x,y].Closed;
+				pdi.updColor();
+			    //debugcubes.Add(cube);
+				//if(map[x,y].Closed || map[x,y].Used){
+				//	cube.renderer.material = debugMat1;
+				//}
 		}
 		
+	}
+	
+	void Update(){
+		//press o to save
+		if(Input.GetKeyDown(KeyCode.O) && debug){
+			Texture2D tex = new Texture2D(width,height);
+			GameObject[] debugcubes = GameObject.FindGameObjectsWithTag("debugCubePathfinding");
+			foreach (GameObject cube in debugcubes){
+				pathfindingDebugInfoholder pdi = cube.GetComponent<pathfindingDebugInfoholder>();
+				float f = System.Convert.ToInt32(!pdi.closed);
+				tex.SetPixel((int)pdi.place.x,(int)pdi.place.y,new Color(0f,f,0f));
+			}
+			byte[] bytes = tex.EncodeToPNG();
+			File.WriteAllBytes(Application.dataPath + "/../pathfindingdebugimage.png", bytes);
+		}
 	}
 	
 	//initerar alla nodes och läser av pixelmappen
@@ -73,9 +97,18 @@ public class Pathfinding : MonoBehaviour {
 			map[x,y].clean();
 		}
 	} 
-	
+	bool compareVec3(Vector3 v1,Vector3 v2){
+		return Vector3.Distance(v1,v2) < 0.6;
+		
+	}
+
 	//hittar en path och gör om den till worldkordinater
 	public List<Vector3> findpath(Vector3 start, Vector3 end){
+		//om vi redan är där avbryt tidigare
+		if(Vector2.Distance(worldposToGridpos(start),worldposToGridpos(end)) < 0.2){
+			return new List<Vector3>();
+		}
+		
 		findPath2d(worldposToGridpos(start),worldposToGridpos(end));
 		
 		List<Vector3> vec3path = new List<Vector3>();
@@ -86,7 +119,8 @@ public class Pathfinding : MonoBehaviour {
 			
 		}
 		vec3path.Reverse();
-		vec3path.RemoveAt(0);
+		if(vec3path.Count > 0)
+			vec3path.RemoveAt(0);
 		path.Clear();
 		return vec3path;
 		
@@ -94,6 +128,8 @@ public class Pathfinding : MonoBehaviour {
 	
 	//A* implementationen
 	private void findPath2d(Vector2 start,Vector2 end){
+		start = new Vector2(Mathf.Clamp(start.x,0,width),Mathf.Clamp(start.y,0,height));
+		end = new Vector2(Mathf.Clamp(end.x,0,width),Mathf.Clamp(end.y,0,height));
 		cleanmap();
 		//Debug.Log("Start x = " + (int)start.x + " y = " + (int)start.y);
 		//Debug.Log("End x = " + (int)end.x + " y = " + (int)end.y);
