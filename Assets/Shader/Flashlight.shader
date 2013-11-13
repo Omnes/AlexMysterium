@@ -1,7 +1,8 @@
 Shader "Alex Shaders/Flashlight" {
 	Properties {
-		_DropFreq ("Drop Frequency", Range(0, 50.0)) = 0.3
-		_WaterSpeed ("Water Speed", Range(0, 50.0)) = 0.3
+        _DropFreq ("Drop Frequency", Range(0, 50.0)) = 0.3
+        _DistClampMin ("Distance Minimum Clamp Value", Range(0, 0.3)) = 0.1
+        _DistClampMax ("Distance Maximum Clamp Value", Range(0.3, 1.0)) = 0.3
 	}
    SubShader {
      // Tags { "Queue" = "Transparent" } 
@@ -27,16 +28,16 @@ Shader "Alex Shaders/Flashlight" {
 				float4 pos : POSITION;
 				float4 tex : TEXCOORD0;
 			};
-			
-	         vertexOutput vert(vertexInput input) 
-	         {
-	            vertexOutput output;
-	            
-				output.pos = input.vertex;
+	        
+			vertexOutput vert(vertexInput input) 
+			{
+				vertexOutput output;
+				
 				output.tex = input.texcoord;
-	            
-	            return output;
-	         }
+				output.pos = mul(UNITY_MATRIX_MVP, input.vertex);
+		
+				return output;
+			}
 			
 			float _DropFreq;
 			float _DistClampMin;
@@ -45,16 +46,13 @@ Shader "Alex Shaders/Flashlight" {
 			float4 frag(vertexOutput input) : COLOR 
 			{
 			
-			  	float dist = distance(input.tex, float2(0.5,0.5));
+			  	float dist = distance(input.tex.xy, float2(0.5,0.5));
 			  	dist = clamp(dist, _DistClampMin, _DistClampMax);
    				float waterDrop = (sin(dist*_DropFreq));
-				
-				float4 penis = float4(1.0,0.0,0.0,1.0);
-				
-				//return mix(float4(0.0,0.0,0.0,1.0), float4(0.0,0.0,0.0,0.0), waterDrop); 
-				//return float4(0.0,0.0,0.0,1.0);
-				//return waterDrop;
-				return penis;
+
+				//float4 output = mix(float4(0.0,0.0,0.0,1.0), float4(0.0,0.0,0.0,0.0), waterDrop); 
+				return float4(0.0,0.0,0.0,1-waterDrop);
+
 			}
 		
 			ENDCG  
