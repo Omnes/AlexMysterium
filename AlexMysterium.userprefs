@@ -2,7 +2,7 @@
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Shader\Flashlight.shader">
     <Files>
-      <File FileName="Assets\Shader\Flashlight.shader" Line="53" Column="54" />
+      <File FileName="Assets\Shader\Flashlight.shader" Line="43" Column="20" />
       <File FileName="Assets\Scripts\zoom_TEST.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\InteractTest.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\MovementManager.cs" Line="1" Column="1" />
