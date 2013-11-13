@@ -5,7 +5,7 @@ Shader "Alex Shaders/Flashlight" {
         _DistClampMax ("Distance Maximum Clamp Value", Range(0.3, 1.0)) = 0.3
 	}
    SubShader {
-     // Tags { "Queue" = "Transparent" } 
+      Tags { "Queue" = "Transparent" } 
          // draw after all opaque geometry has been drawn
       Pass {
 			
@@ -50,9 +50,8 @@ Shader "Alex Shaders/Flashlight" {
 			  	dist = clamp(dist, _DistClampMin, _DistClampMax);
    				float waterDrop = (sin(dist*_DropFreq));
 
-				//float4 output = lerp(float4(0.0,0.0,0.0,1.0), float4(0.0,0.0,0.0,0.0), waterDrop); 
 				return float4(0.0,0.0,0.0,1-waterDrop);
-
+				
 			}
 		
 			ENDCG  
