@@ -33,7 +33,7 @@ public class InputManager : MonoBehaviour {
 	void Update () {
 		
 		//if in puzzle then WorldInput == false
-		if(buttonDelayCounter + buttonDelay < Time.time){
+		if(buttonDelayCounter + buttonDelay < Time.time && !ptrInventory.showInventory){
 			FindInput ();
 		}
 		
@@ -71,7 +71,8 @@ public class InputManager : MonoBehaviour {
 					//without pathfinding
 					if(isPuzzle){
 						
-						hit.transform.SendMessage("Item");
+						ptrInventory.AddItem(hit.transform.gameObject);
+						//hit.transform.SendMessage("Item");
 						
 					}else{//with pathfinding
 					

@@ -15,13 +15,15 @@ public class CameraSmoothFollowScript : MonoBehaviour {
 	private bool isColliding = false;
 	private Vector3 cameraCenter;
 	private Vector3 cameraCenterToPlayer;
-	private bool isFollowing = true;
+	public bool isFollowing = true;
 	
 	
 	// Use this for initialization
 	void Start () {
 		//startposition
-		transform.position = new Vector3(5f,CameraDistY,CameraDistZ);  //defaultspawn
+		if(isFollowing){
+			transform.position = new Vector3(5f,CameraDistY,CameraDistZ);  //defaultspawn
+		}
 	}
 	
 	// Update is called once per frame
@@ -91,13 +93,13 @@ public class CameraSmoothFollowScript : MonoBehaviour {
 		if(x.isPuzzle){
 			isFollowing = false;
 		}else{
-			isFollowing = true;
+			isFollowing = false;
 		}
 		
 	}
 	
 	void exitPuzzle(){
-		isFollowing = true;
+		isFollowing = false;
 		
 	}
 	

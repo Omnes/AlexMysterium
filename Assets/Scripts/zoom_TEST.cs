@@ -49,7 +49,7 @@ public class zoom_TEST : MonoBehaviour {
 	}
 		
 	void Interact(){
-		//Activate();
+		Activate();
 		//Debug.Log("you interacted with the zoom-object!?!?!!!!");
 		//Camera.main.SendMessage("SetIsPuzzle", true);				// Let the input manager know we are in a puzzel.
 		
@@ -79,7 +79,7 @@ public class zoom_TEST : MonoBehaviour {
 	ZDB Create_ZDB()//  creates a ZoomDataBlock
 	{
 		ZDB zoom = new ZDB();
-		zoom.deactive_pos	= this.transform.position;
+		zoom.deactive_pos	= Camera.main.transform.position;
 		zoom.active_pos		= childObject.position;
 		zoom.name 			= name;
 		
