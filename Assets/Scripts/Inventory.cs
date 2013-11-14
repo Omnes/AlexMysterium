@@ -62,7 +62,10 @@ public class Inventory : MonoBehaviour {
 	
 	public bool useItem(string name,bool consume){
 		Item i = findItemByName(inventoryList,name);
-		if(i.name == null) return false;
+		if(i.id == -1){
+			Debug.Log("Item was not found: " + name);
+			return false;
+		}
 		if(consume) inventoryList.Remove(i);
 		return true;
 		
