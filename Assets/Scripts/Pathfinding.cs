@@ -129,7 +129,7 @@ public class Pathfinding : MonoBehaviour {
 	//A* implementationen
 	private void findPath2d(Vector2 start,Vector2 end){
 		start = new Vector2(Mathf.Clamp(start.x,0,width),Mathf.Clamp(start.y,0,height));
-		end = new Vector2(Mathf.Clamp(end.x,0,width),Mathf.Clamp(end.y,0,height));
+		end = new Vector2(Mathf.Clamp(end.x,0,width-1),Mathf.Clamp(end.y,0,height-1));
 		cleanmap();
 		//Debug.Log("Start x = " + (int)start.x + " y = " + (int)start.y);
 		//Debug.Log("End x = " + (int)end.x + " y = " + (int)end.y);
@@ -168,7 +168,7 @@ public class Pathfinding : MonoBehaviour {
 					
 					if(!n.Closed && !n.Used){
 					//if(!closedNodes.Contains(n)){
-						int sv = (i == cur.x || j == cur.y ? 10 : 14);
+						int sv = (i == cur.x || j == cur.y ? 14 : 10);
 						if(!openNodes.ContainsValue(n)){
 							n.G = cur.G + (int)(sv*n.weigth)+ (float)(Random.value*0.1); //lägg till *1.4 för diagonal
 							n.H = 10 * (int)(Mathf.Abs(i - end.x) + Mathf.Abs(j - end.y));
