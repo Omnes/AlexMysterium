@@ -57,7 +57,7 @@ public class Animationator : MonoBehaviour {
 		
 		float spriteSize = distanceDelta * transform.GetChild(0).position.z;
 		
-		transform.GetChild(0).localScale = new Vector3(orgSpriteSize.x - orgSpriteSize.x*spriteSize, orgSpriteSize.z - orgSpriteSize.z*spriteSize, orgSpriteSize.z);
+		transform.GetChild(0).localScale = new Vector3(orgSpriteSize.x - orgSpriteSize.x*spriteSize, orgSpriteSize.y, orgSpriteSize.z - orgSpriteSize.z*spriteSize);
 		
 		//transform.localScale = spriteSize/(transform.position.z/distanceDelta); //Bildens storlek anpassas efter djupet(Z)
 	}
