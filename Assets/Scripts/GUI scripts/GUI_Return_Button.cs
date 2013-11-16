@@ -36,10 +36,7 @@ public class GUI_Return_Button : GUI_Button {
 				//Camera.main.SendMessage("exitPuzzle");
 				
 			}
-<<<<<<< HEAD
-			
-=======
->>>>>>> Jessica
+
 		}
     }
 	
