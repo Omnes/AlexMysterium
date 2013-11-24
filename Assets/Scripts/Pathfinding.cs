@@ -110,6 +110,8 @@ public class Pathfinding : MonoBehaviour {
 		}
 		
 		findPath2d(worldposToGridpos(start),worldposToGridpos(end));
+		Debug.Log ("end in: " + end);
+		Debug.Log ("end grid in: " + worldposToGridpos(end));
 		
 		List<Vector3> vec3path = new List<Vector3>();
 		vec3path.Clear();
@@ -118,6 +120,8 @@ public class Pathfinding : MonoBehaviour {
 			vec3path.Add(gridposToWorld(node.pos));
 			
 		}
+		Debug.Log ("end grid out: " + path[0].pos);
+		Debug.Log ("end out: " + vec3path[0]);
 		vec3path.Reverse();
 		if(vec3path.Count > 0)
 			vec3path.RemoveAt(0);
@@ -209,7 +213,7 @@ public class Pathfinding : MonoBehaviour {
 		
 		
 	}
-	
+	/*
 	//tar en vector3 med en världs kordinat och gör om den till nodegrid kordinater
 	public Vector2 worldposToGridpos(Vector3 worldposition){
 		Vector3 offset = 10 * walkmesh.localScale / 2;
@@ -219,15 +223,14 @@ public class Pathfinding : MonoBehaviour {
 		gridpos += new Vector2(walkmesh.position.x,walkmesh.position.y);
 		//Debug.Log("WtG -> " + " x " + worldposition.x + " y " + worldposition.z + " x -> " + gridpos.x + " y " + gridpos.y);
 		return gridpos;
-	}
-	
+	}*/
+	/*
 	//tar en vector2 med en nodegrid kordinat och gör om den till världs kordinater
 	public Vector3 gridposToWorld(Vector2 gridposition){
 		Vector3 offset = 10 * walkmesh.localScale;
 		Vector3 mapscale =  new Vector3(offset.x/(float)pixelMap.width,0,offset.z/(float)pixelMap.height)*2;
 		offset =  new Vector3(offset.x,0,offset.z);
 		
-
 		float midpointoffset = 0.5f;
 
 		Vector3 worldpos = new Vector3((gridposition.x - offset.x + midpointoffset) ,0 ,(gridposition.y - offset.z + midpointoffset))/2 ;
@@ -235,6 +238,46 @@ public class Pathfinding : MonoBehaviour {
 		worldpos = new Vector3(worldpos.x*mapscale.x ,0,worldpos.z*mapscale.z);
 		//Debug.Log("GtW -> " + " x " + gridposition.x + " y " + gridposition.y + " x -> " + worldpos.x + " y " + worldpos.z);
 		return worldpos;
+	}
+	*/
+	/*
+	public Vector2 worldposToGridpos1(Vector3 worldposition){
+		Vector3 offset = 10 * walkmesh.localScale / 2;
+		Vector3 mapscale =  new Vector3(offset.x*4/width,0,offset.z*4/height);
+		
+		Vector2 gridpos = new Vector2(Mathf.Floor(worldposition.x + offset.x)*mapscale.x,Mathf.Floor(worldposition.z + offset.z)*mapscale.z) * 2;
+		gridpos += new Vector2(walkmesh.position.x,walkmesh.position.y);
+		Debug.Log("wp " + worldposition + " gp " + gridpos);
+		return gridpos;
+	}*/
+	
+	public Vector2 worldposToGridpos(Vector3 worldposition){
+		Vector3 floorSize = 10*walkmesh.localScale;
+		Vector3 localOrginOffset = new Vector3(floorSize.x/2f,0,floorSize.z/2f);
+		//localOrginOffset.y = 0;
+		Vector3 floorOrgin = walkmesh.position - localOrginOffset;
+		
+		Vector3 nodeArea = new Vector3(floorSize.x/width,0,floorSize.z/height);
+		
+		Vector3 floorPos = worldposition + localOrginOffset;
+		Vector2 gridpos = new Vector2(Mathf.Floor(floorPos.x/nodeArea.x+0.5f),Mathf.Floor(floorPos.z/nodeArea.z+0.5f));
+		//Debug.Log("in: wp " + worldposition + " gp " + gridpos);
+		return gridpos;
+	}
+	
+	
+	public Vector3 gridposToWorld(Vector2 gridposition){
+		Vector3 floorSize = 10*walkmesh.localScale;
+		Vector3 localOrginOffset = floorSize/2;
+		localOrginOffset.y = 0;
+		Vector3 floorOrgin = walkmesh.position - localOrginOffset;
+		
+		Vector3 nodeArea = new Vector3(floorSize.x/width,0,floorSize.z/height);
+		
+		Vector3 worldPos = new Vector3(nodeArea.x*gridposition.x,0,nodeArea.z*gridposition.y);
+		worldPos += floorOrgin;
+		//Debug.Log("out: wp " + worldPos + " gp " + gridposition);
+		return worldPos;
 	}
 	
 	
