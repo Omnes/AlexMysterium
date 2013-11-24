@@ -11,6 +11,8 @@ public class Mouse_Animation : MonoBehaviour {
 	public Texture2D interactiveCursor;
 	public Texture2D standardCursor;
 	
+	public Vector2 mouseDisp = new Vector2(3.0f,3.0f);
+	
 	private float currentTime;
 	public float maxTime = 0.05f;
 	
@@ -50,7 +52,7 @@ public class Mouse_Animation : MonoBehaviour {
 	public void OnGUI()
 	{
 		if(isDrawing){
-			GUI.DrawTexture(new Rect(Input.mousePosition.x - 3, (Screen.height - Input.mousePosition.y) - 3, cursorWidth, cursorHeight), cursorImage, ScaleMode.ScaleAndCrop);
+			GUI.DrawTexture(new Rect(Input.mousePosition.x - mouseDisp.x, (Screen.height - Input.mousePosition.y) - mouseDisp.y, cursorWidth, cursorHeight), cursorImage, ScaleMode.ScaleAndCrop);
 		}
 	}
 }

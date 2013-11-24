@@ -1,0 +1,14 @@
+﻿<Properties>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Mouse_Animation.cs">
+    <Files>
+      <File FileName="Assets\Scripts\Flashlight_Movement.cs" Line="15" Column="3" />
+      <File FileName="Assets\Shader\Flashlight.shader" Line="44" Column="4" />
+      <File FileName="Assets\Scripts\Mouse_Animation.cs" Line="26" Column="29" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>
