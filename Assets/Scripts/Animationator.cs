@@ -57,7 +57,7 @@ public class Animationator : MonoBehaviour {
 		
 		float spriteSize = distanceDelta * transform.GetChild(0).position.z;
 		
-		transform.GetChild(0).localScale = new Vector3(orgSpriteSize.x - orgSpriteSize.x*spriteSize, orgSpriteSize.z - orgSpriteSize.z*spriteSize, orgSpriteSize.z);
+		transform.GetChild(0).localScale = new Vector3(orgSpriteSize.x - orgSpriteSize.x*spriteSize, orgSpriteSize.y, orgSpriteSize.z - orgSpriteSize.z*spriteSize);
 		
 		//transform.localScale = spriteSize/(transform.position.z/distanceDelta); //Bildens storlek anpassas efter djupet(Z)
 	}
@@ -72,7 +72,7 @@ public class Animationator : MonoBehaviour {
 		
 		
 		//världens fulaste jävla cplösning nedanför, ser dessutom skitfult ut
-		if(direction.y < 0.5 && direction.y > -0.5){
+		if(direction.y < 1 && direction.y > -1){
 			if(direction.x > 0){
 				yOffset = 0.25f;
 			}
