@@ -12,7 +12,6 @@ public class Flashlight_Movement : MonoBehaviour {
 	void Update () {
 
 		Vector2 normPos = new Vector2(Input.mousePosition.x/Screen.width, Input.mousePosition.y/Screen.height);
-		
 		renderer.material.SetVector("_MousePos", new Vector4(1-normPos.x,1-normPos.y,0.0f,0.0f));
 	}
 }

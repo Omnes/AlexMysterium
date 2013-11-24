@@ -17,6 +17,7 @@ public class Mouse_Animation : MonoBehaviour {
 	public float maxTime = 0.05f;
 	
 	public bool isDrawing = true;
+	public bool isInInventory = false;
 	
 	
 	// Use this for initialization
@@ -35,9 +36,9 @@ public class Mouse_Animation : MonoBehaviour {
 				RaycastHit hit;
 				
 				if(Physics.Raycast(ray, out hit)){
-					if(hit.transform.gameObject.layer == 8){//8 == Door Layer
+					if(hit.transform.gameObject.layer == 8 && !isInInventory){//8 == Door Layer
 						cursorImage = doorCursor;
-					}else if(hit.transform.gameObject.layer == 9){//9 == Interactive Layer
+					}else if(hit.transform.gameObject.layer == 9  && !isInInventory){//9 == Interactive Layer
 						cursorImage = interactiveCursor;
 					}else{
 						cursorImage = standardCursor;
