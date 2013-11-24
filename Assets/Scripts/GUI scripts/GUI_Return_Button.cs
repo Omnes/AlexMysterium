@@ -28,15 +28,18 @@ public class GUI_Return_Button : GUI_Button {
 			
 	        if (GUI.Button(new Rect(XPos, YPos, Width, Height),aTexture , gui_style))
 			{//, ScaleMode.ScaleToFit, true);
-				Camera.main.SendMessage("Deactivate");
+				GameObject.Find("MasterMind").SendMessage("Deactivate");
+				Debug.Log("You pressed the button, VICTORY!!!!");
+				Debug.Log("THE BUTTON SUB_CLASS!!!!");
 				//use a queue
+				
 				
 				//Camera.main.SendMessage("SetIsPuzzle", false);
 				//GameObject.Find(name).GetComponent<GUI_Parent>().Activate(false);
 				//Camera.main.SendMessage("exitPuzzle");
 				
 			}
-
+			
 		}
     }
 	
