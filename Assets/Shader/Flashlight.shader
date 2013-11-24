@@ -1,8 +1,9 @@
 Shader "Alex Shaders/Flashlight" {
 	Properties {
         _DropFreq ("Drop Frequency", Range(0, 50.0)) = 0.3
-        _DistClampMin ("Distance Minimum Clamp Value", Range(0, 0.3)) = 0.1
-        _DistClampMax ("Distance Maximum Clamp Value", Range(0.3, 1.0)) = 0.3
+        _DistClampMin ("Distance Minimum Clamp Value", Range(0, 0.5)) = 0.1
+        _DistClampMax ("Distance Maximum Clamp Value", Range(0.0, 1.0)) = 0.3
+        _TimeMulti ("SinTime", Range(1.0, 50.0)) = 1.0
 	}
    SubShader {
       Tags { "Queue" = "Transparent" } 
@@ -42,6 +43,7 @@ Shader "Alex Shaders/Flashlight" {
 			float _DropFreq;
 			float _DistClampMin;
 			float _DistClampMax;
+			float _TimeMulti;
 			
 			float4 frag(vertexOutput input) : COLOR 
 			{
@@ -49,14 +51,18 @@ Shader "Alex Shaders/Flashlight" {
 			  	float dist = distance(input.tex.xy, float2(0.5,0.5));
 			  	dist = clamp(dist, _DistClampMin, _DistClampMax);
    				float waterDrop = (sin(dist*_DropFreq));
-
-				return float4(0.0,0.0,0.0,1-waterDrop);
+   				
+   				float sinTime = clamp(sin(_Time.x * _TimeMulti), 0.0, 1.0);
+   				
+   				sinTime += 0.001;
+   				
+   				waterDrop = waterDrop * (1-trunc(sinTime));
+				
+				return float4(0.0,0.0,0.0,(1-waterDrop));
 				
 			}
 		
 			ENDCG  
 		}
-		
-		
 	}
 }

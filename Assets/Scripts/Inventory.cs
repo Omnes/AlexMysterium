@@ -51,6 +51,26 @@ public class Inventory : MonoBehaviour {
 		inventoryList.Remove(item);
 	}
 	
+	Item findItemByName(List<Item> list,string name){
+		foreach(Item i in list){
+			if(i.name == name){
+				return i;
+			}
+		}
+		return new Item("null",null,-1);
+	}
+	
+	public bool useItem(string name,bool consume){
+		Item i = findItemByName(inventoryList,name);
+		if(i.id == -1){
+			Debug.Log("Item was not found: " + name);
+			return false;
+		}
+		if(consume) inventoryList.Remove(i);
+		return true;
+		
+	}
+	
 	public List<Item> GetInventoryList(){
 		return inventoryList;
 	}
