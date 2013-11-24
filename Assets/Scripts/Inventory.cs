@@ -89,8 +89,11 @@ public class Inventory : MonoBehaviour {
 			GUI.DrawTexture(new Rect(Input.mousePosition.x-spriteSize.x/2,Screen.height-Input.mousePosition.y-spriteSize.y/2,spriteSize.x,spriteSize.y),holdingItem.sprite);
 			
 			//seans holding item icon thingy
+			//tells mouse animation that invetory is closing
+			mo_anim.isInInventory = false;
+			//tells mouse animation to stop drawing
 			mo_anim.isDrawing = false;
-			GUI.DrawTexture(new Rect(Input.mousePosition.x - 3, (Screen.height - Input.mousePosition.y) - 3, 32, 32), cursorImage, ScaleMode.ScaleAndCrop);
+			GUI.DrawTexture(new Rect(Input.mousePosition.x - 8, (Screen.height - Input.mousePosition.y) - 5, 32, 32), cursorImage, ScaleMode.ScaleAndCrop);
 		}
 
 	}
@@ -124,6 +127,7 @@ public class Inventory : MonoBehaviour {
 			offset += (spriteSize.x*inventoryList.Count-offset)/2+0.01f;
 		}
 		
+		//close inventory
 		if(!showInventory && offset > 0){
 			offset = (offset)/2-0.01f;
 		}
@@ -131,6 +135,9 @@ public class Inventory : MonoBehaviour {
 		
 		
 		if(showInventory){
+			//tells mouseanimation that inventory is open
+			mo_anim.isInInventory = true;
+			
 			if(Input.GetMouseButtonDown(0)){
 				if(holdingItem.id == nullItem.id){
 					if(Screen.width-mousePos.x - paddingFromEdge.x < inventoryList.Count*spriteSize.x + paddingFromEdge.x && mousePos.y < spriteSize.y + paddingFromEdge.y){
@@ -161,8 +168,9 @@ public class Inventory : MonoBehaviour {
 					//ta reda på vad vi släppte objektet över och skicka ett meddelande till det
 				}
 			}
+		}else{
+			mo_anim.isInInventory = false;
 		}
-		
 	}
 }
 

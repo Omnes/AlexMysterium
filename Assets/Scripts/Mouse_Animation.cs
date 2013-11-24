@@ -11,10 +11,13 @@ public class Mouse_Animation : MonoBehaviour {
 	public Texture2D interactiveCursor;
 	public Texture2D standardCursor;
 	
+	public Vector2 mouseDisp = new Vector2(3.0f,3.0f);
+	
 	private float currentTime;
 	public float maxTime = 0.05f;
 	
 	public bool isDrawing = true;
+	public bool isInInventory = false;
 	
 	
 	// Use this for initialization
@@ -33,9 +36,9 @@ public class Mouse_Animation : MonoBehaviour {
 				RaycastHit hit;
 				
 				if(Physics.Raycast(ray, out hit)){
-					if(hit.transform.gameObject.layer == 8){//8 == Door Layer
+					if(hit.transform.gameObject.layer == 8 && !isInInventory){//8 == Door Layer
 						cursorImage = doorCursor;
-					}else if(hit.transform.gameObject.layer == 9){//9 == Interactive Layer
+					}else if(hit.transform.gameObject.layer == 9  && !isInInventory){//9 == Interactive Layer
 						cursorImage = interactiveCursor;
 					}else{
 						cursorImage = standardCursor;
@@ -50,7 +53,7 @@ public class Mouse_Animation : MonoBehaviour {
 	public void OnGUI()
 	{
 		if(isDrawing){
-			GUI.DrawTexture(new Rect(Input.mousePosition.x - 3, (Screen.height - Input.mousePosition.y) - 3, cursorWidth, cursorHeight), cursorImage, ScaleMode.ScaleAndCrop);
+			GUI.DrawTexture(new Rect(Input.mousePosition.x - mouseDisp.x, (Screen.height - Input.mousePosition.y) - mouseDisp.y, cursorWidth, cursorHeight), cursorImage, ScaleMode.ScaleAndCrop);
 		}
 	}
 }
