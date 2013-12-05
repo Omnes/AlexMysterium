@@ -4,14 +4,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.IO;
 
-//Robin
+//koden är skit.
 
 public class Pathfinding : MonoBehaviour {
 	
 	
 	public Texture2D pixelMap;
 	public Transform walkmesh;
-	
+	public int diagonalcost = 14;
+	public int straightcost = 10;
 	
 	public Material debugMat1;
 	public GameObject debugNodePrefab;
@@ -20,6 +21,7 @@ public class Pathfinding : MonoBehaviour {
 	public Node[,] map;
 	public List<Node> path;
 	public List<Node> mapclosed;
+
 	
 	private int height;
 	private int width;
@@ -36,13 +38,34 @@ public class Pathfinding : MonoBehaviour {
 		initMap();
 		if(debug) createDebugNodes();
 	}
+
+	struct Vector2Int{
+		int _x;
+		int _y;
+		public Vector2Int(int x,int y){
+			this._x = x;
+			this._y = y;
+		}
+		public Vector2Int(float x,float y){
+			this._x = Mathf.RoundToInt(x);
+			this._y = Mathf.RoundToInt(y);
+		}
+		public int x{
+			get{return _x;}
+		}
+		public int y{
+			get{return _y;}
+		}
+	}
 	
 	
 	//debug funktion som skapar en kub på varje node position och byter färge på de som är closed
 	public void createDebugNodes(){
+		GameObject cubeparent = Instantiate(debugNodePrefab,Vector3.zero,Quaternion.identity) as GameObject;
 		for(int y = 0; y < height; y++)
 			for(int x = 0; x < width; x++){
-				GameObject cube = Instantiate(debugNodePrefab,gridposToWorld(map[x,y].pos),Quaternion.identity) as GameObject;
+			 	GameObject cube = Instantiate(debugNodePrefab,gridposToWorld(map[x,y].pos),Quaternion.identity) as GameObject; 
+				cube.transform.parent = cubeparent.transform;
 			 	cube.tag = "debugCubePathfinding";
 				pathfindingDebugInfoholder pdi = cube.AddComponent("pathfindingDebugInfoholder") as pathfindingDebugInfoholder;
 				pdi.place = new Vector2(x,y);
@@ -81,9 +104,9 @@ public class Pathfinding : MonoBehaviour {
 				Color col = pixelMap.GetPixel(x,y);
 				//float w = 1 + 1-col.grayscale;
 				// w sätter 'weight' för varje node / kan användas för att få den att helst undvika vissa nodes om den kan
-				float w = 1;
+				int w = 1;
 				bool c = col.g < 0.1;
-				map[x,y] = new Node{pos = new Vector2(x,y),Closed = c,weigth = w,Used = false, parent = null};
+				map[x,y] = new Node{posx = x, posy = y,Closed = c,weigth = w,Used = false, parent = null};
 				//if(c){
 				//	mapclosed.Add(map[x,y]);
 				//}
@@ -131,14 +154,14 @@ public class Pathfinding : MonoBehaviour {
 	}
 	
 	//A* implementationen
-	private void findPath2d(Vector2 start,Vector2 end){
-		start = new Vector2(Mathf.Clamp(start.x,0,width),Mathf.Clamp(start.y,0,height));
-		end = new Vector2(Mathf.Clamp(end.x,0,width-1),Mathf.Clamp(end.y,0,height-1));
+	private void findPath2d(Vector2 startv2,Vector2 endv2){
+		Vector2Int start = new Vector2Int(Mathf.Clamp(startv2.x,0,width),Mathf.Clamp(startv2.y,0,height));
+		Vector2Int end = new Vector2Int(Mathf.Clamp(endv2.x,0,width-1),Mathf.Clamp(endv2.y,0,height-1));
 		cleanmap();
 		//Debug.Log("Start x = " + (int)start.x + " y = " + (int)start.y);
 		//Debug.Log("End x = " + (int)end.x + " y = " + (int)end.y);
-		Node startNode = map[(int)start.x,(int)start.y];
-		Node endNode = map[(int)end.x,(int)end.y];
+		Node startNode = map[start.x,start.y];
+		Node endNode = map[end.x,end.y];
 		
 		//bryt ur om slutnoden inte går att nå
 		if(endNode.Closed){
@@ -147,6 +170,7 @@ public class Pathfinding : MonoBehaviour {
 		}
 		
 		SortedList<float, Node> openNodes = new SortedList<float, Node>();
+		openNodes.Clear();
 		//List<Node> closedNodes = new List<Node>(mapclosed);
 		
 		Node cur = startNode;
@@ -166,27 +190,29 @@ public class Pathfinding : MonoBehaviour {
 				return;
 			}
 			
-			for(int i = Mathf.Max(cur.x-1, 0); i < Mathf.Min(cur.x+2, width); i++)
+			for(int i = Mathf.Max(cur.x-1, 0); i < Mathf.Min(cur.x+2, width); i++){
 				for(int j = Mathf.Max(cur.y-1, 0); j < Mathf.Min(cur.y+2, height); j++){
-					Node n = map[i,j];
-					
-					if(!n.Closed && !n.Used){
-					//if(!closedNodes.Contains(n)){
-						int sv = (i == cur.x || j == cur.y ? 14 : 10);
-						if(!openNodes.ContainsValue(n)){
-							n.G = cur.G + (int)(sv*n.weigth)+ (float)(Random.value*0.1); //lägg till *1.4 för diagonal
-							n.H = 10 * (int)(Mathf.Abs(i - end.x) + Mathf.Abs(j - end.y));
-							n.parent = cur;
-							openNodes.Add(n.G + n.H,n);
+					Node node = map[i,j];
+						
+					if(!node.Closed && !node.Used){
+						//if(!closedNodes.Contains(n)){
+						int sv = ((i == cur.x || j == cur.y) ? straightcost : diagonalcost);
+						if(!openNodes.ContainsValue(node)){
+								
+							node.G = cur.G + sv * node.weigth + Random.value * 0.1f;
+							node.H = 10 * Mathf.Abs(i - end.x) + Mathf.Abs(j - end.y);
+							node.parent = cur;
+							openNodes.Add(node.G + node.H,node);
 						}else{
-							if(n.G > cur.G + (int)(sv*n.weigth)+ 0.1){ //FIXA SÅ DEN BYTER PARENT NÄR DEN HITTAR TILL EN POSITION MED HÖGRE VÄRDE
-								n.G = cur.G + (int)(sv*n.weigth) + (float)(Random.value*0.1);
-								//n.parent = cur; //fick spelet att hänga sig när 2 nodes blev parents till varandra
-								openNodes.RemoveAt(openNodes.IndexOfValue(n));
-								openNodes.Add(n.G + n.H,n);
+							if(node.G > cur.G + sv * node.weigth + 0.1f){ //FIXA SÅ DEN BYTER PARENT NÄR DEN HITTAR TILL EN POSITION MED HÖGRE VÄRDE
+								node.G = cur.G + sv * node.weigth + Random.value * 0.1f;
+								node.parent = cur; //fick spelet att hänga sig när 2 nodes blev parents till varandra
+								openNodes.RemoveAt(openNodes.IndexOfValue(node));
+								openNodes.Add(node.G + node.H,node);
 							}
 						}
 					}
+				}
 			}
 			
 			cur = openNodes.FirstOrDefault().Value;
@@ -288,14 +314,19 @@ public class Pathfinding : MonoBehaviour {
 		public float H;
 		public float G;
 		public Node parent;
-		public Vector2 pos;
-		public float weigth;
+		public int posx;
+		public int posy;
+		public int weigth;
 		public int x{
-			get{return (int)pos.x;}
+			get{return posx;}
 		}
 		public int y{
-			get{return (int)pos.y;}
+			get{return posy;}
 		}
+		public Vector2 pos{
+			get{return new Vector2(posx,posy);}
+		}
+
 		public void clean(){
 			this.parent = null;
 			this.Used = false;
