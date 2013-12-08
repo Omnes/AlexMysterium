@@ -16,7 +16,7 @@ public class Pathfinding : MonoBehaviour {
 	
 	public Material debugMat1;
 	public GameObject debugNodePrefab;
-	public bool debug = false;
+	public bool debugMode = false;
 	
 	public Node[,] map;
 	public List<Node> path;
@@ -36,7 +36,7 @@ public class Pathfinding : MonoBehaviour {
 		mapclosed = new List<Node>();
 		
 		initMap();
-		if(debug) createDebugNodes();
+		if(debugMode) createDebugNodes();
 	}
 
 	struct Vector2Int{
@@ -61,7 +61,9 @@ public class Pathfinding : MonoBehaviour {
 	
 	//debug funktion som skapar en kub på varje node position och byter färge på de som är closed
 	public void createDebugNodes(){
-		GameObject cubeparent = Instantiate(debugNodePrefab,Vector3.zero,Quaternion.identity) as GameObject;
+		GameObject empty = new GameObject();
+		GameObject cubeparent = Instantiate(empty,Vector3.zero,Quaternion.identity) as GameObject;
+		cubeparent.name = "debuggrid";
 		for(int y = 0; y < height; y++)
 			for(int x = 0; x < width; x++){
 			 	GameObject cube = Instantiate(debugNodePrefab,gridposToWorld(map[x,y].pos),Quaternion.identity) as GameObject; 
@@ -81,7 +83,7 @@ public class Pathfinding : MonoBehaviour {
 	
 	void Update(){
 		//press o to save
-		if(Input.GetKeyDown(KeyCode.O) && debug){
+		if(Input.GetKeyDown(KeyCode.O) && debugMode){
 			Texture2D tex = new Texture2D(width,height);
 			GameObject[] debugcubes = GameObject.FindGameObjectsWithTag("debugCubePathfinding");
 			foreach (GameObject cube in debugcubes){
@@ -133,8 +135,8 @@ public class Pathfinding : MonoBehaviour {
 		}
 		
 		findPath2d(worldposToGridpos(start),worldposToGridpos(end));
-		Debug.Log ("end in: " + end);
-		Debug.Log ("end grid in: " + worldposToGridpos(end));
+		//Debug.Log ("end in: " + end);
+		//Debug.Log ("end grid in: " + worldposToGridpos(end));
 		
 		List<Vector3> vec3path = new List<Vector3>();
 		vec3path.Clear();
@@ -143,8 +145,8 @@ public class Pathfinding : MonoBehaviour {
 			vec3path.Add(gridposToWorld(node.pos));
 			
 		}
-		Debug.Log ("end grid out: " + path[0].pos);
-		Debug.Log ("end out: " + vec3path[0]);
+		//Debug.Log ("end grid out: " + path[0].pos);
+		//Debug.Log ("end out: " + vec3path[0]);
 		vec3path.Reverse();
 		if(vec3path.Count > 0)
 			vec3path.RemoveAt(0);
@@ -155,7 +157,7 @@ public class Pathfinding : MonoBehaviour {
 	
 	//A* implementationen
 	private void findPath2d(Vector2 startv2,Vector2 endv2){
-		Vector2Int start = new Vector2Int(Mathf.Clamp(startv2.x,0,width),Mathf.Clamp(startv2.y,0,height));
+		Vector2Int start = new Vector2Int(Mathf.Clamp(startv2.x,0,width-1),Mathf.Clamp(startv2.y,0,height-1));
 		Vector2Int end = new Vector2Int(Mathf.Clamp(endv2.x,0,width-1),Mathf.Clamp(endv2.y,0,height-1));
 		cleanmap();
 		//Debug.Log("Start x = " + (int)start.x + " y = " + (int)start.y);
@@ -165,7 +167,7 @@ public class Pathfinding : MonoBehaviour {
 		
 		//bryt ur om slutnoden inte går att nå
 		if(endNode.Closed){
-			Debug.Log("could not find path. end node closed");
+			//Debug.Log("could not find path. end node closed");
 			return;
 		}
 		
@@ -197,15 +199,16 @@ public class Pathfinding : MonoBehaviour {
 					if(!node.Closed && !node.Used){
 						//if(!closedNodes.Contains(n)){
 						int sv = ((i == cur.x || j == cur.y) ? straightcost : diagonalcost);
+						float weigth = cur.G + sv * node.weigth + Random.value * 0.449f;
+						
 						if(!openNodes.ContainsValue(node)){
-								
-							node.G = cur.G + sv * node.weigth + Random.value * 0.1f;
+							node.G = weigth;
 							node.H = 10 * Mathf.Abs(i - end.x) + Mathf.Abs(j - end.y);
 							node.parent = cur;
 							openNodes.Add(node.G + node.H,node);
 						}else{
-							if(node.G > cur.G + sv * node.weigth + 0.1f){ //FIXA SÅ DEN BYTER PARENT NÄR DEN HITTAR TILL EN POSITION MED HÖGRE VÄRDE
-								node.G = cur.G + sv * node.weigth + Random.value * 0.1f;
+							if(node.G > weigth){ //FIXA SÅ DEN BYTER PARENT NÄR DEN HITTAR TILL EN POSITION MED HÖGRE VÄRDE
+								node.G = weigth;
 								node.parent = cur; //fick spelet att hänga sig när 2 nodes blev parents till varandra
 								openNodes.RemoveAt(openNodes.IndexOfValue(node));
 								openNodes.Add(node.G + node.H,node);
