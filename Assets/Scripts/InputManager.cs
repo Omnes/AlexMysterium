@@ -81,7 +81,7 @@ public class InputManager : MonoBehaviour {
 						//start new coroutine
 						StartCoroutine("PickUpObject", (hit.transform));
 					}
-					break;
+					return;
 					
 				}
 				//----------------------------------------------------------
@@ -102,7 +102,7 @@ public class InputManager : MonoBehaviour {
 						StartCoroutine("InteractObject", (hit.transform));
 						
 					}
-					
+					return;
 					
 				}
 				

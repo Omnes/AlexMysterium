@@ -4,22 +4,24 @@ using System.Collections.Generic;
 using System.Linq;
 using System.IO;
 
-//Robin
+//koden är skit.
 
 public class Pathfinding : MonoBehaviour {
 	
 	
 	public Texture2D pixelMap;
 	public Transform walkmesh;
-	
+	public int diagonalcost = 14;
+	public int straightcost = 10;
 	
 	public Material debugMat1;
 	public GameObject debugNodePrefab;
-	public bool debug = false;
+	public bool debugMode = false;
 	
 	public Node[,] map;
 	public List<Node> path;
 	public List<Node> mapclosed;
+
 	
 	private int height;
 	private int width;
@@ -34,15 +36,38 @@ public class Pathfinding : MonoBehaviour {
 		mapclosed = new List<Node>();
 		
 		initMap();
-		if(debug) createDebugNodes();
+		if(debugMode) createDebugNodes();
+	}
+
+	struct Vector2Int{
+		int _x;
+		int _y;
+		public Vector2Int(int x,int y){
+			this._x = x;
+			this._y = y;
+		}
+		public Vector2Int(float x,float y){
+			this._x = Mathf.RoundToInt(x);
+			this._y = Mathf.RoundToInt(y);
+		}
+		public int x{
+			get{return _x;}
+		}
+		public int y{
+			get{return _y;}
+		}
 	}
 	
 	
 	//debug funktion som skapar en kub på varje node position och byter färge på de som är closed
 	public void createDebugNodes(){
+		GameObject empty = new GameObject();
+		GameObject cubeparent = Instantiate(empty,Vector3.zero,Quaternion.identity) as GameObject;
+		cubeparent.name = "debuggrid";
 		for(int y = 0; y < height; y++)
 			for(int x = 0; x < width; x++){
-				GameObject cube = Instantiate(debugNodePrefab,gridposToWorld(map[x,y].pos),Quaternion.identity) as GameObject;
+			 	GameObject cube = Instantiate(debugNodePrefab,gridposToWorld(map[x,y].pos),Quaternion.identity) as GameObject; 
+				cube.transform.parent = cubeparent.transform;
 			 	cube.tag = "debugCubePathfinding";
 				pathfindingDebugInfoholder pdi = cube.AddComponent("pathfindingDebugInfoholder") as pathfindingDebugInfoholder;
 				pdi.place = new Vector2(x,y);
@@ -58,7 +83,7 @@ public class Pathfinding : MonoBehaviour {
 	
 	void Update(){
 		//press o to save
-		if(Input.GetKeyDown(KeyCode.O) && debug){
+		if(Input.GetKeyDown(KeyCode.O) && debugMode){
 			Texture2D tex = new Texture2D(width,height);
 			GameObject[] debugcubes = GameObject.FindGameObjectsWithTag("debugCubePathfinding");
 			foreach (GameObject cube in debugcubes){
@@ -81,9 +106,9 @@ public class Pathfinding : MonoBehaviour {
 				Color col = pixelMap.GetPixel(x,y);
 				//float w = 1 + 1-col.grayscale;
 				// w sätter 'weight' för varje node / kan användas för att få den att helst undvika vissa nodes om den kan
-				float w = 1;
+				int w = 1;
 				bool c = col.g < 0.1;
-				map[x,y] = new Node{pos = new Vector2(x,y),Closed = c,weigth = w,Used = false, parent = null};
+				map[x,y] = new Node{posx = x, posy = y,Closed = c,weigth = w,Used = false, parent = null};
 				//if(c){
 				//	mapclosed.Add(map[x,y]);
 				//}
@@ -110,6 +135,8 @@ public class Pathfinding : MonoBehaviour {
 		}
 		
 		findPath2d(worldposToGridpos(start),worldposToGridpos(end));
+		//Debug.Log ("end in: " + end);
+		//Debug.Log ("end grid in: " + worldposToGridpos(end));
 		
 		List<Vector3> vec3path = new List<Vector3>();
 		vec3path.Clear();
@@ -118,6 +145,8 @@ public class Pathfinding : MonoBehaviour {
 			vec3path.Add(gridposToWorld(node.pos));
 			
 		}
+		//Debug.Log ("end grid out: " + path[0].pos);
+		//Debug.Log ("end out: " + vec3path[0]);
 		vec3path.Reverse();
 		if(vec3path.Count > 0)
 			vec3path.RemoveAt(0);
@@ -127,22 +156,23 @@ public class Pathfinding : MonoBehaviour {
 	}
 	
 	//A* implementationen
-	private void findPath2d(Vector2 start,Vector2 end){
-		start = new Vector2(Mathf.Clamp(start.x,0,width),Mathf.Clamp(start.y,0,height));
-		end = new Vector2(Mathf.Clamp(end.x,0,width-1),Mathf.Clamp(end.y,0,height-1));
+	private void findPath2d(Vector2 startv2,Vector2 endv2){
+		Vector2Int start = new Vector2Int(Mathf.Clamp(startv2.x,0,width-1),Mathf.Clamp(startv2.y,0,height-1));
+		Vector2Int end = new Vector2Int(Mathf.Clamp(endv2.x,0,width-1),Mathf.Clamp(endv2.y,0,height-1));
 		cleanmap();
 		//Debug.Log("Start x = " + (int)start.x + " y = " + (int)start.y);
 		//Debug.Log("End x = " + (int)end.x + " y = " + (int)end.y);
-		Node startNode = map[(int)start.x,(int)start.y];
-		Node endNode = map[(int)end.x,(int)end.y];
+		Node startNode = map[start.x,start.y];
+		Node endNode = map[end.x,end.y];
 		
 		//bryt ur om slutnoden inte går att nå
 		if(endNode.Closed){
-			Debug.Log("could not find path. end node closed");
+			//Debug.Log("could not find path. end node closed");
 			return;
 		}
 		
 		SortedList<float, Node> openNodes = new SortedList<float, Node>();
+		openNodes.Clear();
 		//List<Node> closedNodes = new List<Node>(mapclosed);
 		
 		Node cur = startNode;
@@ -162,27 +192,30 @@ public class Pathfinding : MonoBehaviour {
 				return;
 			}
 			
-			for(int i = Mathf.Max(cur.x-1, 0); i < Mathf.Min(cur.x+2, width); i++)
+			for(int i = Mathf.Max(cur.x-1, 0); i < Mathf.Min(cur.x+2, width); i++){
 				for(int j = Mathf.Max(cur.y-1, 0); j < Mathf.Min(cur.y+2, height); j++){
-					Node n = map[i,j];
-					
-					if(!n.Closed && !n.Used){
-					//if(!closedNodes.Contains(n)){
-						int sv = (i == cur.x || j == cur.y ? 14 : 10);
-						if(!openNodes.ContainsValue(n)){
-							n.G = cur.G + (int)(sv*n.weigth)+ (float)(Random.value*0.1); //lägg till *1.4 för diagonal
-							n.H = 10 * (int)(Mathf.Abs(i - end.x) + Mathf.Abs(j - end.y));
-							n.parent = cur;
-							openNodes.Add(n.G + n.H,n);
+					Node node = map[i,j];
+						
+					if(!node.Closed && !node.Used){
+						//if(!closedNodes.Contains(n)){
+						int sv = ((i == cur.x || j == cur.y) ? straightcost : diagonalcost);
+						float weigth = cur.G + sv * node.weigth + Random.value * 0.449f;
+						
+						if(!openNodes.ContainsValue(node)){
+							node.G = weigth;
+							node.H = 10 * Mathf.Abs(i - end.x) + Mathf.Abs(j - end.y);
+							node.parent = cur;
+							openNodes.Add(node.G + node.H,node);
 						}else{
-							if(n.G > cur.G + (int)(sv*n.weigth)+ 0.1){ //FIXA SÅ DEN BYTER PARENT NÄR DEN HITTAR TILL EN POSITION MED HÖGRE VÄRDE
-								n.G = cur.G + (int)(sv*n.weigth) + (float)(Random.value*0.1);
-								//n.parent = cur; //fick spelet att hänga sig när 2 nodes blev parents till varandra
-								openNodes.RemoveAt(openNodes.IndexOfValue(n));
-								openNodes.Add(n.G + n.H,n);
+							if(node.G > weigth){ //FIXA SÅ DEN BYTER PARENT NÄR DEN HITTAR TILL EN POSITION MED HÖGRE VÄRDE
+								node.G = weigth;
+								node.parent = cur; //fick spelet att hänga sig när 2 nodes blev parents till varandra
+								openNodes.RemoveAt(openNodes.IndexOfValue(node));
+								openNodes.Add(node.G + node.H,node);
 							}
 						}
 					}
+				}
 			}
 			
 			cur = openNodes.FirstOrDefault().Value;
@@ -209,7 +242,7 @@ public class Pathfinding : MonoBehaviour {
 		
 		
 	}
-	
+	/*
 	//tar en vector3 med en världs kordinat och gör om den till nodegrid kordinater
 	public Vector2 worldposToGridpos(Vector3 worldposition){
 		Vector3 offset = 10 * walkmesh.localScale / 2;
@@ -219,15 +252,14 @@ public class Pathfinding : MonoBehaviour {
 		gridpos += new Vector2(walkmesh.position.x,walkmesh.position.y);
 		//Debug.Log("WtG -> " + " x " + worldposition.x + " y " + worldposition.z + " x -> " + gridpos.x + " y " + gridpos.y);
 		return gridpos;
-	}
-	
+	}*/
+	/*
 	//tar en vector2 med en nodegrid kordinat och gör om den till världs kordinater
 	public Vector3 gridposToWorld(Vector2 gridposition){
 		Vector3 offset = 10 * walkmesh.localScale;
 		Vector3 mapscale =  new Vector3(offset.x/(float)pixelMap.width,0,offset.z/(float)pixelMap.height)*2;
 		offset =  new Vector3(offset.x,0,offset.z);
 		
-
 		float midpointoffset = 0.5f;
 
 		Vector3 worldpos = new Vector3((gridposition.x - offset.x + midpointoffset) ,0 ,(gridposition.y - offset.z + midpointoffset))/2 ;
@@ -235,6 +267,46 @@ public class Pathfinding : MonoBehaviour {
 		worldpos = new Vector3(worldpos.x*mapscale.x ,0,worldpos.z*mapscale.z);
 		//Debug.Log("GtW -> " + " x " + gridposition.x + " y " + gridposition.y + " x -> " + worldpos.x + " y " + worldpos.z);
 		return worldpos;
+	}
+	*/
+	/*
+	public Vector2 worldposToGridpos1(Vector3 worldposition){
+		Vector3 offset = 10 * walkmesh.localScale / 2;
+		Vector3 mapscale =  new Vector3(offset.x*4/width,0,offset.z*4/height);
+		
+		Vector2 gridpos = new Vector2(Mathf.Floor(worldposition.x + offset.x)*mapscale.x,Mathf.Floor(worldposition.z + offset.z)*mapscale.z) * 2;
+		gridpos += new Vector2(walkmesh.position.x,walkmesh.position.y);
+		Debug.Log("wp " + worldposition + " gp " + gridpos);
+		return gridpos;
+	}*/
+	
+	public Vector2 worldposToGridpos(Vector3 worldposition){
+		Vector3 floorSize = 10*walkmesh.localScale;
+		Vector3 localOrginOffset = new Vector3(floorSize.x/2f,0,floorSize.z/2f);
+		//localOrginOffset.y = 0;
+		Vector3 floorOrgin = walkmesh.position - localOrginOffset;
+		
+		Vector3 nodeArea = new Vector3(floorSize.x/width,0,floorSize.z/height);
+		
+		Vector3 floorPos = worldposition + localOrginOffset;
+		Vector2 gridpos = new Vector2(Mathf.Floor(floorPos.x/nodeArea.x+0.5f),Mathf.Floor(floorPos.z/nodeArea.z+0.5f));
+		//Debug.Log("in: wp " + worldposition + " gp " + gridpos);
+		return gridpos;
+	}
+	
+	
+	public Vector3 gridposToWorld(Vector2 gridposition){
+		Vector3 floorSize = 10*walkmesh.localScale;
+		Vector3 localOrginOffset = floorSize/2;
+		localOrginOffset.y = 0;
+		Vector3 floorOrgin = walkmesh.position - localOrginOffset;
+		
+		Vector3 nodeArea = new Vector3(floorSize.x/width,0,floorSize.z/height);
+		
+		Vector3 worldPos = new Vector3(nodeArea.x*gridposition.x,0,nodeArea.z*gridposition.y);
+		worldPos += floorOrgin;
+		//Debug.Log("out: wp " + worldPos + " gp " + gridposition);
+		return worldPos;
 	}
 	
 	
@@ -245,14 +317,19 @@ public class Pathfinding : MonoBehaviour {
 		public float H;
 		public float G;
 		public Node parent;
-		public Vector2 pos;
-		public float weigth;
+		public int posx;
+		public int posy;
+		public int weigth;
 		public int x{
-			get{return (int)pos.x;}
+			get{return posx;}
 		}
 		public int y{
-			get{return (int)pos.y;}
+			get{return posy;}
 		}
+		public Vector2 pos{
+			get{return new Vector2(posx,posy);}
+		}
+
 		public void clean(){
 			this.parent = null;
 			this.Used = false;
