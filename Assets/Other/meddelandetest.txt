@@ -1,3 +1,41 @@
-HEJ ALEX!
-
-Jag är en katt, mjau! ^=.=^
+<quests>
+	<quest>
+		<id>1</id>
+		<text>Enslave all the humans</text>
+	</quest>
+	
+	<quest>
+		<id>1a</id>
+		<text>Kill the king</text>
+	</quest>
+	
+	<quest>
+		<id>1b</id>
+		<text>Wear Crown</text>
+	</quest>
+	
+	<quest>
+		<id>1c</id>
+		<text>??????</text>
+	</quest>
+	
+	<quest>
+		<id>1d</id>
+		<text>Profit!</text>
+	</quest>
+	
+	<quest>
+		<id>2</id>
+		<text>Comic Sans</text>
+	</quest>
+	
+	<quest>
+		<id>2a</id>
+		<text>Kill all fonts except comic sans</text>
+	</quest>
+	
+	<quest>
+		<id>2b</id>
+		<text>set all fonts to comic sans</text>
+	</quest>
+</quests>
