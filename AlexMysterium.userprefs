@@ -1,12 +1,11 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\MessageWindow.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\LevelInitation.cs">
     <Files>
-      <File FileName="Assets\Other\meddelandetest.txt" Line="24" Column="16" />
-      <File FileName="Assets\Scripts\Zoom\zoom_TEST.cs" Line="39" Column="28" />
-      <File FileName="Assets\Scripts\MessageWindow.cs" Line="31" Column="21" />
-      <File FileName="Assets\Scripts\Questpair.cs" Line="20" Column="3" />
-      <File FileName="Assets\Scripts\Inventory.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\LevelInitation.cs" Line="11" Column="38" />
+      <File FileName="Assets\Scripts\Pathfinding.cs" Line="61" Column="2" />
+      <File FileName="Assets\Scripts\CameraSmoothFollowScript.cs" Line="33" Column="4" />
+      <File FileName="Assets\Scripts\IAMTHEMASTER.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
