@@ -38,7 +38,6 @@ public class LevelInitation : MonoBehaviour {
 		GetComponent<InputManager>().SetPlayer(player);
         Camera.main.GetComponent<CameraSmoothFollowScript>().Player = player.gameObject;
 
-        
 		Transform floor = GameObject.Find("floor").transform;
 		Debug.Log(floor);
 
@@ -70,7 +69,7 @@ public class LevelInitation : MonoBehaviour {
 			alphaFadeValue = Mathf.Clamp01(alphaFadeValue - (Time.deltaTime * 2));
 		}
         if (assignCamera){
-            Camera.main.GetComponent<CameraSmoothFollowScript>().Player = playerPrefab.gameObject;
+            Camera.main.GetComponent<CameraSmoothFollowScript>().Player = GameObject.FindGameObjectWithTag("Player").gameObject;
             assignCamera = false;
         }
 	}
