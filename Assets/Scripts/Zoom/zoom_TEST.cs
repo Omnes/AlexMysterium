@@ -68,7 +68,7 @@ public class zoom_TEST : MonoBehaviour {
 		*/
 		zoomInfo = Create_ZDB();
 		send_ZDB();
-		
+		Debug.Log("PENIS");
 		// Debug.Log("You entered the zoom");
 		// Camera.main.SendMessage("SetIsPuzzle", true);				// Let the input manager know we are in a puzzel.
 		
