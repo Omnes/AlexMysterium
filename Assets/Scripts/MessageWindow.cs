@@ -26,7 +26,7 @@ public class MessageWindow : MonoBehaviour {
 		newObjective = gameObject.GetComponent<AudioSource>();	
 		//print(asset.text);
 		bool writeMessage = false; 
-	/*	addQuest ("2");
+		addQuest ("2");
 		addQuest ("1");
 		addSubQuest("1a");
 		addSubQuest("1b");
@@ -36,7 +36,7 @@ public class MessageWindow : MonoBehaviour {
 		addSubQuest("2b");
 		finishedSubQuest("2b");
 		finishedSubQuest("2a");
-		*/
+		
 	} 
 	void Update(){
 		if(Input.GetKeyUp(KeyCode.A)){
@@ -47,12 +47,12 @@ public class MessageWindow : MonoBehaviour {
 	}
 
 //Triggar Meddelandet 
-	/*void Interact(){
+	void Interact(){
 		
 		Debug.Log("Displaying Message");
 		writeMessage = true; 
 		Time.timeScale = 0; 
-	} */
+	} 
 	
 // Lägg till en main-quest
 	public void addQuest(string id){
