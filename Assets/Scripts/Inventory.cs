@@ -15,7 +15,7 @@ public class Inventory : MonoBehaviour {
 	private float offset = 0;
 	
 	public Vector2 spriteSize = new Vector2(64,64);
-	private Vector2 startPosition = new Vector2(Screen.width,Screen.height);
+	public Vector2 startPosition = new Vector2(Screen.width,Screen.height);
 	public Vector2 paddingFromEdge;
 	
 	private Item holdingItem;

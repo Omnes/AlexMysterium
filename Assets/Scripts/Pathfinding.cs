@@ -11,8 +11,8 @@ public class Pathfinding : MonoBehaviour {
 	
 	public Texture2D pixelMap;
 	public Transform walkmesh;
-	public int diagonalcost = 14;
-	public int straightcost = 10;
+	public int diagonalcost = 14000;
+	public int straightcost = 10000;
 	
 	public Material debugMat1;
 	public GameObject debugNodePrefab;
@@ -159,6 +159,7 @@ public class Pathfinding : MonoBehaviour {
 	private void findPath2d(Vector2 startv2,Vector2 endv2){
 		Vector2Int start = new Vector2Int(Mathf.Clamp(startv2.x,0,width-1),Mathf.Clamp(startv2.y,0,height-1));
 		Vector2Int end = new Vector2Int(Mathf.Clamp(endv2.x,0,width-1),Mathf.Clamp(endv2.y,0,height-1));
+		//Debug.Log("input end " + endv2.x + " " + endv2.y);
 		cleanmap();
 		//Debug.Log("Start x = " + (int)start.x + " y = " + (int)start.y);
 		//Debug.Log("End x = " + (int)end.x + " y = " + (int)end.y);
@@ -171,10 +172,10 @@ public class Pathfinding : MonoBehaviour {
 			return;
 		}
 		
-		SortedList<float, Node> openNodes = new SortedList<float, Node>();
+		SortedList<int, Node> openNodes = new SortedList<int, Node>();
 		openNodes.Clear();
 		//List<Node> closedNodes = new List<Node>(mapclosed);
-		
+		openNodes.Add(0,startNode);
 		Node cur = startNode;
 		cur.Used = true;
 		//closedNodes.Add(cur);
@@ -183,14 +184,20 @@ public class Pathfinding : MonoBehaviour {
 		
 		int tries = 0;
 		
-		while(true){
+		while(openNodes.Count > 0 && cur != endNode && cur != null){
 			
 			//så den inte fastnar i ett försök att hitta till en path till en plats som inte går att nå 
-			tries++;
-			if(tries > 5000){
-				Debug.Log("failed");
-				return;
-			}
+			//tries++;
+			//if(tries > 5000){
+			//	Debug.Log("failed");
+			//	return;
+			//}
+			//if(cur == null || cur == endNode)
+			//	break;
+			
+			cur = openNodes.FirstOrDefault().Value;
+			openNodes.RemoveAt(0);
+			cur.Used = true;
 			
 			for(int i = Mathf.Max(cur.x-1, 0); i < Mathf.Min(cur.x+2, width); i++){
 				for(int j = Mathf.Max(cur.y-1, 0); j < Mathf.Min(cur.y+2, height); j++){
@@ -198,37 +205,44 @@ public class Pathfinding : MonoBehaviour {
 						
 					if(!node.Closed && !node.Used){
 						//if(!closedNodes.Contains(n)){
-						int sv = ((i == cur.x || j == cur.y) ? straightcost : diagonalcost);
-						float weigth = cur.G + sv * node.weigth + Random.value * 0.449f;
+						int sv = ((i == cur.x || j == cur.y) ? straightcost : diagonalcost); // kolla om det är diagonalt eller rakt till noden
+						int weigth = cur.G + sv * node.weigth + (int)(Random.value * 10);
 						
 						if(!openNodes.ContainsValue(node)){
 							node.G = weigth;
-							node.H = 10 * Mathf.Abs(i - end.x) + Mathf.Abs(j - end.y);
+							node.H = straightcost * (Mathf.Abs(i - end.x) + Mathf.Abs(j - end.y));
 							node.parent = cur;
-							openNodes.Add(node.G + node.H,node);
+							int w = node.G + node.H;
+							while(openNodes.ContainsKey(w)){
+								w += 1;
+							}
+							openNodes.Add(w,node);
 						}else{
 							if(node.G > weigth){ //FIXA SÅ DEN BYTER PARENT NÄR DEN HITTAR TILL EN POSITION MED HÖGRE VÄRDE
 								node.G = weigth;
 								node.parent = cur; //fick spelet att hänga sig när 2 nodes blev parents till varandra
 								openNodes.RemoveAt(openNodes.IndexOfValue(node));
-								openNodes.Add(node.G + node.H,node);
+								int w = node.G + node.H;
+								while(openNodes.ContainsKey(w)){
+									w += 1;
+								}
+								openNodes.Add(w,node);
 							}
 						}
 					}
 				}
 			}
 			
-			cur = openNodes.FirstOrDefault().Value;
-			openNodes.RemoveAt(0);
-			cur.Used = true;
+			//cur = openNodes.FirstOrDefault().Value;
+			//openNodes.RemoveAt(0);
+			//cur.Used = true;
 			//closedNodes.Add(cur);
-			if(cur == null || cur == endNode)
-				break;
+			
 
 		}
 		
 		//Debug.Log("Path found! cells in open: " + openNodes.Count + " value on last node: " + cur.G + cur.H);
-		
+		//Debug.Log("output end " + cur.x + " " + cur.y);
 		//går baklänges igenom alla parents
 		while(cur != null){
 			path.Add(cur);
@@ -282,13 +296,15 @@ public class Pathfinding : MonoBehaviour {
 	
 	public Vector2 worldposToGridpos(Vector3 worldposition){
 		Vector3 floorSize = 10*walkmesh.localScale;
+		floorSize.y = 0;
 		Vector3 localOrginOffset = new Vector3(floorSize.x/2f,0,floorSize.z/2f);
-		//localOrginOffset.y = 0;
+		localOrginOffset.y = 0;
 		Vector3 floorOrgin = walkmesh.position - localOrginOffset;
 		
 		Vector3 nodeArea = new Vector3(floorSize.x/width,0,floorSize.z/height);
 		
-		Vector3 floorPos = worldposition + localOrginOffset;
+		//Vector3 floorPos = worldposition + localOrginOffset;
+		Vector3 floorPos = worldposition + localOrginOffset + walkmesh.position;
 		Vector2 gridpos = new Vector2(Mathf.Floor(floorPos.x/nodeArea.x+0.5f),Mathf.Floor(floorPos.z/nodeArea.z+0.5f));
 		//Debug.Log("in: wp " + worldposition + " gp " + gridpos);
 		return gridpos;
@@ -297,6 +313,7 @@ public class Pathfinding : MonoBehaviour {
 	
 	public Vector3 gridposToWorld(Vector2 gridposition){
 		Vector3 floorSize = 10*walkmesh.localScale;
+		floorSize.y = 0;
 		Vector3 localOrginOffset = floorSize/2;
 		localOrginOffset.y = 0;
 		Vector3 floorOrgin = walkmesh.position - localOrginOffset;
@@ -314,8 +331,8 @@ public class Pathfinding : MonoBehaviour {
 	public class Node{
 		public bool Closed;
 		public bool Used;
-		public float H;
-		public float G;
+		public int H;
+		public int G;
 		public Node parent;
 		public int posx;
 		public int posy;

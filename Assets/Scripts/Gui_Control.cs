@@ -22,7 +22,7 @@ public class Gui_Control : MonoBehaviour {
 		Vector2 mousePos = Input.mousePosition;
 		mousePos.y = Screen.height-mousePos.y; 
 		if(!inventory.showInventory){
-			if(inventoryArea.Contains(mousePos)){
+			if(inventoryArea.Contains(mousePos) && inventory.GetInventoryList().Count > 0){
 				inventory.showInventory = true;
 			}
 		}else{
