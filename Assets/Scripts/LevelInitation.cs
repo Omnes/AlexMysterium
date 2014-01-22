@@ -19,6 +19,12 @@ public class LevelInitation : MonoBehaviour {
 	}
 	
 	void Update(){
+		
+		if(Input.GetKeyDown(KeyCode.B)){
+			initiateFade = !initiateFade;
+		}
+		
+		
 		if(initiateFade){
 			FadeIn();
 		}else{			//it might be expensive to always diminish the fadevalue...
@@ -70,7 +76,9 @@ public class LevelInitation : MonoBehaviour {
 	
 	//create new color every GUI tick might be expensive..
 	void OnGUI(){
-		GUI.color = new Color(0,0,0,alphaFadeValue);
-		GUI.DrawTexture(new Rect(0,0,Screen.width, Screen.height), blackTexture);
+		if(alphaFadeValue > 0f){
+			GUI.color = new Color(0,0,0,alphaFadeValue);
+			GUI.DrawTexture(new Rect(0, 0, Screen.width, Screen.height), blackTexture);
+		}
 	}
 }
