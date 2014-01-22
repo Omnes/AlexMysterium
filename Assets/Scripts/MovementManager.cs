@@ -112,7 +112,8 @@ public class MovementManager : MonoBehaviour {
 	*/
 	
 	public bool isAtPosition(Vector3 target){
-		bool isAt = pathfinder.worldposToGridpos(target) == pathfinder.worldposToGridpos(transform.position);
+		//bool isAt = pathfinder.worldposToGridpos(target) == pathfinder.worldposToGridpos(transform.position);
+		bool isAt = compareVec3(target, transform.position);
 		return isAt;
 		
 	}

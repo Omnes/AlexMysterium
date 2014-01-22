@@ -13,7 +13,7 @@ public class Animationator : MonoBehaviour {
 	float yOffset;
 	float currentFrame;
 	float clock;
-	bool walk;
+	public bool walk;
 	private Material playerMat;
 	
 	
