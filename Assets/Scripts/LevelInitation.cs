@@ -76,6 +76,7 @@ public class LevelInitation : MonoBehaviour {
 		}
         if (assignCamera){
             Camera.main.GetComponent<CameraSmoothFollowScript>().Player = GameObject.FindGameObjectWithTag("Player").gameObject;
+			Debug.Log("hejehehjehjhjehjehjehjehehjehjejh");
             assignCamera = false;
         }
 	}
