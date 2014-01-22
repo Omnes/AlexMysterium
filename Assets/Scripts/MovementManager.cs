@@ -37,7 +37,7 @@ public class MovementManager : MonoBehaviour {
 			drawPath();
             moveTowards(path[0]);
             //transform.localScale = startScale * (3-transform.position.y);
-            if (Vector3.Distance(transform.position,path[0])< speed*Time.deltaTime+0.1){
+            if (Vector3.Distance(transform.position,path[0])< speed*Time.deltaTime+0.01){
                 //moving = false;
 				path.RemoveAt(0);
 				

@@ -15,6 +15,9 @@ public class LevelInitation : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		if(GameObject.FindGameObjectsWithTag("Mastermind").Length > 1){
+			Destroy(this);
+		}
 		DontDestroyOnLoad(transform.gameObject);
 		OnLevelWasLoaded(); //kan ställa till saker sen!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! DANGERZONE
 	}
