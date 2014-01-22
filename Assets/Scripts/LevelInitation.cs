@@ -10,6 +10,7 @@ public class LevelInitation : MonoBehaviour {
 	public Texture2D blackTexture;
 	private float alphaFadeValue = 0.0f;
 	public bool initiateFade = false;
+    public bool assignCamera = false;
 	private string nextLevel;
 
 	// Use this for initialization
@@ -19,6 +20,12 @@ public class LevelInitation : MonoBehaviour {
 	}
 	
 	void Update(){
+		
+		if(Input.GetKeyDown(KeyCode.B)){
+			initiateFade = !initiateFade;
+		}
+		
+		
 		if(initiateFade){
 			FadeIn();
 		}else{			//it might be expensive to always diminish the fadevalue...
@@ -35,8 +42,8 @@ public class LevelInitation : MonoBehaviour {
 			
 		Transform player = (Transform)Instantiate(playerPrefab,spawnPosition,Quaternion.identity);
 		GetComponent<InputManager>().SetPlayer(player);
-		Camera.main.GetComponent<CameraSmoothFollowScript>().Player = player.gameObject;
-		
+        Camera.main.GetComponent<CameraSmoothFollowScript>().Player = player.gameObject;
+
 		Transform floor = GameObject.Find("floor").transform;
 		Debug.Log(floor);
 
@@ -58,6 +65,7 @@ public class LevelInitation : MonoBehaviour {
 		alphaFadeValue = Mathf.Clamp01(alphaFadeValue + (Time.deltaTime * 2));
 		if(alphaFadeValue > 0.99){
 			Application.LoadLevel(nextLevel);
+            assignCamera = true;
 			initiateFade = false;
 		}
 	}
@@ -66,11 +74,17 @@ public class LevelInitation : MonoBehaviour {
 		if(alphaFadeValue > 0.01f){
 			alphaFadeValue = Mathf.Clamp01(alphaFadeValue - (Time.deltaTime * 2));
 		}
+        if (assignCamera){
+            Camera.main.GetComponent<CameraSmoothFollowScript>().Player = GameObject.FindGameObjectWithTag("Player").gameObject;
+            assignCamera = false;
+        }
 	}
 	
 	//create new color every GUI tick might be expensive..
 	void OnGUI(){
-		GUI.color = new Color(0,0,0,alphaFadeValue);
-		GUI.DrawTexture(new Rect(0,0,Screen.width, Screen.height), blackTexture);
+		if(alphaFadeValue > 0f){
+			GUI.color = new Color(0,0,0,alphaFadeValue);
+			GUI.DrawTexture(new Rect(0, 0, Screen.width, Screen.height), blackTexture);
+		}
 	}
 }
