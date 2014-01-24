@@ -182,7 +182,7 @@ public class Pathfinding : MonoBehaviour {
 		
 
 		
-		int tries = 0;
+		//int tries = 0;
 		
 		while(openNodes.Count > 0 && cur != endNode && cur != null){
 			
