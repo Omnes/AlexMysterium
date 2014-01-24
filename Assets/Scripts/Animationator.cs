@@ -16,7 +16,7 @@ public class Animationator : MonoBehaviour {
 	float currentFrame;
 	float clock;
 	float Frametime;
-	//bool walk;
+	public bool walk;
 	private Material playerMat;
 	
 	
@@ -31,7 +31,7 @@ public class Animationator : MonoBehaviour {
 		yOffset = 0;
 		orgSpriteSize = orgSpriteSize += orgSpriteSize*Size;
 	
-		//walk = false;
+		walk = false;
 		
 	}
 	
@@ -101,7 +101,7 @@ public class Animationator : MonoBehaviour {
 		
 		playerMat.mainTextureOffset = new Vector2(xOffset,yOffset); //sätter nuvarande offsetY
 		
-		//walk = true;
+		walk = true;
 	}
 	
 	public void setStandAnimation(){
@@ -112,6 +112,6 @@ public class Animationator : MonoBehaviour {
 	
 		yOffset = 0.8f;	
 		
-		//walk = false;
+		walk = false;
 	}
 }

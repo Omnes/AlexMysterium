@@ -12,8 +12,8 @@ public class Pathfinding : MonoBehaviour {
 	
 	public Texture2D pixelMap;
 	public Transform walkmesh;
-	public int diagonalcost = 140000;
-	public int straightcost = 100000;
+	public int diagonalcost = 14;
+	public int straightcost = 10;
 	
 	public Material debugMat1;
 	public GameObject debugNodePrefab;
