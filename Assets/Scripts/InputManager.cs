@@ -31,7 +31,7 @@ public class InputManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
+
 		//if in puzzle then WorldInput == false
 		if(buttonDelayCounter + buttonDelay < Time.time && !ptrInventory.showInventory){
 			FindInput ();
@@ -50,7 +50,7 @@ public class InputManager : MonoBehaviour {
 		
 		//mousebutton left pressed
 		if(Input.GetMouseButtonDown(0)){
-			
+
 			//reset mousecounter
 			buttonDelayCounter = Time.time;
 			
