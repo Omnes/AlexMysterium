@@ -15,6 +15,9 @@ public class LevelInitation : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		if(GameObject.FindGameObjectsWithTag("Mastermind").Length > 1){
+			Destroy(this);
+		}
 		DontDestroyOnLoad(transform.gameObject);
 		OnLevelWasLoaded(); //kan ställa till saker sen!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! DANGERZONE
 	}
@@ -45,6 +48,7 @@ public class LevelInitation : MonoBehaviour {
         Camera.main.GetComponent<CameraSmoothFollowScript>().Player = player.gameObject;
 
 		Transform floor = GameObject.Find("floor").transform;
+		player.GetComponent<Pathfinding>().pixelMap = (Texture2D)floor.renderer.material.GetTexture("_MainTex");
 		Debug.Log(floor);
 
 		player.GetComponent<Pathfinding>().walkmesh = floor;
@@ -75,7 +79,7 @@ public class LevelInitation : MonoBehaviour {
 			alphaFadeValue = Mathf.Clamp01(alphaFadeValue - (Time.deltaTime * 2));
 		}
         if (assignCamera){
-            Camera.main.GetComponent<CameraSmoothFollowScript>().Player = GameObject.FindGameObjectWithTag("Player").gameObject;
+			Camera.main.GetComponent<CameraSmoothFollowScript>().Player = GameObject.FindGameObjectWithTag("Player").gameObject;
             assignCamera = false;
         }
 	}
