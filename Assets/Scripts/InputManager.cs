@@ -113,30 +113,7 @@ public class InputManager : MonoBehaviour {
 					
 					
 				}
-				
-				//----------------------------------------------------------
-				/*
-				if(hit.transform.tag == "Zoom_Interact"){
-					
-					//if in puzzle
-					//without pathfinding
-					if(isPuzzle){
-						
-						hit.transform.SendMessage("Activate");
-						
-					}else{//with pathfinding
-						
-						//stop previous coroutine
-						StopCoroutine("InteractObject");
-						//start new coroutine
-						StartCoroutine("InteractObject", (hit.transform));
-						
-					}
-					
-					
-				}
-				*/
-				//---------------------------------------------------------
+
 				
 			}
 			
