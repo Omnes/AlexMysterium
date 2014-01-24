@@ -57,7 +57,7 @@ public class MovementManager : MonoBehaviour {
 	}
 	
 	bool compareVec3(Vector3 v1,Vector3 v2){
-		return Vector3.Distance(v1,v2) < 0.6;
+		return Vector3.Distance(v1,v2) < 0.9;
 		
 	}
 	
