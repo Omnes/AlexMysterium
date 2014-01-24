@@ -37,7 +37,7 @@ public class MovementManager : MonoBehaviour {
 			drawPath();
             moveTowards(path[0]);
             //transform.localScale = startScale * (3-transform.position.y);
-            if (Vector3.Distance(transform.position,path[0])< speed*Time.deltaTime+0.1){
+            if (Vector3.Distance(transform.position,path[0])< speed*Time.deltaTime+0.01){
                 //moving = false;
 				path.RemoveAt(0);
 				
@@ -112,7 +112,8 @@ public class MovementManager : MonoBehaviour {
 	*/
 	
 	public bool isAtPosition(Vector3 target){
-		bool isAt = pathfinder.worldposToGridpos(target) == pathfinder.worldposToGridpos(transform.position);
+		//bool isAt = pathfinder.worldposToGridpos(target) == pathfinder.worldposToGridpos(transform.position);
+		bool isAt = compareVec3(target, transform.position);
 		return isAt;
 		
 	}
