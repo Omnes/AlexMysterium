@@ -85,11 +85,11 @@ public class Inventory : MonoBehaviour {
 	public void DoGUI(){
 		
 		if(offset > 0){
-			Rect slidy = new Rect(Screen.width - offset - spriteSize.x - paddingFromEdge.x*2, Screen.height - spriteSize.y - paddingFromEdge.y, (spriteSize.y + paddingFromEdge.y*2)/slidyThingie.height * slidyThingie.width ,  spriteSize.y + paddingFromEdge.y);
-			Debug.Log(slidy);
+			Rect slidy = new Rect(Screen.width - offset - 64 - paddingFromEdge.x*2, Screen.height - spriteSize.y - paddingFromEdge.y, (spriteSize.y + paddingFromEdge.y*2)/slidyThingie.height * slidyThingie.width ,  spriteSize.y + paddingFromEdge.y);
+			//Debug.Log(slidy);
 			GUI.DrawTexture(slidy,slidyThingie);
 			//GUI.Box(slidy,"yo");
-			Vector2 sp = startPosition - new Vector2(spriteSize.x,0);
+			Vector2 sp = startPosition - new Vector2(64,0);
 			for(int i = startItem; i < inventoryList.Count && i < startItem+displayCount; i++){
 				if(i != holdingItemNr){
 					Rect pos = new Rect(sp.x-spriteSize.x*(i-startItem+1)+spriteSize.x*inventoryList.Count-offset - paddingFromEdge.x,sp.y-spriteSize.y - paddingFromEdge.y*0,spriteSize.x,spriteSize.y);
