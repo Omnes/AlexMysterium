@@ -48,6 +48,7 @@ public class LevelInitation : MonoBehaviour {
         Camera.main.GetComponent<CameraSmoothFollowScript>().Player = player.gameObject;
 
 		Transform floor = GameObject.Find("floor").transform;
+		
 		Debug.Log(floor);
 
 		player.GetComponent<Pathfinding>().walkmesh = floor;

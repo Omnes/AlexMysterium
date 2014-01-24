@@ -12,12 +12,14 @@ public class Inventory : MonoBehaviour {
 	
 	public bool showInventory = false;
 	private bool drawInventory = false;
-	private float offset = 0;
+	public float offset = 0;
 	
 	public Vector2 spriteSize = new Vector2(64,64);
-	public Vector2 startPosition = new Vector2(Screen.width,Screen.height);
-	public Vector2 paddingFromEdge;
-	
+	private Vector2 startPosition = new Vector2(Screen.width,Screen.height);
+	public Vector2 paddingFromEdge = new Vector2(Screen.width/100,Screen.width/100);
+	public Texture2D slidyThingie;
+	private Texture2D slidyUnpacked;
+		
 	private Item holdingItem;
 	private Item nullItem;
 	private Rect inventoryArea;
@@ -35,6 +37,11 @@ public class Inventory : MonoBehaviour {
 		inventoryList = new List<Item>();
 		nullItem = new Item("null",null,-1);
 		holdingItem = nullItem;
+		paddingFromEdge = new Vector2(Screen.width/100,Screen.width/100);
+		startPosition = new Vector2(Screen.width,Screen.height);
+		//slidyUnpacked = new Texture2D(1500,156);
+		//slidyUnpacked.SetPixels(slidyThingie.GetPixels(547,1893,1500,156));
+		//slidyThingie.pixelInset = new Rect(547,1893,1500,156);
 		
 		//seans holding item icon thingy
 		mo_anim = GetComponent<Mouse_Animation>();
@@ -78,9 +85,14 @@ public class Inventory : MonoBehaviour {
 	public void DoGUI(){
 		
 		if(offset > 0){
+			Rect slidy = new Rect(Screen.width - offset - spriteSize.x - paddingFromEdge.x*2, Screen.height - spriteSize.y - paddingFromEdge.y, (spriteSize.y + paddingFromEdge.y*2)/slidyThingie.height * slidyThingie.width ,  spriteSize.y + paddingFromEdge.y);
+			Debug.Log(slidy);
+			GUI.DrawTexture(slidy,slidyThingie);
+			//GUI.Box(slidy,"yo");
+			Vector2 sp = startPosition - new Vector2(spriteSize.x,0);
 			for(int i = startItem; i < inventoryList.Count && i < startItem+displayCount; i++){
 				if(i != holdingItemNr){
-					Rect pos = new Rect(startPosition.x-spriteSize.x*(i-startItem+1)+spriteSize.x*inventoryList.Count-offset - paddingFromEdge.x,startPosition.y-spriteSize.y - paddingFromEdge.y,spriteSize.x,spriteSize.y);
+					Rect pos = new Rect(sp.x-spriteSize.x*(i-startItem+1)+spriteSize.x*inventoryList.Count-offset - paddingFromEdge.x,sp.y-spriteSize.y - paddingFromEdge.y*0,spriteSize.x,spriteSize.y);
 					GUI.DrawTexture(pos,inventoryList[i].sprite);
 				}
 			}
@@ -95,7 +107,7 @@ public class Inventory : MonoBehaviour {
 			mo_anim.isDrawing = false;
 			GUI.DrawTexture(new Rect(Input.mousePosition.x - 8, (Screen.height - Input.mousePosition.y) - 5, 32, 32), cursorImage, ScaleMode.ScaleAndCrop);
 		}
-
+		 
 	}
 	
 	void Update(){
@@ -140,9 +152,9 @@ public class Inventory : MonoBehaviour {
 			
 			if(Input.GetMouseButtonDown(0)){
 				if(holdingItem.id == nullItem.id){
-					if(Screen.width-mousePos.x - paddingFromEdge.x < inventoryList.Count*spriteSize.x + paddingFromEdge.x && mousePos.y < spriteSize.y + paddingFromEdge.y){
+					if(Screen.width-spriteSize.x-mousePos.x - paddingFromEdge.x < inventoryList.Count*spriteSize.x + paddingFromEdge.x && mousePos.y < spriteSize.y + paddingFromEdge.y){
 						//plocka upp
-						holdingItemNr = startItem + (int)Mathf.Floor((Screen.width-mousePos.x  - paddingFromEdge.x)/spriteSize.x);
+						holdingItemNr = startItem + (int)Mathf.Floor((Screen.width - spriteSize.x - mousePos.x - paddingFromEdge.x)/spriteSize.x);
 						holdingItem = inventoryList[holdingItemNr];
 						Debug.Log("plockade upp: " + holdingItem.name);
 					}
