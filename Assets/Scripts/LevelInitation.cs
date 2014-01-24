@@ -29,7 +29,7 @@ public class LevelInitation : MonoBehaviour {
 		}
 		
 		
-		if(initiateFade){
+		if(initiateFade == true){
 			FadeIn();
 		}else{			//it might be expensive to always diminish the fadevalue...
 			FadeOut();
@@ -78,9 +78,9 @@ public class LevelInitation : MonoBehaviour {
 		if(alphaFadeValue > 0.01f){
 			alphaFadeValue = Mathf.Clamp01(alphaFadeValue - (Time.deltaTime * 2));
 		}
-        if (assignCamera){
+        if (assignCamera == true){
 			Camera.main.GetComponent<CameraSmoothFollowScript>().Player = GameObject.FindGameObjectWithTag("Player").gameObject;
-            assignCamera = false;
+			assignCamera = false;
         }
 	}
 	
