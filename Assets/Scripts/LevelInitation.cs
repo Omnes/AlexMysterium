@@ -79,8 +79,7 @@ public class LevelInitation : MonoBehaviour {
 			alphaFadeValue = Mathf.Clamp01(alphaFadeValue - (Time.deltaTime * 2));
 		}
         if (assignCamera){
-            Camera.main.GetComponent<CameraSmoothFollowScript>().Player = GameObject.FindGameObjectWithTag("Player").gameObject;
-			Debug.Log("hejehehjehjhjehjehjehjehehjehjejh");
+			Camera.main.GetComponent<CameraSmoothFollowScript>().Player = GameObject.FindGameObjectWithTag("Player").gameObject;
             assignCamera = false;
         }
 	}
