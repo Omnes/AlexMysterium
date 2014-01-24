@@ -7,6 +7,7 @@ public class Questpair {
 	public string mID;
 	public string mContent;
 	public bool mFinished = false;
+	public int mID2;
 	public List<Questpair> mQuestlog = new List<Questpair>();
 	
 	public Questpair(string id, string content){
@@ -35,5 +36,15 @@ public class Questpair {
 	public string getContent(){
 	
 		return mContent;
+	}
+
+	public int getID2(){
+
+		return mID2;
+	}
+
+	public void setID2(int id){
+
+		mID2 = id;
 	}
 }

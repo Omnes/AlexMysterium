@@ -3,17 +3,20 @@ using System.Collections;
 
 public class Animationator : MonoBehaviour {
 	
-	public float Animations; //Antal animationer på spriteSheeten
-	public float Frames;
-	public float Frametime;
+	public float Animations = 5; //Antal animationer på spriteSheeten
+	public float Frames =14;
+	public float FrametimeWalk = 0.05f;
+	public float FrametimeStand = 0.1f;
 	public float distanceDelta; //Hur mycket storleken på spriten ska ändras beroende av avståndet
 	public float groundDepth;
+	public float Size;
 	Vector3 orgSpriteSize;
 	float xOffset;
 	float yOffset;
 	float currentFrame;
 	float clock;
-	bool walk;
+	float Frametime;
+	//bool walk;
 	private Material playerMat;
 	
 	
@@ -26,14 +29,16 @@ public class Animationator : MonoBehaviour {
 		clock = Time.time; //Startar klockan
 		xOffset = 0;
 		yOffset = 0;
-		walk = false;
+		orgSpriteSize = orgSpriteSize += orgSpriteSize*Size;
+	
+		//walk = false;
 		
 	}
 	
 	
 	void Update () {
 		
-		if(walk){
+		//if(walk){
 			
 			if(Time.time - clock > Frametime){ //När frametimen passerat
 			
@@ -53,7 +58,7 @@ public class Animationator : MonoBehaviour {
 			
 				clock = Time.time; //Starta om klockan
 			}
-		}
+	//	}
 		
 		float spriteSize = distanceDelta * transform.GetChild(0).position.z;
 		
@@ -72,34 +77,41 @@ public class Animationator : MonoBehaviour {
 		
 		
 		//världens fulaste jävla cplösning nedanför, ser dessutom skitfult ut
+
+		Frametime = FrametimeWalk;
+
 		if(direction.y < 1 && direction.y > -1){
 			if(direction.x > 0){
-				yOffset = 0.25f;
+				yOffset = 0f;
 			}
 			if(direction.x < 0){
-				yOffset = 0.75f;
+				yOffset = 0.20f;
 			}
 		}else{
 			if(direction.y < 0){
 				
-				yOffset = 0.5f;
+				yOffset = 0.60f;
 			}
 			if(direction.y > 0){
 				
-				yOffset = 0;
+				yOffset = 0.40f;
 			}
 		}		
 
 		
 		playerMat.mainTextureOffset = new Vector2(xOffset,yOffset); //sätter nuvarande offsetY
 		
-		walk = true;
+		//walk = true;
 	}
 	
 	public void setStandAnimation(){
+
+		//playerMat.mainTextureOffset = new Vector2(0,yOffset);	
+
+		Frametime = FrametimeStand;
 	
-		playerMat.mainTextureOffset = new Vector2(0,yOffset);	
+		yOffset = 0.8f;	
 		
-		walk = false;
+		//walk = false;
 	}
 }
