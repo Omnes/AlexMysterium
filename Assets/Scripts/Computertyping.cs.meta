@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 2d920cd9c24ced847af3ebe6262b79b1
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences:
+  - currentLayout: {instanceID: 0}
+  - mailLayout: {instanceID: 0}
+  - returntomail: {instanceID: 0}
+  - Return: {instanceID: 0}
+  - mailsource: {instanceID: 0}
+  - font: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 

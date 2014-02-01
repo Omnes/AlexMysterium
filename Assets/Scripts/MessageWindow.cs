@@ -8,6 +8,8 @@ public class MessageWindow : MonoBehaviour {
 	public Texture2D Messagelayout;
 	public Texture2D FinishedQuest;
 	public TextAsset asset; //tillfällig
+	public AudioSource newObjective;
+	public AudioClip addQuestSound;
 	public float posX = 150;
 	public float posY = 50;
 	public Font font;
@@ -17,10 +19,11 @@ public class MessageWindow : MonoBehaviour {
 	public float subQuestTab= 30;
 	bool writeMessage;	
 	List<Questpair> questlog = new List<Questpair>(); //Array där alla quests ska sparas
+	
 
 // Use this for initialization 
 	void Start () { 
-		
+		newObjective = gameObject.GetComponent<AudioSource>();	
 		//print(asset.text);
 		bool writeMessage = false; 
 		addQuest ("2");
@@ -33,8 +36,16 @@ public class MessageWindow : MonoBehaviour {
 		addSubQuest("2b");
 		finishedSubQuest("2b");
 		finishedSubQuest("2a");
+		
 	} 
-	
+/*	void Update(){
+		if(Input.GetKeyUp(KeyCode.A)){
+			writeMessage = true; 
+			Time.timeScale = 0; 
+		}
+		
+	}
+	*/
 
 //Triggar Meddelandet 
 	void Interact(){
@@ -45,7 +56,9 @@ public class MessageWindow : MonoBehaviour {
 	} 
 	
 // Lägg till en main-quest
-	void addQuest(string id){
+	public void addQuest(string id){
+		
+		Debug.Log("quest added");
 		
 		XmlDocument doc = new XmlDocument(); 
 		doc.LoadXml(asset.text);				//Laddar vår xml-fil
@@ -58,6 +71,11 @@ public class MessageWindow : MonoBehaviour {
 			
 			Debug.Log (node.mContent);
 		}
+		Debug.Log("about to play audio");
+	//	audio.clip = addQuestSound;
+	//	audio.timeSamples = 5000;
+	//	audio.Play();
+		Debug.Log ("audio played");
 	}
 	
 //Lägg till en subquest
