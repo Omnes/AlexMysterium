@@ -3,10 +3,13 @@ using System.Collections;
 
 public class Puzzel_slot : MonoBehaviour {
 	
-	public Vector3 	position;
-	public Vector3	centerPos;
-	public float 	radius;
-	public int 		correct_slot_value;
+	public Vector3 		position;
+	public Vector3		centerPos;
+	public float 		radius;
+	public int 			correct_slot_value;
+	
+	//public AudioClip	sound;
+	public AudioSource 	speaker;// finish to make it play sound when a piece is set.OBS!!!!!!!!!!!!!!!!!!!!!
 	//public bool 	correct_piece;
 	
 	public bool Correct;
@@ -22,6 +25,8 @@ public class Puzzel_slot : MonoBehaviour {
 		//centerPos.z += (int)gameObject.transform.localScale.z;
 		centerPos.z -= (int)(gameObject.collider.bounds.size.z/2);
 		Debug.Log("z: " + gameObject.collider.bounds.size.z/2 );
+		
+		speaker = gameObject.GetComponent<AudioSource>();
 	}
 	
 	// Update is called once per frame
@@ -81,6 +86,7 @@ public class Puzzel_slot : MonoBehaviour {
 				if(!ptrPuzzel_Piece.holding){
 					ptrPuzzel_Piece.transform.position = areaSnapping();
 					Debug.Log("pusselbit");
+					speaker.Play();
 					//ptrPuzzel_Piece.transform.position = areaSnapping();
 					
 				/*if(ptrPuzzel_Piece.Piece_KeyValue == correct_slot_value && ptrPuzzel_Piece.movable){
@@ -95,6 +101,7 @@ public class Puzzel_slot : MonoBehaviour {
 		}
 		if(ptrPuzzel_Piece != null && !ptrPuzzel_Piece.holding && ptrPuzzel_Piece.transform.position != centerPos){
 			ptrPuzzel_Piece.transform.position = areaSnapping();
+			speaker.Play();
 		}
 		if(ptrPuzzel_Piece != null && ptrPuzzel_Piece.Piece_KeyValue == correct_slot_value && ptrPuzzel_Piece.correct && !ptrPuzzel_Piece.holding){
 			//if(ptrPuzzel_Piece.movable){

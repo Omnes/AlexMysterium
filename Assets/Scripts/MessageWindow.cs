@@ -38,6 +38,7 @@ public class MessageWindow : MonoBehaviour {
 		finishedSubQuest("2a");
 		
 	} 
+<<<<<<< HEAD
 /*	void Update(){
 		if(Input.GetKeyUp(KeyCode.A)){
 			writeMessage = true; 
@@ -46,6 +47,9 @@ public class MessageWindow : MonoBehaviour {
 		
 	}
 	*/
+=======
+
+>>>>>>> d17862795a2c939a2d185ea457c011e33cdb0646
 
 //Triggar Meddelandet 
 	void Interact(){
@@ -75,6 +79,10 @@ public class MessageWindow : MonoBehaviour {
 	//	audio.clip = addQuestSound;
 	//	audio.timeSamples = 5000;
 	//	audio.Play();
+<<<<<<< HEAD
+=======
+
+>>>>>>> d17862795a2c939a2d185ea457c011e33cdb0646
 		Debug.Log ("audio played");
 	}
 	

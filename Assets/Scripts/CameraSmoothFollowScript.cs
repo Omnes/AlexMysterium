@@ -21,8 +21,10 @@ public class CameraSmoothFollowScript : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		//startposition
-		if(isFollowing){
-			transform.position = new Vector3(5f,CameraDistY,CameraDistZ);  //defaultspawn
+
+		GameObject cmObj = GameObject.FindGameObjectWithTag("CameraSpawn");
+		if(cmObj != null){
+			transform.position = new Vector3(cmObj.transform.position.x, CameraDistY, CameraDistZ);
 		}
 	}
 	
@@ -51,7 +53,11 @@ public class CameraSmoothFollowScript : MonoBehaviour {
 		//follow player
 		if(isColliding == false){
 			playerMovement = new Vector3(Player.transform.position.x, CameraDistY, CameraDistZ);
-			transform.position = playerMovement;
+			Vector3 dirVec = playerMovement - transform.position;
+			//pro programming skillz
+			if(dirVec.magnitude > 0.001){
+				transform.position += dirVec.normalized * 0.1f * dirVec.magnitude;
+			}
 		}
 		
 		//Center of camera
