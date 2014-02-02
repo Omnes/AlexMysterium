@@ -149,8 +149,8 @@ public class Computertyping : MonoBehaviour {
 
 				GUILayout.Label(maillist[currentmail-1].mContent, style);
 
-				if(GUI.Button(new Rect(returntomailPosX,returntomailPosY,returntomail.height,returntomail.width), returntomail,style)){ 	//Return-button
-					
+				if(GUI.Button(new Rect(returntomailPosX,returntomailPosY,returntomail.width,returntomail.height), returntomail,style)){ 	//Return-button
+
 					readingmail = false;
 					currentLayout = inboxLayout;
 					

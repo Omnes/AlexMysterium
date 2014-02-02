@@ -49,7 +49,7 @@ public class Inventory : MonoBehaviour {
 	
 	public void AddItem (GameObject itemPickup) {
 		itemPickup.SetActive(false);
-		Item item = new Item(itemPickup.name,(Texture2D)itemPickup.renderer.material.mainTexture,ItemPickupCounter);
+		Item item = new Item(itemPickup.name,itemPickup.GetComponent<ItemIconHolder>().itemIcon,ItemPickupCounter);
 		inventoryList.Add(item);
 		ItemPickupCounter++;
 	}

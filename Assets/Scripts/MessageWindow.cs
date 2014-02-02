@@ -39,7 +39,6 @@ public class MessageWindow : MonoBehaviour {
 		
 	} 
 
-
 //Triggar Meddelandet 
 	void Interact(){
 		

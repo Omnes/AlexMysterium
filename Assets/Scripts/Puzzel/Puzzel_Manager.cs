@@ -22,7 +22,7 @@ public class Puzzel_Manager : MonoBehaviour {
 	public float buttonDelay = 0.3f;
 	private float buttonDelayCounter;
 	
-	private Puzzel_piece tempPiece; 
+	public Puzzel_piece tempPiece; 
 	//private Vector3 tempPos;
 	// sounds
 	/*
@@ -94,13 +94,12 @@ public class Puzzel_Manager : MonoBehaviour {
 			//-----------------------------------------------------------------------------------------------------------------------------------------------------
 			if(Input.GetMouseButton(0) && tempPiece != null){// We are holding a piece
 				if(tempPiece.correct){
-								//Debug.Log (Input.mousePosition.x + " " + Input.mousePosition.y + " " + Input.mousePosition.z);
-							Vector3 newPos = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, Input.mousePosition.z));
-							newPos.z = transform.position.z;
-							tempPiece.transform.position = newPos;
+					//Debug.Log (Input.mousePosition.x + " " + Input.mousePosition.y + " " + Input.mousePosition.z);
+					Vector3 newPos = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, Input.mousePosition.z));
+					newPos.z = transform.position.z;
+					tempPiece.transform.position = newPos;
 							
-						}
-				
+				}
 			}
 			//-----------------------------------------------------------------------------------------------------------------------------------------------------
 			if(!Input.GetMouseButton(0) && tempPiece != null){// we dropped the piece
