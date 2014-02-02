@@ -37,7 +37,7 @@ public class MovementManager : MonoBehaviour {
 			drawPath();
             moveTowards(path[0]);
             //transform.localScale = startScale * (3-transform.position.y);
-            if (Vector3.Distance(transform.position,path[0])< speed*Time.deltaTime+0.01){
+            if (Vector3.Distance(transform.position,path[0])< speed*Time.deltaTime+0.1){
                 //moving = false;
 				path.RemoveAt(0);
 				
@@ -57,7 +57,7 @@ public class MovementManager : MonoBehaviour {
 	}
 	
 	bool compareVec3(Vector3 v1,Vector3 v2){
-		return Vector3.Distance(v1,v2) < 0.6;
+		return Vector3.Distance(v1,v2) < 0.9;
 		
 	}
 	

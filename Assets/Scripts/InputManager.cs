@@ -31,7 +31,7 @@ public class InputManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
+
 		//if in puzzle then WorldInput == false
 		if(buttonDelayCounter + buttonDelay < Time.time && !ptrInventory.showInventory){
 			FindInput ();
@@ -50,7 +50,7 @@ public class InputManager : MonoBehaviour {
 		
 		//mousebutton left pressed
 		if(Input.GetMouseButtonDown(0)){
-			
+
 			//reset mousecounter
 			buttonDelayCounter = Time.time;
 			
@@ -113,30 +113,7 @@ public class InputManager : MonoBehaviour {
 					
 					
 				}
-				
-				//----------------------------------------------------------
-				/*
-				if(hit.transform.tag == "Zoom_Interact"){
-					
-					//if in puzzle
-					//without pathfinding
-					if(isPuzzle){
-						
-						hit.transform.SendMessage("Activate");
-						
-					}else{//with pathfinding
-						
-						//stop previous coroutine
-						StopCoroutine("InteractObject");
-						//start new coroutine
-						StartCoroutine("InteractObject", (hit.transform));
-						
-					}
-					
-					
-				}
-				*/
-				//---------------------------------------------------------
+
 				
 			}
 			

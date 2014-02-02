@@ -16,8 +16,9 @@ public class Animationator : MonoBehaviour {
 	float currentFrame;
 	float clock;
 	float Frametime;
-	//bool walk;
+	public bool walk;
 	private Material playerMat;
+	public float downOffset = 0.35f; 
 	
 	
 	void Start () {
@@ -31,7 +32,7 @@ public class Animationator : MonoBehaviour {
 		yOffset = 0;
 		orgSpriteSize = orgSpriteSize += orgSpriteSize*Size;
 	
-		//walk = false;
+		walk = false;
 		
 	}
 	
@@ -61,8 +62,9 @@ public class Animationator : MonoBehaviour {
 	//	}
 		
 		float spriteSize = distanceDelta * transform.GetChild(0).position.z;
-		
+
 		transform.GetChild(0).localScale = new Vector3(orgSpriteSize.x - orgSpriteSize.x*spriteSize, orgSpriteSize.y, orgSpriteSize.z - orgSpriteSize.z*spriteSize);
+		transform.GetChild(0).localPosition = new Vector3(0, transform.GetChild(0).localScale.z*10/2 - downOffset, 0);
 		
 		//transform.localScale = spriteSize/(transform.position.z/distanceDelta); //Bildens storlek anpassas efter djupet(Z)
 	}
@@ -101,7 +103,7 @@ public class Animationator : MonoBehaviour {
 		
 		playerMat.mainTextureOffset = new Vector2(xOffset,yOffset); //sätter nuvarande offsetY
 		
-		//walk = true;
+		walk = true;
 	}
 	
 	public void setStandAnimation(){
@@ -112,6 +114,6 @@ public class Animationator : MonoBehaviour {
 	
 		yOffset = 0.8f;	
 		
-		//walk = false;
+		walk = false;
 	}
 }
