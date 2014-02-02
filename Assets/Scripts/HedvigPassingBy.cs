@@ -9,19 +9,21 @@ public class HedvigPassingBy : MonoBehaviour {
 	public float walkingspeed;
 	public float pathlength;
 	Vector3 direction = new Vector3(1,0,0);
-
+	GameObject hedvig;
 	// Use this for initialization
 	void Start () {
-
+	
 		Animationator hedvigani = gameObject.GetComponent<Animationator>();
 		hedvigani.Animations = 2;
 		hedvigani.Frames = 7;
+		hedvigani.setWalkAnimation(direction);
 	}
 	
 	// Update is called once per frame
 	void Update () {
-	
-		prefab.position += walkingspeed;
+
+		float temppos = hedvig.transform.position.x + walkingspeed;
+		hedvig.transform.position = new Vector3(temppos, hedvig.transform.position.y, hedvig.transform.position.z);
 
 		if(prefab.position.x - spawnposition.x > pathlength){
 
@@ -31,7 +33,6 @@ public class HedvigPassingBy : MonoBehaviour {
 
 	void playAnimation(){
 
-		Instantiate(prefab,spawnposition,prefab.rotation);
-		hedvigani.setWalkAnimation(direction);
+		hedvig = (GameObject) Instantiate(prefab,spawnposition,prefab.rotation);
 	}
 }
