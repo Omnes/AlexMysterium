@@ -3,50 +3,46 @@ using System.Collections;
 
 public class Radio : MonoBehaviour {
 	
-	public AudioClip audioList;
-	public AudioSource speaker;
-	
-	public bool enabled = true;
-	
-	public 	float 	pan;
-	
-	void Awaken(){
+	public AudioClip mainClip;
+	public AudioClip powerfailureClip;
+	private AudioSource speaker;
+	public bool enabled = false;
+	public bool avbrott = false;
 
-	}
-	
-	// Use this for initialization
 	void Start () {
 		speaker = gameObject.GetComponent<AudioSource>();
-	
-		
+		speaker.clip = mainClip;
 	}
-	
-	// Update is called once per frame
-	void Update () {
-		if(enabled){
-			if(!speaker.isPlaying){
-				speaker.Play();
+
+	void Interact(){
+		if(!avbrott){
+			enabled = !enabled;
+			if(enabled){
+				if(!speaker.isPlaying){
+					speaker.Play();
+				}
+			}else{
+				speaker.Pause();
 			}
 		}
 	}
-	
-	void Interact(){
-		enabled = !enabled;
-		if(enabled){
-			
+
+	void setPower(bool powerOff){
+		avbrott = powerOff;
+		if(powerOff){
+			if(enabled){
+				speaker.clip = powerfailureClip;
+				speaker.Play();
+				speaker.loop = false;
+			}
+		}else{
+			if(enabled){
+				speaker.clip = mainClip;
+				speaker.Play();
+				speaker.loop = true;
+			}
 		}
+
 	}
-	
-	private void restart(){ // pick another random sound, not the same as the last one.
-		// starta upp radion igen, inte för långt ifrån där man avslutade.
-	}
-	
-	/*private void nextPan(){
-		speaker.pan = pans[panIndex];
-		panIndex++;
-		if(panIndex == pans.Length){
-				panIndex = 0;	
-		}
-	}*/
-	
+
 }

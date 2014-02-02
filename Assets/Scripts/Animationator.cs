@@ -21,8 +21,13 @@ public class Animationator : MonoBehaviour {
 	public float downOffset = 0.35f; 
 	
 	
-	void Start () {
+	/*void Start () {
 		
+
+		
+	}*/
+
+	public void MastermindRunsThisStartFunction(){
 		orgSpriteSize = transform.GetChild(0).localScale;//Storleken på objektet
 		playerMat = transform.GetChild(0).renderer.material;
 		playerMat.mainTextureScale = new Vector2(1/Frames,1/Animations); //Skalar av höjden(Y) till en frame
@@ -31,9 +36,8 @@ public class Animationator : MonoBehaviour {
 		xOffset = 0;
 		yOffset = 0;
 		orgSpriteSize = orgSpriteSize += orgSpriteSize*Size;
-	
-		walk = false;
 		
+		walk = false;
 	}
 	
 	
