@@ -23,8 +23,9 @@ public class Puzzel_piece : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		
-		if(notUsed){
+		if(notUsed && !holding){
 			if(transform.position != position && correct){
+				Debug.Log("Repositioning:" + position);
 				transform.position = position;	
 			}
 		}
