@@ -12,6 +12,8 @@ public class LevelInitation : MonoBehaviour {
 	public bool initiateFade = false;
     //public bool assignCamera = false;
 	private string nextLevel;
+	public float[] PlayerSizesPerLevel = {0.2f,10f,10f,10f,10f,10f,10f};
+	public float[] PlayerDeltasPerLevel = {0.1f,0.1f,0.1f,0.1f,0.1f};
 
 	// Use this for initialization
 	void Start () {
@@ -45,6 +47,9 @@ public class LevelInitation : MonoBehaviour {
 			
 		Transform player = (Transform)Instantiate(playerPrefab,spawnPosition,Quaternion.identity);
 		GetComponent<InputManager>().SetPlayer(player);
+		player.gameObject.GetComponent<Animationator>().Size = PlayerSizesPerLevel[Application.loadedLevel];
+		player.gameObject.GetComponent<Animationator>().Size = PlayerDeltasPerLevel[Application.loadedLevel];
+		player.gameObject.GetComponent<Animationator>().MastermindRunsThisStartFunction();
         Camera.main.GetComponent<CameraSmoothFollowScript>().Player = player.gameObject;
 
 		Transform floor = GameObject.Find("floor").transform;

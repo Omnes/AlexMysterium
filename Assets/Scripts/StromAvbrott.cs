@@ -7,6 +7,14 @@ public class StromAvbrott : MonoBehaviour {
 	public bool avbrott = false;
 
 	void Start(){
+		//setOn();
+	}
+
+	void OnEnable(){
+
+	}
+
+	void OnLevelWasLoaded(){
 		setOn();
 	}
 
