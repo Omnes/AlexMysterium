@@ -29,7 +29,7 @@ public struct ZDB{
 	public Vector3 		active_pos;			// new camera pos
 	public string 		name; 				// Name of the zoom
 	
-	public Camera zoom_cam;
+	public GameObject zoom_cam;
 	public bool uses_puzzel;
 	public Puzzel_Manager current_manager;
 }

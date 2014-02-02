@@ -10,12 +10,16 @@ public class zoomManager : MonoBehaviour {
 			public List<ZDB> zoomList;
 	//public ZDB[] zoomArray;
 	//Private: 
-	private Camera cam_ref;// main cam
+	public Camera cam_ref;// main cam
 	private Vector3 previous_cam_pos;
 	
 	//------------------------------------
-	void Start () {
+	/*void Start () {
 		//zoomQueue = new Queue();
+		cam_ref = Camera.main;
+		zoomList = new List<ZDB>();
+	}****/
+	void OnLevelWasLoaded(){
 		cam_ref = Camera.main;
 		zoomList = new List<ZDB>();
 	}
