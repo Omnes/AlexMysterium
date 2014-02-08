@@ -39,8 +39,7 @@ public class Animationator : MonoBehaviour {
 		
 		walk = false;
 	}
-	
-	
+
 	void Update () {
 		
 		//if(walk){
@@ -91,16 +90,16 @@ public class Animationator : MonoBehaviour {
 				yOffset = 0f;
 			}
 			if(direction.x < 0){
-				yOffset = 0.20f;
+				yOffset = 1f/Animations;
 			}
 		}else{
 			if(direction.y < 0){
 				
-				yOffset = 0.60f;
+				yOffset = 1f/Animations*3;
 			}
 			if(direction.y > 0){
 				
-				yOffset = 0.40f;
+				yOffset = 1f/Animations*2;
 			}
 		}		
 

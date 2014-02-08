@@ -5,34 +5,56 @@ using UnityEditor;
 public class HedvigPassingBy : MonoBehaviour {
 
 	public Transform prefab;
+	private Transform instance;
 	public Vector3 spawnposition;
 	public float walkingspeed;
-	public float pathlength;
-	Vector3 direction = new Vector3(1,0,0);
-	GameObject hedvig;
+	public float pathlength; 
+	bool instantiated = false;
+	float alpha;
+	Hedviganimation hedvigani; 
+
 	// Use this for initialization
 	void Start () {
-	
-		Animationator hedvigani = gameObject.GetComponent<Animationator>();
-		hedvigani.Animations = 2;
-		hedvigani.Frames = 7;
-		hedvigani.setWalkAnimation(direction);
+	 
+		//alpha = 0.01f;
+		playAnimation();
+		//renderer.material.SetTexture("_MainTex",playerMat.GetTexture("_MainTex"));
+		hedvigani = instance.GetComponent<Hedviganimation>();
 	}
 	
 	// Update is called once per frame
 	void Update () {
+		
+		if(instantiated){
 
-		float temppos = hedvig.transform.position.x + walkingspeed;
-		hedvig.transform.position = new Vector3(temppos, hedvig.transform.position.y, hedvig.transform.position.z);
+			float temppos = instance.position.x + walkingspeed;
+			instance.position = new Vector3(temppos, instance.position.y, instance.position.z);
+			
+			Debug.Log ("ska ha flyttat sig framåt här");
+			
+			if(Mathf.Abs(spawnposition.x - instance.position.x)> pathlength){
+				Destroy(instance.gameObject); //Vet inte om detta duger
+				//PrefabUtility.DisconnectPrefabInstance(prefab);
+				instantiated = false;
+			}
 
-		if(prefab.position.x - spawnposition.x > pathlength){
+			if(Mathf.Abs(spawnposition.x - instance.position.x)> pathlength - 3){
 
-			PrefabUtility.DisconnectPrefabInstance(prefab);
+				hedvigani.startfadingaway();
+			}
+		//	alpha += 0.01f;
+			//prefab.transform.GetChild(0).renderer.material.color = new Color(renderer.material.color.r,renderer.material.color.g,renderer.material.color.b,alpha += 0.01f);
 		}
+		//	}
 	}
 
-	void playAnimation(){
 
-		hedvig = (GameObject) Instantiate(prefab,spawnposition,prefab.rotation);
+	public void playAnimation(){
+
+		Debug.Log ("Hallå ja");
+		instance = Instantiate(prefab,spawnposition,prefab.rotation) as Transform;
+		instantiated = true;
+		Debug.Log ("Instansiated ghost");
 	}
+
 }
