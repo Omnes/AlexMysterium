@@ -136,7 +136,7 @@ public class InputManager : MonoBehaviour {
 	public void UseItemOnTarget(Transform target,Item item){
 		
 		if(isPuzzle){
-			target.SendMessage("UseItem",item);
+			target.SendMessage("UseItem",item,SendMessageOptions.DontRequireReceiver);
 		
 		}else{
 			stopPreviousCoroutine();
@@ -185,7 +185,7 @@ public class InputManager : MonoBehaviour {
 		Vector3 targetPosition = ptrMovementManager.pathfindToObject(tai.target);
 		while(true){
 			if(ptrMovementManager.isAtPosition(targetPosition)){
-				tai.target.SendMessage("UseItem",tai.item);
+				tai.target.SendMessage("UseItem",tai.item,SendMessageOptions.DontRequireReceiver);
 				break;
 			}
 			

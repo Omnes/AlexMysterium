@@ -23,8 +23,7 @@ public class zoom_TEST : MonoBehaviour {
 	
 	// Use this for initialization
 	void Awake(){
-		//changePos			= GameObject.Find(name).GetComponent("zoom").retrieveCameraPos(); 					// hitta till rätt inzoomning så man kan hämta koordinaterna som kameran ska flyttas till. //1: find the object. 2: find the script on that object. 3:Access that script 4:???? 5: PROFIT
-		
+
 		changePos			= childObject.transform.position;
 
 		cam_ref = Camera.main.gameObject;
@@ -34,53 +33,38 @@ public class zoom_TEST : MonoBehaviour {
 	void Start () {
 
 		Puzzel_cam = GameObject.Instantiate(
-			//temp_main, 				// clone of the original
 			ZoomCamPrefab, 				// clone of the original
 			changePos,				// Position
 			Quaternion.FromToRotation(new Vector3(0, 0, 0), new Vector3(0, 0, 1)) 		// Rotation
 			) as GameObject;
 
-
-		//ZoomCamPrefab.gameObject.SetActive(false);
 		Debug.Log("hejseas ");
 		Puzzel_cam.gameObject.SetActive(false);	// Activate if needed
-		//Puzzel_cam.position = changePos;
-//robin did this		Puzzel_cam.GetComponent<AudioListener>().enabled = false;
-		//--------------------------------------------------------
 
 		if(Puzzelmanager_Name != ""){
 			current_Manager = GameObject.Find(Puzzelmanager_Name).GetComponent<Puzzel_Manager>();
 			uses_puzzel = true;
 		}
-		//zoomInfo = Create_ZDB();
-		
-	}
-	
-	/*// Update is called once per frame
-	void Update () {
-	
-	}
-	*/
-	
-		
-	void Activate()
-	{
 
+	}
+
+	void Activate(){
 		zoomInfo = Create_ZDB();
 		send_ZDB();
+		childObject.transform.parent.SendMessage("ActivateStuff",SendMessageOptions.DontRequireReceiver);
 		Debug.Log("RAWR!");
 
 	}
 		
 	void Interact(){
+		if(!enabled) return;
 		Activate();
-
 	}
 	
 	void Deactivate()
 	{
+		childObject.transform.parent.SendMessage("DeactivateStuff",SendMessageOptions.DontRequireReceiver);
 		GameObject.Find("MasterMind").SendMessage("Deactivate");
-
 	}
 	
 	ZDB Create_ZDB()//  creates a ZoomDataBlock

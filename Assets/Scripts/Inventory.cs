@@ -180,7 +180,7 @@ public class Inventory : MonoBehaviour {
 					Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 					RaycastHit hit;
 					if(Physics.Raycast(ray, out hit)){
-						if(hit.transform.tag == "Combinable"){
+						if(hit.transform.tag == "Interactive"){
 							GetComponent<InputManager>().UseItemOnTarget(hit.transform,holdingItem);
 							
 						}
