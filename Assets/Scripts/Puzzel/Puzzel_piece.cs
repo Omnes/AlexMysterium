@@ -66,6 +66,10 @@ public class Puzzel_piece : MonoBehaviour {
 			notUsed = true;
 		}
 	}
+
+	public void Reposition(){
+		transform.position = position;
+	}
 }
 
 /*public struct Piece{

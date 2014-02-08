@@ -26,37 +26,9 @@ public class zoom_TEST : MonoBehaviour {
 		//changePos			= GameObject.Find(name).GetComponent("zoom").retrieveCameraPos(); 					// hitta till rätt inzoomning så man kan hämta koordinaterna som kameran ska flyttas till. //1: find the object. 2: find the script on that object. 3:Access that script 4:???? 5: PROFIT
 		
 		changePos			= childObject.transform.position;
-		//changePos			= GameObject.Find(name).GetComponent<zoom>().retrieveCameraPos();
-		//Component tempScript	    = temp.GetComponent("zoom"); 
-		//changePos 					= tempScript.retrieveCameraPos();
-		/*
-		//-------------------------------------------------------
-		cam_ref = Camera.main;
-		//Create camera
-		Camera temp_main = Camera.main;
-		Puzzel_cam = Camera.Instantiate(
-			temp_main, 				// clone of the original
-			changePos,				// Position
-			Quaternion.FromToRotation(new Vector3(0, 0, 0), new Vector3(0, 0, 1)) 		// Rotation
-		) as Camera;
-		Puzzel_cam.enabled = false;	// Activate if needed
-		Puzzel_cam.GetComponent<AudioListener>().enabled = false;
-		//--------------------------------------------------------
-		*/
-		//-------------------------------------------------------
+
 		cam_ref = Camera.main.gameObject;
-		//Create camera
-		/*Puzzel_cam = GameObject.Instantiate(
-			//temp_main, 				// clone of the original
-			ZoomCamPrefab, 				// clone of the original
-			changePos,				// Position
-			Quaternion.FromToRotation(new Vector3(0, 0, 0), new Vector3(0, 0, 1)) 		// Rotation
-			) as GameObject;*/
-		//Puzzel_cam.gameObject.SetActive(false);	// Activate if needed
-		//Puzzel_cam.position = changePos;
-		//Puzzel_cam.GetComponent<AudioListener>().enabled = false;
-		//--------------------------------------------------------
-		//zoomInfo = Create_ZDB();
+
 	}
 
 	void Start () {
@@ -93,60 +65,22 @@ public class zoom_TEST : MonoBehaviour {
 		
 	void Activate()
 	{
-		//zoomInfo = Create_ZDB();
-		//send_ZDB();
-		/*
-		Puzzel_cam.enabled = true; 		// ! might need a more solid approch but for now this works !
-		Puzzel_cam.GetComponent<AudioListener>().enabled = true;
-		cam_ref.GetComponent<AudioListener>().enabled = false;
-		cam_ref.enabled = false; // if it don't work call them by name.
-		*/
+
 		zoomInfo = Create_ZDB();
 		send_ZDB();
 		Debug.Log("RAWR!");
-		// Debug.Log("You entered the zoom");
-		// Camera.main.SendMessage("SetIsPuzzle", true);				// Let the input manager know we are in a puzzel.
-		
-		// CameraChangePos messenger 	= new CameraChangePos();			/* Change the camera position and let it know we are in puzzel mode 	*/
-		// messenger.pos 				= changePos;						/* Uses a struct with a position and a bool as a data messenger			*/
-		// messenger.isPuzzle 			= true;								/*																		*/
-		
-		// Camera.main.SendMessage("SetPos", messenger);				// the new camera position is set.
-		// GameObject.Find(name).GetComponent<GUI_Parent>().Activate(true);	// activates the GUI-components of the current zoom.
+
 	}
 		
 	void Interact(){
 		Activate();
-		//Debug.Log("you interacted with the zoom-object!?!?!!!!");
-		//Camera.main.SendMessage("SetIsPuzzle", true);				// Let the input manager know we are in a puzzel.
-		
-		//CameraChangePos messenger = new CameraChangePos();			/* Change the camera position and let it know we are in puzzel mode 	*/
-		//messenger.pos = changePos;									/*  																	*/
-		//messenger.isPuzzle = true;									/*																		*/
-		
-		//Camera.main.SendMessage("SetPos", messenger);				// the new camera position is set.
-		//GameObject.Find(name).GetComponent<GUI_Parent>().Activate(true);	// activates the GUI-components of the current zoom.
+
 	}
 	
 	void Deactivate()
 	{
 		GameObject.Find("MasterMind").SendMessage("Deactivate");
-		/*
-		cam_ref.enabled 	= true; // if it don't work call them by name.
-		cam_ref.GetComponent<AudioListener>().enabled		= true;
-		Puzzel_cam.GetComponent<AudioListener>().enabled	= false;
-		Puzzel_cam.enabled 	= false;
-		*/
-		// GameObject.Find(name).GetComponent<GUI_Parent>().Activate(false);	// activates the GUI-components of the current zoom.
-		
-		// Debug.Log("You left the zoom");
-		// Camera.main.SendMessage("SetIsPuzzle", false);				// Let the input manager know we are in a puzzel.
-		
-		// CameraChangePos messenger 	= new CameraChangePos();			/* Change the camera position and let it know we are in puzzel mode 	*/
-		// messenger.pos 				= changePos;						/*  Uses a struct with a position and a bool as a data messenger		*/
-		// messenger.isPuzzle 			= false;							/*																		*/
-		
-		// Camera.main.SendMessage("SetPos", messenger);				// the new camera position is set.
+
 	}
 	
 	ZDB Create_ZDB()//  creates a ZoomDataBlock
@@ -157,7 +91,11 @@ public class zoom_TEST : MonoBehaviour {
 		zoom.name 			= name;
 		zoom.zoom_cam 		= Puzzel_cam;
 		zoom.uses_puzzel	= uses_puzzel;
-		zoom.current_manager= current_Manager;
+		if(current_Manager != null){
+			zoom.current_manager= current_Manager;
+		}else{
+			Debug.LogWarning("puzzel_Manager not used");
+		}
 		
 		return zoom;
 	}

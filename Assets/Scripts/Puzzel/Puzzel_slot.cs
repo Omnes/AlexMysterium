@@ -13,6 +13,7 @@ public class Puzzel_slot : MonoBehaviour {
 	//public bool 	correct_piece;
 	
 	public bool Correct;
+	//private bool enter_exit = true;
 	
 	//seans skit
 	private Puzzel_piece ptrPuzzel_Piece;
@@ -20,10 +21,11 @@ public class Puzzel_slot : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		position = transform.position;
+		//centerPos = renderer.bounds.center;
 		centerPos = renderer.bounds.center;
 		Debug.Log("Z: " + centerPos.z );
 		//centerPos.z += (int)gameObject.transform.localScale.z;
-		centerPos.z -= (int)(gameObject.collider.bounds.size.z/2);
+		centerPos.z -= (int)((gameObject.collider.bounds.size.z/2)-(gameObject.collider.bounds.size.z/4));
 		Debug.Log("z: " + gameObject.collider.bounds.size.z/2 );
 		
 		speaker = gameObject.GetComponent<AudioSource>();
@@ -31,7 +33,20 @@ public class Puzzel_slot : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
+		if(ptrPuzzel_Piece != null && !ptrPuzzel_Piece.holding && Vector3.Distance(ptrPuzzel_Piece.transform.position,centerPos) > 0.2){
+			//Debug.Log("Current pos: " + ptrPuzzel_Piece.transform.position + " new pos: " + centerPos);
+			ptrPuzzel_Piece.transform.position = areaSnapping();
+			//Debug.Log(" AFTERSNAPCurrent pos: " + ptrPuzzel_Piece.transform.position + " new pos: " + centerPos);
+			speaker.Play();
+			Debug.Log("PLAYING A SOUND");
+		}
+		if(ptrPuzzel_Piece != null && ptrPuzzel_Piece.Piece_KeyValue == correct_slot_value && ptrPuzzel_Piece.correct && !ptrPuzzel_Piece.holding && !Correct){
+			//if(ptrPuzzel_Piece.movable){
+			//ptrPuzzel_Piece.correct = false;
+			Correct = true;
+			Debug.Log("Correct!");
+			//}
+		}
 	}
 	
 	Vector3 areaSnapping(){// puzzel piece | puzzel target position and radius
@@ -54,54 +69,49 @@ public class Puzzel_slot : MonoBehaviour {
 		}
 		return check;
 	}
-	/*
+
 	void OnTriggerEnter(Collider other) {
-		Debug.Log("SEAN!!!");
-		if(other.tag == "PusselBit" && slot_empty){
-			
-			Debug.Log("pusselbit");
-			
-			ptrPuzzel_Piece = other.GetComponent<Puzzel_piece>();
-			
-			if(ptrPuzzel_Piece.Piece_KeyValue == correct_slot_value){
-				
-				Correct = true;
-				slot_empty = false;
-				Debug.Log("Correct!");
-				//if(snap == true){
-					
-				//other.transform.position = gameObject.transform.position;
-					
-				//}	
-			}
-		}
+			//enter_exit = true;
 	}
-	*/
+
 	void OnTriggerStay(Collider other) {// bara kolla bitarna när man har släppt dem.
-		if(!Correct){
-			if(other.tag == "PusselBit" && slot_empty){
+				//if(enter_exit){
+			if(other.tag == "PusselBit"){
 				ptrPuzzel_Piece = other.GetComponent<Puzzel_piece>();
-				slot_empty = false;
-			
-				if(!ptrPuzzel_Piece.holding){
-					ptrPuzzel_Piece.transform.position = areaSnapping();
-					Debug.Log("pusselbit");
-					speaker.Play();
-					//ptrPuzzel_Piece.transform.position = areaSnapping();
-					
-				/*if(ptrPuzzel_Piece.Piece_KeyValue == correct_slot_value && ptrPuzzel_Piece.movable){
-					//if(ptrPuzzel_Piece.movable){
-						ptrPuzzel_Piece.movable = false;
-						Correct = true;
-						Debug.Log("Correct!");
-					//}
-				}*/
+				if( slot_empty && !ptrPuzzel_Piece.holding){
+					//ptrPuzzel_Piece = other.GetComponent<Puzzel_piece>();
+					slot_empty = false;
+				
+					if(!ptrPuzzel_Piece.holding){
+						ptrPuzzel_Piece.transform.position = areaSnapping();
+						Debug.Log("pusselbit");
+						//speaker.Play();
+						//ptrPuzzel_Piece.transform.position = areaSnapping();
+						
+					/*if(ptrPuzzel_Piece.Piece_KeyValue == correct_slot_value && ptrPuzzel_Piece.movable){
+						//if(ptrPuzzel_Piece.movable){
+							ptrPuzzel_Piece.movable = false;
+							Correct = true;
+							Debug.Log("Correct!");
+						//}
+					}*/
+					}
 				}
+			//}
+		}else{ 
+			if(other.tag == "PusselBit" && !slot_empty && other != ptrPuzzel_Piece){
+				Puzzel_piece temp = other.GetComponent<Puzzel_piece>();
+				//speaker.Play();
+				temp.Reposition();
+				Debug.LogWarning("Pussel-spot occupied");
 			}
 		}
-		if(ptrPuzzel_Piece != null && !ptrPuzzel_Piece.holding && ptrPuzzel_Piece.transform.position != centerPos){
+		/*if(ptrPuzzel_Piece != null && !ptrPuzzel_Piece.holding && Vector3.Distance(ptrPuzzel_Piece.transform.position,centerPos) < 0.2){
+			//Debug.Log("Current pos: " + ptrPuzzel_Piece.transform.position + " new pos: " + centerPos);
 			ptrPuzzel_Piece.transform.position = areaSnapping();
+			//Debug.Log(" AFTERSNAPCurrent pos: " + ptrPuzzel_Piece.transform.position + " new pos: " + centerPos);
 			speaker.Play();
+			Debug.Log("PLAYING A SOUND");
 		}
 		if(ptrPuzzel_Piece != null && ptrPuzzel_Piece.Piece_KeyValue == correct_slot_value && ptrPuzzel_Piece.correct && !ptrPuzzel_Piece.holding){
 			//if(ptrPuzzel_Piece.movable){
@@ -109,7 +119,10 @@ public class Puzzel_slot : MonoBehaviour {
 				Correct = true;
 				Debug.Log("Correct!");
 			//}
-		}
+			}
+		}*/
+			//enter_exit = false;
+		//}
 	}
 	
 	void OnTriggerExit(Collider other){// om du tar bort en bit från dess rätta plats så får platsen ett "unfinished state"
@@ -122,6 +135,7 @@ public class Puzzel_slot : MonoBehaviour {
 				Correct = false;
 			}
 			ptrPuzzel_Piece = null;
+				//enter_exit = false;
 		}
 	}
 	

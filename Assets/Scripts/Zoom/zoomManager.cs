@@ -68,20 +68,26 @@ public class zoomManager : MonoBehaviour {
 	//cam_ref.SendMessage("SetPos", true);					// the new camera position is set.
 		//cam_ref.SendMessage("SetZoom", true);					// the new camera position is set.
 		GameObject.Find(temp.name).GetComponent<GUI_Parent>().Activate(true);	// activates the GUI-components of the current zoom.
-		if(temp.uses_puzzel && temp.current_manager != null){
-			temp.current_manager.Active(true);// activate the current pussel-manager	
-		}else{
-			Debug.Log("Pussel-manager couldn't be activated");
-		}
+		if(temp.uses_puzzel){
+			if(temp.current_manager != null){
+				temp.current_manager.Active(true);// activate the current pussel-manager	
+			}else{
+					Debug.LogError("Pussel-manager couldn't be activated");
+				}
+			}
 	}
 	
 	void Deactivate(){// deactivate current ZDB
 		if(zoomList.Count != 0){// make sure we have a zoom to deactivate first
 			//ZDB temp = zoomQueue.Peek() as ZDB;// use the latest zoom
 					ZDB temp = zoomList[zoomList.Count - 1];
-			if(temp.uses_puzzel){
-				temp.current_manager.Active(false);	
-			}
+				if(temp.uses_puzzel){
+					if(temp.current_manager != null){
+						temp.current_manager.Active(false);// activate the current pussel-manager	
+					}else{
+						Debug.LogError("Pussel-manager couldn't be activated");
+					}
+				}
 			GameObject.Find(temp.name).GetComponent<GUI_Parent>().Activate(false);	// activates the GUI-components of the current zoom.
 			
 			if(zoomList.Count == 1){
@@ -104,10 +110,9 @@ public class zoomManager : MonoBehaviour {
 			DeacitivateCurrent();											// remove the deactive zoom from the manager.
 			if(zoomList.Count != 0){// if there is another 
 				Activate ();	
+			}else{
+				Debug.Log ("Can't deactivate the zoom because the is no zoom active (the queue is empty)");
 			}
-		}
-		else{
-			Debug.Log ("Can't deactivate the zoom because the is no zoom active (the queue is empty)");
 		}
 	}
 }
