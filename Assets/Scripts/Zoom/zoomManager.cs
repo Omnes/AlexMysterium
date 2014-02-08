@@ -56,8 +56,8 @@ public class zoomManager : MonoBehaviour {
 				ZDB temp = zoomList[zoomList.Count - 1]; 
 		//--------------------
 		temp.zoom_cam.gameObject.SetActive(true); 		// ! might need a more solid approch but for now this works !
-		temp.zoom_cam.GetComponent<AudioListener>().enabled = true;
-		cam_ref.GetComponent<AudioListener>().enabled = false;
+//robin		temp.zoom_cam.GetComponent<AudioListener>().enabled = true;
+//robin		cam_ref.GetComponent<AudioListener>().enabled = false;
 		cam_ref.gameObject.SetActive(false);// = false;
 		//--------------------
 		//CameraChangePos messenger 	= new CameraChangePos();			/* Change the camera position and let it know we are in puzzel mode 	*/
@@ -90,8 +90,8 @@ public class zoomManager : MonoBehaviour {
 			}
 			//-------------------------
 			cam_ref.gameObject.SetActive(true); 
-			cam_ref.GetComponent<AudioListener>().enabled		= true;
-			temp.zoom_cam.GetComponent<AudioListener>().enabled	= false;
+//robin			cam_ref.GetComponent<AudioListener>().enabled		= true;
+//robin			temp.zoom_cam.GetComponent<AudioListener>().enabled	= false;
 			temp.zoom_cam.gameObject.SetActive(false);// 		= false;
 			//-------------------------
 			CameraChangePos messenger 	= new CameraChangePos();			/* Change the camera position and let it know we are in puzzel mode 	*/
