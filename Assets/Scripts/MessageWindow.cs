@@ -57,12 +57,18 @@ public class MessageWindow : MonoBehaviour {
 		
 		XmlNode quest = doc.SelectSingleNode("quests/quest/id[contains(text(),'"+id +"')]").NextSibling; //noden för meddelandet
 	
-		questlog.Add(new Questpair(id, quest.InnerText));
-		
-		foreach(Questpair node in questlog){  //Tillfällig testsak woo
-			
-			Debug.Log (node.mContent);
+		bool dontadd = false;
+
+		foreach(Questpair node in questlog){  //Ser till att inte samma quest läggs till flera gånger
+			if(id == node.getID()){
+				dontadd = true;
+			}
+		}	
+
+		if(!dontadd){
+			questlog.Add(new Questpair(id, quest.InnerText));
 		}
+
 		Debug.Log("about to play audio");
 	//	audio.clip = addQuestSound;
 	//	audio.timeSamples = 5000;
@@ -79,13 +85,25 @@ public class MessageWindow : MonoBehaviour {
 		
 		XmlNode quest = doc.SelectSingleNode("quests/quest/id[contains(text(),'" + subquest +"')]").NextSibling; //noden för meddelandet
 	
+		bool dontadd = false;
+
 		foreach(Questpair node in questlog){
 		
 			if(subquest.StartsWith(node.mID)){
-				
-				node.addSubQuest(new Questpair(subquest, quest.InnerText));
-				//foreach(Questpair subNode in node.mQuestlog){
-				//	questlog.Add(new Questpair(subquest, ));
+
+				foreach(Questpair sub in node.mQuestlog){
+
+					if(sub.getID() == subquest){
+
+						dontadd = true;
+					}
+
+					if(!dontadd){
+					node.addSubQuest(new Questpair(subquest, quest.InnerText));
+					//foreach(Questpair subNode in node.mQuestlog){
+					//	questlog.Add(new Questpair(subquest, ));
+					}
+				}
 			}
 		}
 	}
@@ -157,9 +175,6 @@ public class MessageWindow : MonoBehaviour {
 			float tempposY = posY;
 			
 			GUI.DrawTexture(new Rect(posX,tempposY, Messagelayout.width,Messagelayout.height),Messagelayout);
-			
-			//GUI.Box(new Rect(posX + 10,tempposY + 10, Messagelayout.width-10,Messagelayout.height-10), "",style);
-			
 			GUILayout.BeginArea(new Rect(posX + 10,tempposY + 10,Messagelayout.width-10,Messagelayout.height-10));
 			GUILayout.BeginVertical();
 			
@@ -185,12 +200,7 @@ public class MessageWindow : MonoBehaviour {
 				
 				GUILayout.EndVertical();
 				GUILayout.EndHorizontal();
-				
-				/*if(GUI.Button(new Rect(posX,posY, Messagelayout.width,Messagelayout.height),"",style)){ 
-					
-					writeMessage = false; 
-					Time.timeScale = 1; 
-				}*/
+		
 			} 
 			GUILayout.FlexibleSpace();
 			GUILayout.EndVertical();
@@ -200,33 +210,6 @@ public class MessageWindow : MonoBehaviour {
 					writeMessage = false; 
 					Time.timeScale = 1; 
 				}
-		}/*
-		if(writeMessage){ 
-			float tempposY = posY;
-			
-			GUI.DrawTexture(new Rect(posX,tempposY, Messagelayout.width,Messagelayout.height),Messagelayout);
-			
-			GUI.Box(new Rect(posX + 10,tempposY + 10, Messagelayout.width-10,Messagelayout.height-10), "",style);
-			
-			
-			foreach(Questpair node in questlog){
-				
-				GUI.Label(new Rect(posX + 10,tempposY + 10, Messagelayout.width-10,Messagelayout.height-10), node.mContent,style);
-				
-				foreach(Questpair subnode in node.mQuestlog){
-					
-					GUI.Label(new Rect(posX + 10,tempposY + 30, Messagelayout.width-10,Messagelayout.height-10), "\t" + subnode.mContent,style);
-					
-					tempposY += 30;
-				}
-				
-				tempposY += 30;
-				/*if(GUI.Button(new Rect(posX,posY, Messagelayout.width,Messagelayout.height),"",style)){ 
-					
-					writeMessage = false; 
-					Time.timeScale = 1; 
-				}
-			} 
-		}*/
+		}
 	} 
 }
