@@ -7,7 +7,7 @@ public class zoomManager : MonoBehaviour {
 	// Use this for initialization
 	//Public:
 	//public Queue zoomQueue;// tänkte först använda queue, men fick problem och fick förslaget att använda List istället som funkade, gör om koden att använda List
-			public List<ZDB> zoomList;
+			public List<ZDB> zoomList = new List<ZDB>();
 	//public ZDB[] zoomArray;
 	//Private: 
 	public Camera cam_ref;// main cam

@@ -76,7 +76,7 @@ public class zoom_TEST : MonoBehaviour {
 		Puzzel_cam.GetComponent<AudioListener>().enabled = false;
 		//--------------------------------------------------------
 
-		if(Puzzelmanager_Name != null){
+		if(Puzzelmanager_Name != ""){
 			current_Manager = GameObject.Find(Puzzelmanager_Name).GetComponent<Puzzel_Manager>();
 			uses_puzzel = true;
 		}
