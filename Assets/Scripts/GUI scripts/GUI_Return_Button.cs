@@ -3,6 +3,10 @@ using System.Collections;
 
 public class GUI_Return_Button : GUI_Button {
 
+
+	float lastActivateTime = 0;
+	public float cooldown = 1;
+
 	public override void Start () {
 		enabled = false;
 	}
@@ -26,11 +30,11 @@ public class GUI_Return_Button : GUI_Button {
 			
 			//GUI.skin.button.onHover.textColor = Color.cyan;
 			
-	        if (GUI.Button(new Rect(XPos, YPos, Width, Height),aTexture , gui_style))
+	        if (GUI.Button(new Rect(XPos, YPos, Width, Height),aTexture , gui_style) && lastActivateTime + cooldown > Time.time)
 			{//, ScaleMode.ScaleToFit, true);
-				GameObject.Find("MasterMind").SendMessage("Deactivate");
+				lastActivateTime = Time.time;
+				GameObject.Find("MasterMind").SendMessage("");
 				Debug.Log("You pressed the button, VICTORY!!!!");
-				Debug.Log("THE BUTTON SUB_CLASS!!!!");
 				//use a queue
 				
 				

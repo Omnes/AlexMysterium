@@ -2,13 +2,12 @@ using UnityEngine;
 using System.Collections;
 using System.Xml;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 
 public class Computertyping : MonoBehaviour {
 
 	public Texture2D currentLayout;
 	public Texture2D inboxLayout;
-	public Texture2D mailLayout;
-	public Texture2D returntomail;
 	public Texture2D Return;
 	public TextAsset mailsource;
 	public Font PasswordFont;
@@ -16,37 +15,42 @@ public class Computertyping : MonoBehaviour {
 	public int passwordSize = 20;
 	public int mailheadlineSize = 20;
 	public int mailtextSize = 20;
-	public int maxPasswordLength = 25;
-	public float passwordPosX = 200;
-	public float passwordPosY = 200;
-	public float headlinePosX = 100;
-	public float headlinePosY = 100;
-	public float mailtextPosX = 100;
-	public float mailtextPosY = 100;
-	public float backgroundPosX = 50;
-	public float backgroundPosY = 50;
-	public float returntomailPosX = 100f;
-	public float returntomailPosY = 100f;
+	private int maxPasswordLength = 10;
+	public Rect passwordField;
+	public Rect headlineField;
+	public Rect mailtextField;
+
 	public string correctPassword = "Alex2001";
 	float mailquantity = 3;
-	bool computerscreen = false; 
+	public bool computerscreen = false; 
 	bool loggedin = false;
 	bool readingmail = false;
 	string passwordinput = "";
 	TextAsset passwordGUI;
 	List<Questpair> maillist = new List<Questpair>();
-	int currentmail;
+	int currentmail = 1;
+	private GameObject screen;
 	
 
 	// Use this for initialization
 	
 	void Start () {
-		
+		screen = GameObject.Find ("computerscreen");
+		screen.renderer.enabled = false;
+	}
+
+	public void setComputerScreen(bool toggle){
+		computerscreen = toggle;
+	}
+
+	void ActivateStuff(){
+		Debug.Log ("OGGAAAABOOOGAAAGA");
+		setComputerScreen(true);
+		screen.renderer.enabled = true;
 	}
 	
-	void Interact(){
-		
-		computerscreen = true; 
+	void DeactivateStuff(){
+		setComputerScreen(false);
 	}
 	
 	// Update is called once per frame
@@ -54,26 +58,21 @@ public class Computertyping : MonoBehaviour {
 		
 		if(!loggedin){  									// Hanterar tangentbordets input
         	foreach (char c in Input.inputString) {
-            	if (c == "\b"[0]){							//Suddar ut skit
-            	
-					if (passwordinput.Length != 0){
-        	        	
-						passwordinput = passwordinput.Substring(0, passwordinput.Length - 1);
-					}
-				}
-				else if (c == "\n"[0] || c == "\r"[0]){  //enter, KANSKE BEHÖVER LÄGGA TILL ETT KLICK OCKSÅ
-			
+				if (c == "\n"[0] || c == "\r"[0]){  //enter, KANSKE BEHÖVER LÄGGA TILL ETT KLICK OCKSÅ
 					if(passwordinput == correctPassword){
-						
-						loggedin = true;				//Loggat in!!!!
+						loggedin = true;				//Loggat in!!!!f
 						currentLayout = inboxLayout;
+
+						screen.renderer.material.SetTexture("_MainTex",inboxLayout);
 						addemails();
 						//SPELA UPP LJUD
+					}else{
+						passwordinput = "";
 					}
 				}
-           	 	else{
-            		passwordinput += c;	
-        		}
+			}
+			if(passwordinput.Length > maxPasswordLength){
+				passwordinput = passwordinput.Substring(0, passwordinput.Length - 1);
 			}
 		}
     }
@@ -94,77 +93,79 @@ public class Computertyping : MonoBehaviour {
 		}
 	}
 
+	Rect makeRect(float x,float y,float w,float h){
+		return new Rect(Screen.width/x,Screen.height/y,Screen.width/w,Screen.height/h);
+	}
+	Rect makeRect(Rect r){
+		return new Rect(Screen.width/r.x,Screen.height/r.y,Screen.width/r.width,Screen.height/r.height);
+	}
+
 	
 	void OnGUI(){
+
+		//GUI.Box(makeRect(passwordField),"passfield");
+		//GUI.Box(makeRect(mailtextField),"mailtextField");
+		//GUI.Box(makeRect(headlineField),"headlineField");
+
 		
 		GUIStyle style = GUIStyle.none;
 		
 		if(computerscreen == true){   //Gå in på datorn
 
-			GUI.DrawTexture(new Rect(backgroundPosX,backgroundPosY, currentLayout.width,currentLayout.height),currentLayout);
+
+			//GUI.DrawTexture(new Rect(backgroundPosX,backgroundPosY, currentLayout.width,currentLayout.height),currentLayout);
 
 			if (!loggedin){ 					//Lösenord-gui
 
 				style.font = PasswordFont;
 				style.fontSize = passwordSize;
-				passwordinput = GUI.TextField(new Rect(passwordPosX,passwordPosY,200,20), passwordinput, maxPasswordLength, style);
+				GUI.SetNextControlName ("PasswordField");
+				passwordinput = GUI.TextField(makeRect(passwordField), passwordinput,maxPasswordLength, style);
+				passwordinput = Regex.Replace(passwordinput, @"[^a-zA-Z0-9]", "");  //remove unallowed Chars
+				GUI.FocusControl("PasswordField");
+
 			}
 			else if(loggedin && !readingmail){ 			//Inbox-gui
 				
-				float tempposY = headlinePosY;
-				GUILayout.BeginArea(new Rect(headlinePosX,headlinePosY,currentLayout.width,currentLayout.height));
+				//float tempposY = headlinePosY;
+				GUILayout.BeginArea(makeRect(headlineField));
 				GUILayout.BeginVertical();
 			
 			    foreach(Questpair node in maillist){	//radar upp alla mail
-				
-				style.font = MailFont;
-				style.fontSize = mailheadlineSize;
 					
-				if(GUI.Button(new Rect(headlinePosX,tempposY,mailheadlineSize*node.mID.Length,mailheadlineSize),node.mID,style)){ //klicka på rubriken för att läsa
+					style.font = MailFont;
+					style.fontSize = mailheadlineSize;
 
-						currentLayout = mailLayout;
-						readingmail = true;
-						currentmail = node.getID2();
-				}
-					
-				tempposY += 30;
-				GUILayout.BeginHorizontal();
-				GUILayout.BeginVertical();
+					GUILayout.BeginHorizontal();
+						if(GUILayout.Button(node.mID,style)){ //klicka på rubriken för att läsa
+								currentmail = node.getID2();
+						}
+						//GUILayout.FlexibleSpace();
+					GUILayout.EndHorizontal();
+
+						
+					//tempposY += 30;
 				
 				}
-				
+
 				GUILayout.FlexibleSpace();
 				GUILayout.EndVertical();
 				GUILayout.EndArea();
-			}
-			else{												//Mail-gui
 
-				Debug.Log("HÄRÄRETTFETTMAIL");
 
-				GUILayout.BeginArea(new Rect(mailtextPosX,mailtextPosY,currentLayout.width,currentLayout.height));
+				GUILayout.BeginArea(makeRect(mailtextField));
 				GUILayout.BeginVertical();
-
+				
 				style.font = MailFont;
 				style.fontSize = mailtextSize;
-
-				GUILayout.Label(maillist[currentmail-1].mContent, style);
-
-				if(GUI.Button(new Rect(returntomailPosX,returntomailPosY,returntomail.width,returntomail.height), returntomail,style)){ 	//Return-button
-
-					readingmail = false;
-					currentLayout = inboxLayout;
-					
+				if(currentmail > 0){
+					GUILayout.Label(maillist[currentmail-1].mContent, style);
 				}
-
+				
+				
 				GUILayout.FlexibleSpace();
 				GUILayout.EndVertical();
 				GUILayout.EndArea();
-
-			}
-			
-			if(GUI.Button(new Rect(20,20,Return.width,Return.height), Return,style)){ 	//Return-button
-			
-				computerscreen = false;	
 			}
 		}
 	}
