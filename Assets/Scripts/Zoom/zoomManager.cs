@@ -7,19 +7,15 @@ public class zoomManager : MonoBehaviour {
 	// Use this for initialization
 	//Public:
 	//public Queue zoomQueue;// tänkte först använda queue, men fick problem och fick förslaget att använda List istället som funkade, gör om koden att använda List
-			public List<ZDB> zoomList;
+			public List<ZDB> zoomList = new List<ZDB>();
 	//public ZDB[] zoomArray;
 	//Private: 
-	public Camera cam_ref;// main cam
+	private Camera cam_ref;// main cam
 	private Vector3 previous_cam_pos;
 	
 	//------------------------------------
-	/*void Start () {
+	void Start () {
 		//zoomQueue = new Queue();
-		cam_ref = Camera.main;
-		zoomList = new List<ZDB>();
-	}****/
-	void OnLevelWasLoaded(){
 		cam_ref = Camera.main;
 		zoomList = new List<ZDB>();
 	}
@@ -72,8 +68,10 @@ public class zoomManager : MonoBehaviour {
 	//cam_ref.SendMessage("SetPos", true);					// the new camera position is set.
 		//cam_ref.SendMessage("SetZoom", true);					// the new camera position is set.
 		GameObject.Find(temp.name).GetComponent<GUI_Parent>().Activate(true);	// activates the GUI-components of the current zoom.
-		if(temp.uses_puzzel){
-			temp.current_manager.Active(true);	
+		if(temp.uses_puzzel && temp.current_manager != null){
+			temp.current_manager.Active(true);// activate the current pussel-manager	
+		}else{
+			Debug.Log("Pussel-manager couldn't be activated");
 		}
 	}
 	
@@ -94,7 +92,7 @@ public class zoomManager : MonoBehaviour {
 			cam_ref.gameObject.SetActive(true); 
 			cam_ref.GetComponent<AudioListener>().enabled		= true;
 			temp.zoom_cam.GetComponent<AudioListener>().enabled	= false;
-			temp.zoom_cam.gameObject.SetActive(false);// 	= false;
+			temp.zoom_cam.gameObject.SetActive(false);// 		= false;
 			//-------------------------
 			CameraChangePos messenger 	= new CameraChangePos();			/* Change the camera position and let it know we are in puzzel mode 	*/
 			//messenger.pos 				= temp.deactive_pos;	0,			/*  Uses a struct with a position and a bool as a data messenger		*/
