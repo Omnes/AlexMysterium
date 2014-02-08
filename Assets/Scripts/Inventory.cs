@@ -57,6 +57,21 @@ public class Inventory : MonoBehaviour {
 	public void RemoveItem(Item item){
 		inventoryList.Remove(item);
 	}
+	public void removeItems(string name,int number){
+		for(int i = 0; i < number;i++){
+			inventoryList.Remove(findItemByName(inventoryList,name));
+		}
+	}
+
+	public bool checkItemSupply(string name,int number){
+		int count = 0;
+		foreach(Item i in inventoryList){
+			if(i.name == name){
+				count++;
+			}
+		}
+		return count >= number;
+	}
 	
 	Item findItemByName(List<Item> list,string name){
 		foreach(Item i in list){
@@ -143,9 +158,7 @@ public class Inventory : MonoBehaviour {
 		if(!showInventory && offset > 0){
 			offset = (offset)/2-0.01f;
 		}
-		
-		
-		
+
 		if(showInventory){
 			//tells mouseanimation that inventory is open
 			mo_anim.isInInventory = true;
