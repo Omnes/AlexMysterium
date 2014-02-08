@@ -9,30 +9,44 @@ public class HedvigPassingBy : MonoBehaviour {
 	public float walkingspeed;
 	public float pathlength;
 	Vector3 direction = new Vector3(1,0,0);
-	GameObject hedvig;
+	bool instantiated = false;
+	float alpha;
 	// Use this for initialization
 	void Start () {
 	
+		alpha = 0.01f;
 		Animationator hedvigani = gameObject.GetComponent<Animationator>();
 		hedvigani.Animations = 2;
 		hedvigani.Frames = 7;
 		hedvigani.setWalkAnimation(direction);
+		playAnimation();
+		prefab.transform.GetChild(0).renderer.material.color = new Color(renderer.material.color.r,renderer.material.color.g,renderer.material.color.b,alpha);
+		
 	}
 	
 	// Update is called once per frame
 	void Update () {
 
-		float temppos = hedvig.transform.position.x + walkingspeed;
-		hedvig.transform.position = new Vector3(temppos, hedvig.transform.position.y, hedvig.transform.position.z);
+		if(instantiated){
 
-		if(prefab.position.x - spawnposition.x > pathlength){
 
-			PrefabUtility.DisconnectPrefabInstance(prefab);
+			alpha += 0.01f;
+			//prefab.transform.GetChild(0).renderer.material.color = new Color(renderer.material.color.r,renderer.material.color.g,renderer.material.color.b,alpha += 0.1);
+		}
+
+		float temppos = prefab.transform.position.x + walkingspeed;
+		prefab.transform.position = new Vector3(temppos, prefab.transform.position.y, prefab.transform.position.z);
+
+		if(Mathf.Abs(spawnposition.x - prefab.transform.position.x)> pathlength){
+
+			Destroy(prefab.transform.gameObject); //Vet inte om detta duger
+			//PrefabUtility.DisconnectPrefabInstance(prefab);
 		}
 	}
 
 	void playAnimation(){
 
-		hedvig = (GameObject) Instantiate(prefab,spawnposition,prefab.rotation);
+		Instantiate(prefab,spawnposition,prefab.rotation);
+		instantiated = true;
 	}
 }
