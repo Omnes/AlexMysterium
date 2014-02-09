@@ -7,7 +7,7 @@ public class zoomManager : MonoBehaviour {
 	// Use this for initialization
 	//Public:
 	//public Queue zoomQueue;// tänkte först använda queue, men fick problem och fick förslaget att använda List istället som funkade, gör om koden att använda List
-			public List<ZDB> zoomList = new List<ZDB>();
+			public List<ZDB> zoomList;
 	//public ZDB[] zoomArray;
 	//Private: 
 	private Camera cam_ref;// main cam
@@ -28,7 +28,8 @@ public class zoomManager : MonoBehaviour {
 	void reciveZDB(ZDB newZoom){// add new ZDB to the queue
 		//Debug.Log(newZoom.name);
 		//zoomQueue.Enqueue(newZoom);
-				zoomList.Add(newZoom);
+		Deactivate();
+		zoomList.Add(newZoom);
 		Activate ();
 	}
 	
@@ -115,4 +116,5 @@ public class zoomManager : MonoBehaviour {
 			}
 		}
 	}
+
 }
