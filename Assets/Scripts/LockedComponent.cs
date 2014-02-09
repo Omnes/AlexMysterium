@@ -7,6 +7,7 @@ public class LockedComponent : MonoBehaviour {
 	public bool locked = true;
 	public string key = "key";
 	public bool consumeKey = true;
+	public GameObject KeyInTheLock;
 
 	// Use this for initialization
 	void Start () {
@@ -19,6 +20,7 @@ public class LockedComponent : MonoBehaviour {
 		if(item.name == key){
 			GameObject.Find("MasterMind").GetComponent<Inventory>().useItem(key,consumeKey);
 			setlock(false);
+			KeyInTheLock.SetActive(true);
 		}
 	}
 

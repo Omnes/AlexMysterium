@@ -56,6 +56,10 @@ public class StromAvbrott : MonoBehaviour {
 		foreach(GameObject g in withtag){
 			g.renderer.enabled =!powerON;
 		}
+		GameObject[] withlighttag = GameObject.FindGameObjectsWithTag("LightLayer");
+		foreach(GameObject g in withlighttag){
+			g.renderer.enabled =powerON;
+		}
 	}
 
 	void powerOut(){
