@@ -12,6 +12,7 @@ public class HedvigPassingBy : MonoBehaviour {
 	bool instantiated = false;
 	float alpha;
 	Hedviganimation hedvigani; 
+	Traveltothepast past; 
 
 	// Use this for initialization
 	void Start () {
@@ -36,6 +37,9 @@ public class HedvigPassingBy : MonoBehaviour {
 				Destroy(instance.gameObject); //Vet inte om detta duger
 				//PrefabUtility.DisconnectPrefabInstance(prefab);
 				instantiated = false;
+				past = gameObject.GetComponent<Traveltothepast>();
+				past.timeTraveltoPast();
+
 			}
 
 			if(Mathf.Abs(spawnposition.x - instance.position.x)> pathlength - 3){
