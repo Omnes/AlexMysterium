@@ -107,7 +107,7 @@ public class Puzzel_Manager : MonoBehaviour {
 				tempPiece = null;
 			}
 			//-----------------------------------------------------------------------------------------------------------------------------------------------------
-			if(CheckIfCorrect()){
+			if(CheckIfCorrect() && !Completed){
 				Completed = true;
 				Debug.Log("SUCCESS YOU COMPLETED THE PUZZLE!!!");	
 			}
@@ -142,7 +142,7 @@ public class Puzzel_Manager : MonoBehaviour {
 		}
 	}
 	*/
-	bool CheckIfCorrect(){
+	public bool CheckIfCorrect(){
 		bool isCorrect = true;
 		
 		foreach(Puzzel_slot current_slot in Pslot_list){
