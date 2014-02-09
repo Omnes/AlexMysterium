@@ -13,7 +13,7 @@ public class Puzzel_piece : MonoBehaviour {
 	public bool	holding = false;	// being moved by the user
 	public bool correct = true;		// is in correct position
 	
-	private bool notUsed = true;
+	public bool inUse = false;
 	
 	// Use this for initialization
 	void Start () {
@@ -23,7 +23,7 @@ public class Puzzel_piece : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		
-		if(notUsed && !holding){
+		if(!inUse && !holding){
 			if(transform.position != position && correct){
 				Debug.Log("Repositioning:" + position);
 				transform.position = position;	
@@ -50,22 +50,22 @@ public class Puzzel_piece : MonoBehaviour {
 		}
 		*/
 	}
-	
+	/*
 	public void Switch_MoveState(){
 		correct = !correct;	
 	}
 	
 	void OnTriggerEnter(Collider other){
 		if(other.tag == "PusselSlot"){
-			notUsed = false;
+			inUse = true;
 		}
 	}
 	
 	void OnTriggerExit(Collider other){
 		if(other.tag == "PusselSlot"){
-			notUsed = true;
+			inUse = false;
 		}
-	}
+	}*/
 
 	public void Reposition(){
 		transform.position = position;
