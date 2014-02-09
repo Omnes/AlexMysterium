@@ -42,7 +42,12 @@ public class Radio : MonoBehaviour {
 				speaker.loop = true;
 			}
 		}
+	}
 
+	//eh, this is a bit odd but okey, should revert this
+	void setPowerOut(bool power){
+		Debug.Log("Radio: powerOut!");
+		setPower(true);
 	}
 
 }

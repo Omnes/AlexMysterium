@@ -37,7 +37,7 @@ public class Puzzel_slot : MonoBehaviour {
 			//Debug.Log("Current pos: " + ptrPuzzel_Piece.transform.position + " new pos: " + centerPos);
 			ptrPuzzel_Piece.transform.position = areaSnapping();
 			//Debug.Log(" AFTERSNAPCurrent pos: " + ptrPuzzel_Piece.transform.position + " new pos: " + centerPos);
-			speaker.Play();
+			//speaker.Play();
 			Debug.Log("PLAYING A SOUND");
 		}
 		if(ptrPuzzel_Piece != null && ptrPuzzel_Piece.Piece_KeyValue == correct_slot_value && ptrPuzzel_Piece.correct && !ptrPuzzel_Piece.holding && !Correct){
@@ -76,34 +76,38 @@ public class Puzzel_slot : MonoBehaviour {
 
 	void OnTriggerStay(Collider other) {// bara kolla bitarna när man har släppt dem.
 				//if(enter_exit){
-			if(other.tag == "PusselBit"){
-				ptrPuzzel_Piece = other.GetComponent<Puzzel_piece>();
-				if( slot_empty && !ptrPuzzel_Piece.holding){
-					//ptrPuzzel_Piece = other.GetComponent<Puzzel_piece>();
-					slot_empty = false;
-				
-					if(!ptrPuzzel_Piece.holding){
-						ptrPuzzel_Piece.transform.position = areaSnapping();
-						Debug.Log("pusselbit");
-						//speaker.Play();
-						//ptrPuzzel_Piece.transform.position = areaSnapping();
-						
-					/*if(ptrPuzzel_Piece.Piece_KeyValue == correct_slot_value && ptrPuzzel_Piece.movable){
-						//if(ptrPuzzel_Piece.movable){
-							ptrPuzzel_Piece.movable = false;
-							Correct = true;
-							Debug.Log("Correct!");
+		if(!Input.GetMouseButtonDown(0)){
+			if(other.tag == "PusselBit" && ptrPuzzel_Piece == null){
+					ptrPuzzel_Piece = other.GetComponent<Puzzel_piece>();
+					ptrPuzzel_Piece.inUse = true;
+					if( slot_empty && !ptrPuzzel_Piece.holding){
+						//ptrPuzzel_Piece = other.GetComponent<Puzzel_piece>();
+						slot_empty = false;
+					
+						//if(!ptrPuzzel_Piece.holding){
+							ptrPuzzel_Piece.transform.position = areaSnapping();
+							Debug.Log("pusselbit");
+							speaker.Play();
+							//ptrPuzzel_Piece.transform.position = areaSnapping();
+							
+						/*if(ptrPuzzel_Piece.Piece_KeyValue == correct_slot_value && ptrPuzzel_Piece.movable){
+							//if(ptrPuzzel_Piece.movable){
+								ptrPuzzel_Piece.movable = false;
+								Correct = true;
+								Debug.Log("Correct!");
+							//}
+						}*/
 						//}
-					}*/
 					}
+				//}
+			}else{ 
+				if(other.tag == "PusselBit" && !slot_empty && other != ptrPuzzel_Piece){
+					Puzzel_piece temp = other.GetComponent<Puzzel_piece>();
+					temp.inUse = false;
+					//speaker.Play();
+					temp.Reposition();
+					Debug.LogWarning("Pussel-spot occupied");
 				}
-			//}
-		}else{ 
-			if(other.tag == "PusselBit" && !slot_empty && other != ptrPuzzel_Piece){
-				Puzzel_piece temp = other.GetComponent<Puzzel_piece>();
-				//speaker.Play();
-				temp.Reposition();
-				Debug.LogWarning("Pussel-spot occupied");
 			}
 		}
 		/*if(ptrPuzzel_Piece != null && !ptrPuzzel_Piece.holding && Vector3.Distance(ptrPuzzel_Piece.transform.position,centerPos) < 0.2){
@@ -126,16 +130,18 @@ public class Puzzel_slot : MonoBehaviour {
 	}
 	
 	void OnTriggerExit(Collider other){// om du tar bort en bit från dess rätta plats så får platsen ett "unfinished state"
-		
 		if(other.tag == "PusselBit"){
-			
-			ptrPuzzel_Piece = other.GetComponent<Puzzel_piece>();
-			slot_empty = true;
-			if(ptrPuzzel_Piece.Piece_KeyValue == correct_slot_value){
-				Correct = false;
+		
+			Puzzel_piece temp = other.GetComponent<Puzzel_piece>();
+			if(temp == ptrPuzzel_Piece){
+				slot_empty = true;
+				if(ptrPuzzel_Piece.Piece_KeyValue == correct_slot_value){
+					Correct = false;
+				}
+				ptrPuzzel_Piece.inUse = false;
+				ptrPuzzel_Piece = null;
+					//enter_exit = false;
 			}
-			ptrPuzzel_Piece = null;
-				//enter_exit = false;
 		}
 	}
 	
