@@ -3,14 +3,16 @@ using System.Collections;
 
 public class StromAvbrott : MonoBehaviour {
 
-	public bool powerON = true;
+	public bool powerON = false;
 	public bool avbrott = false;
 	public Transform[] reactiveObjects;
 
 	public bool asdhjabsdkja = true;
+	private bool played = false;
+	public AudioSource notWorkSound;
 
 	void Start(){
-		powerON = !GetComponent<ItemUseStates>().button;
+		powerON = GetComponent<ItemUseStates>().button;
 		setOn();
 	}
 
@@ -48,6 +50,12 @@ public class StromAvbrott : MonoBehaviour {
 			GetComponent<ItemUseStates>().button = !powerON;
 		}else{
 			powerON = false;
+			if(!played){
+				notWorkSound.Play();
+				Debug.Log("OJYEAH");
+				played = true;
+			}
+
 		}
 		setOn();
 
@@ -69,6 +77,8 @@ public class StromAvbrott : MonoBehaviour {
 			reactiveObjects[i].SendMessage("setPowerOut", false);
 		}
 		avbrott = true;
-		togglePowerON();
+		powerON = false;
+		setOn();
+		
 	}
 }

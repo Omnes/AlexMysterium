@@ -34,6 +34,10 @@ public class Computertyping : MonoBehaviour {
 	//seans
 	public bool cPower = true;
 	public Transform desktopPic;
+	public int correctMail = 2;
+	private bool played = false;
+	public AudioSource mailSound;
+	public AudioClip mailClip;
 	
 
 	// Use this for initialization
@@ -49,9 +53,9 @@ public class Computertyping : MonoBehaviour {
 
 	void ActivateStuff(){
 		if(cPower){
-			Debug.Log ("OGGAAAABOOOGAAAGA");
 			setComputerScreen(true);
 			screen.renderer.enabled = true;
+			gameObject.GetComponent<ComputerSound_script>().playSound();
 		}
 	}
 	
@@ -146,6 +150,13 @@ public class Computertyping : MonoBehaviour {
 					GUILayout.BeginHorizontal();
 						if(GUILayout.Button(node.mID,style)){ //klicka på rubriken för att läsa
 								currentmail = node.getID2();
+							if(currentmail == correctMail && !played){
+							mailSound.clip = mailClip;
+								//Activate sound
+								mailSound.Play();
+								played = true;
+								
+							}
 						}
 						//GUILayout.FlexibleSpace();
 					GUILayout.EndHorizontal();
