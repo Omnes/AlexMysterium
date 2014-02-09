@@ -1,23 +1,69 @@
 <mails>
 	<mail>
 		<id>1</id>
-		<rubrik>Mail 1</rubrik>
-		<text>Hej bloggen! \n Idag har jag ätit två mackor med makrill på. Det var jättegott. Sen såg jag en katt stirra på mig genom fönstret
-			trots att jag bor på fjärde våningen. Jag vet inte ifall den flög eller satt på en osynlig pelare. En sak är dock säker: kattfan
-			är ute efter mig och från och med denna dag bör jag sova med ena ögat öppet.</text>
+		<rubrik>Alex's football practise</rubrik>
+		<text>Subject: Alex's football practise
+From: Yue
+
+Hi dear, I'm going to be late today. 
+Sorry. Could you give Alex a ride to her football practise? 
+I don't want her to take the buss all alone. 
+Don't forget to pack her water bottle, she always forgets it. 
+And her shin guards. And please pack a sweater, 
+she says she doesn't need one because it's summer but it's 
+going to be cold tonight. Also, makes sure she eats something 
+before the practise. 
+
+Love you, 
+Yue
+		</text>
 	</mail>
 	
 	<mail>
 		<id>2</id>
-		<rubrik>Mail 2</rubrik>
-		<text>8939</text>
+		<rubrik>New pass codes</rubrik>
+		<text>Subject: New pass codes
+From: Helen Williams
+
+Hi!
+
+Tomorrow we renew some of the pass codes for secruity reasons. 
+The new codes can be found below.
+
+Supply storage floor 3: 7623
+Egyptological exhibition: 8393
+Broom closets floor 2: 2951
+Hall of Mammals: 1649 
+Personel entrance courtyard: 5283
+Library: 1234
+Cafeteria: 4482
+ 
+
+Best regards,
+Helen
+		
+		</text>
 	</mail>
 	
 	<mail>
 		<id>3</id>
-		<rubrik>Mail 3</rubrik>
-		<text>CONGRATULATIONS! YOU'VE BEEN RANDOMLY SELECTED AS THE WINNER OF OUR COMPETITION AND IS NOW A PROUD OWNER OF ONE MILLION DOLLARS!!! 
-		TO CLAIM YOUR PRIZE, PLEASE REPLY THIS E-MAIL WITH YOUR BANK ACCOUNT INFORMATION AS SOON AS POSSIBLE!</text>
+		<rubrik>Re: Is in stock?</rubrik>
+		<text>Subject: Re: Is in stock?
+From: Grainger IT Service
+
+Hello Eric,
+
+
+We are pleased to annouce that Item #21ML71 is currently in stock 
+and available for order. If you consider ordering in bulk we can 
+provide free delivery costs. This will be shown on the invoice later. 
+
+Feel free to contact us again if you have any further questions.
+
+
+Regards,
+James Holland, IT Service Grainger
+		</text>
 	</mail>
 
 </mails>
