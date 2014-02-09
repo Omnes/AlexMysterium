@@ -2,14 +2,7 @@
 using System.Collections;
 
 public class ItemUseStates : MonoBehaviour {
+	public bool radio = false;
+	public bool button = false;
 
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
 }
