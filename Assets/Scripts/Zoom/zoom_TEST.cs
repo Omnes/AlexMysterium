@@ -40,12 +40,9 @@ public class zoom_TEST : MonoBehaviour {
 
 		Debug.Log("hejseas ");
 		Puzzel_cam.gameObject.SetActive(false);	// Activate if needed
-<<<<<<< HEAD
-=======
 		//Puzzel_cam.position = changePos;
-		Puzzel_cam.GetComponent<AudioListener>().enabled = false;
+		//Puzzel_cam.GetComponent<AudioListener>().enabled = false;
 		//--------------------------------------------------------
->>>>>>> Lukas
 
 		if(Puzzelmanager_Name != null){
 			current_Manager = GameObject.Find(Puzzelmanager_Name).GetComponent<Puzzel_Manager>();
