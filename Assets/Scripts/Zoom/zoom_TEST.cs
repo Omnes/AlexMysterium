@@ -55,7 +55,6 @@ public class zoom_TEST : MonoBehaviour {
 		zoomInfo = Create_ZDB();
 		send_ZDB();
 		childObject.transform.parent.SendMessage("ActivateStuff",SendMessageOptions.DontRequireReceiver);
-		Debug.Log("RAWR!");
 
 	}
 		
