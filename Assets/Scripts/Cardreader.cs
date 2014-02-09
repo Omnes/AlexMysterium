@@ -9,13 +9,7 @@ public class Cardreader : MonoBehaviour {
 	public Texture2D red;
 	public Texture2D yellow;
 	public Texture2D idle;
-	public float ButtonStartX = 100;
-	public float ButtonStartY = 100;
-	public float DisplayposX = 100;
-	public float DisplayposY = 50;
 	public float YOffsetBetweenThem = 5;
-	public float buttondistanceX = 50;
-	public float buttondistanceY = 50;
 	public Texture2D thingy;
 	public float digitsize;
 	public Vector2 digitSizes = new Vector2(64,64);
@@ -23,6 +17,8 @@ public class Cardreader : MonoBehaviour {
 	public float delay = 1;
 	public string keycard = "keycard";
 	public Rect buttonField;
+	public Rect displayField;
+	public Vector2 numberSize;
 	int count = 0; 
 	bool unlocked = false;
 	public List<int> clicked = new List<int>();
@@ -119,53 +115,60 @@ public class Cardreader : MonoBehaviour {
 		//if(carddrawn){
 		//GUI.DrawTexture(new Rect(50,50,thingy.width,thingy.height),thingy);
 
-			float temppos = 0;
-			float newrow = 1;
-			float rowdistance = 0;
+		float temppos = 0;
+		float newrow = 1;
+		float rowdistance = 0;
 
-			GUILayout.BeginArea(makeRect(buttonField));
-			GUILayout.BeginVertical();
+		GUILayout.BeginArea(makeRect(buttonField));
+		GUILayout.BeginVertical();
 
-			for(int i = 0; i < 3; i++){									//Knapparna
-				GUILayout.BeginHorizontal();
-				for(int j = 3*i; j < i*3 +3; j++){
-					if(GUILayout.Button("" + (j+1))){
-						if(carddrawn){
-							if(count < 4){
-								clicked.Add(j+1);
-								count++;
-							}
-						}else{
-							quest.addQuest("1"); //ändra siffran till rätt quest sen
-						}
-					}
-				}
-				GUILayout.EndHorizontal();
-			}
+
+		for(int i = 0; i < 3; i++){
+		//GUILayout.FlexibleSpace();//Knapparna
 			GUILayout.BeginHorizontal();
-			GUILayout.Label("");
-			if(GUILayout.Button("" + 0)){
-				if(carddrawn){
-					if(count < 4){
-						clicked.Add(0);
-						count++;
+			for(int j = 3*i; j < i*3 +3; j++){
+				if(GUILayout.Button("" + (j+1),GUILayout.ExpandHeight(true))){
+					if(carddrawn){
+						if(count < 4){
+							clicked.Add(j+1);
+							count++;
+						}
+					}else{
+						quest.addQuest("1"); //ändra siffran till rätt quest sen
 					}
-				}else{
-					quest.addQuest("1"); //ändra siffran till rätt quest sen
 				}
 			}
-			GUILayout.Label("");
-			//GUILayout.FlexibleSpace();
 			GUILayout.EndHorizontal();
-
-			//GUILayout.FlexibleSpace();
-			GUILayout.EndVertical();
-			GUILayout.EndArea();
-
-			for(int i = 0; i < clicked.Count; i++){
-				
-				GUI.DrawTexture(new Rect(DisplayposX + i*digitSizes.x, DisplayposY + i*YOffsetBetweenThem , digitSizes.x ,  digitSizes.y - i),Digits[clicked[i]]);
+		//GUILayout.FlexibleSpace();
+		}
+	//GUILayout.FlexibleSpace();
+		GUILayout.BeginHorizontal();
+		GUILayout.Label("");
+		if(GUILayout.Button("" + 0,GUILayout.ExpandHeight(true))){
+			if(carddrawn){
+				if(count < 4){
+					clicked.Add(0);
+					count++;
+				}
+			}else{
+				quest.addQuest("1"); //ändra siffran till rätt quest sen
 			}
-		//}
+		}
+		GUILayout.Label("");
+		//GUILayout.FlexibleSpace();
+		GUILayout.EndHorizontal();
+
+		//GUILayout.FlexibleSpace();
+		GUILayout.EndVertical();
+		GUILayout.EndArea();
+
+		GUILayout.BeginArea(makeRect(displayField));
+		GUILayout.BeginHorizontal();
+		for(int i = 0; i < clicked.Count; i++){
+			GUILayout.Box(Digits[clicked[i]],GUILayout.Width(Screen.width/numberSize.x),GUILayout.Height(Screen.height/numberSize.y));
+		}
+		GUILayout.EndHorizontal();
+		GUILayout.EndArea();
+	//}
 	}
 }
