@@ -2,7 +2,13 @@
 using System.Collections;
 
 public class PhotoInteract : MonoBehaviour {
+
+	private bool played = false;
+
 	void Interact(){
-		gameObject.audio.Play();
+		if(!played){
+			gameObject.audio.Play();
+			played = true;
+		}
 	}
 }
