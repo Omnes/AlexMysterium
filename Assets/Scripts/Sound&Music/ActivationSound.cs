@@ -94,7 +94,7 @@ public class ActivationSound : MonoBehaviour {
 		speaker.pan = pans[panIndex];
 		panIndex++;
 		if(panIndex == pans.Length){
-				panIndex = 0;	
+				panIndex = 0;
 		}
 	}
 	

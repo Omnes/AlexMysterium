@@ -21,8 +21,8 @@ public class AmbientSound : MonoBehaviour {
 	void Update () {
 		if(!speaker.isPlaying){
 			if(delay <= 0){
-			nextSound();
-			randomDelay();
+				nextSound();
+				randomDelay();
 			}
 			delay -= Time.deltaTime;
 		}
@@ -45,6 +45,9 @@ public class AmbientSound : MonoBehaviour {
 	}
 	
 	private void randomDelay(){
-		delay = Random.Range (minDelay, maxDelay);	
+		delay = Random.Range (minDelay, maxDelay);
+		if(delay < 0){
+			delay = -delay;
+		}
 	}
 }
