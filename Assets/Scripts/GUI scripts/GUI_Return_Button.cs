@@ -34,6 +34,7 @@ public class GUI_Return_Button : GUI_Button {
 			{//, ScaleMode.ScaleToFit, true);
 				lastActivateTime = Time.time;
 				GameObject.Find("MasterMind").SendMessage("Deactivate");
+				SendMessage("DeactivateStuff");
 				Debug.Log("You pressed the button, VICTORY!!!!");
 				//use a queue
 				

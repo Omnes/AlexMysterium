@@ -32,8 +32,22 @@ public class Computertyping : MonoBehaviour {
 	private GameObject screen;
 
 	//seans
-	public bool cPower = true;
+	public bool compPower = true;
 	public Transform desktopPic;
+	public int correctMail = 2;
+	private bool played = false;
+	public AudioSource aSource;
+	public AudioClip mailClip;
+	public AudioClip powerOutSound;
+	public AudioClip flashAudio;
+	//
+	private float currentTime;
+	public float powerOutTime = 1f;
+	private bool initiatePOut = false;
+	private float timeBeforeGasp = 0.3f;
+	private bool playFlashSound = false;
+	private float currentFlashTime;
+	private bool haveFlashlight = false; // ändra denna så den är falsk
 	
 
 	// Use this for initialization
@@ -48,20 +62,33 @@ public class Computertyping : MonoBehaviour {
 	}
 
 	void ActivateStuff(){
-		if(cPower){
-			Debug.Log ("OGGAAAABOOOGAAAGA");
+		if(compPower){
 			setComputerScreen(true);
 			screen.renderer.enabled = true;
+			gameObject.GetComponent<ComputerSound_script>().playSound();
 		}
 	}
 	
 	void DeactivateStuff(){
+		Debug.Log ("OUTOFTHIS");
 		setComputerScreen(false);
 	}
 	
 	// Update is called once per frame
 	 void Update() {
-		if(cPower){
+
+		if(initiatePOut){
+			initiatePowerOut();
+		}
+
+		//haveFlashlight ska sättas i initiatePowerOut
+		if(playFlashSound && !haveFlashlight){
+			if(currentFlashTime + powerOutSound.length + 1f < Time.time){
+				doPlayFlashSound();
+			}
+		}
+
+		if(compPower){
 			if(!loggedin){  									// Hanterar tangentbordets input
 	        	foreach (char c in Input.inputString) {
 					if (c == "\n"[0] || c == "\r"[0]){  //enter, KANSKE BEHÖVER LÄGGA TILL ETT KLICK OCKSÅ
@@ -146,6 +173,15 @@ public class Computertyping : MonoBehaviour {
 					GUILayout.BeginHorizontal();
 						if(GUILayout.Button(node.mID,style)){ //klicka på rubriken för att läsa
 								currentmail = node.getID2();
+							if(currentmail == correctMail && !played){
+								aSource.clip = mailClip;
+								//Activate sound
+								aSource.Play();
+								currentTime = Time.time;
+								initiatePOut = true;
+								played = true;
+								
+							}
 						}
 						//GUILayout.FlexibleSpace();
 					GUILayout.EndHorizontal();
@@ -179,8 +215,27 @@ public class Computertyping : MonoBehaviour {
 
 	void setPowerOut(bool power){
 		computerscreen = power;
-		cPower = power;
+		compPower = power;
 		desktopPic.gameObject.SetActive(false);
+	}
+
+	void initiatePowerOut(){
+		if(currentTime + powerOutTime < Time.time && initiatePOut){
+			GameObject mastermind = GameObject.FindGameObjectWithTag("Mastermind");
+			mastermind.SendMessage("powerOut");
+			aSource.clip = powerOutSound;
+			aSource.PlayDelayed(timeBeforeGasp);
+			initiatePOut = false;
+			//for flashlightsoudn
+			haveFlashlight = mastermind.GetComponent<Inventory>().checkItemSupply("item_flashlight",1);
+			currentFlashTime = Time.time;
+			playFlashSound = true;
+		}
+	}
+	void doPlayFlashSound(){
+		aSource.clip = flashAudio;
+		aSource.Play();
+		playFlashSound = false;
 	}
 
 }
