@@ -17,6 +17,7 @@ public class Radio : MonoBehaviour {
 	void Interact(){
 		if(!avbrott){
 			enabled = !enabled;
+			GameObject.Find ("MasterMind").GetComponent<ItemUseStates>().radio = enabled;
 			if(enabled){
 				if(!speaker.isPlaying){
 					speaker.Play();

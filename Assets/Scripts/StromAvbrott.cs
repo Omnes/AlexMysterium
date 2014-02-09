@@ -10,6 +10,7 @@ public class StromAvbrott : MonoBehaviour {
 	public bool asdhjabsdkja = true;
 
 	void Start(){
+		powerON = !GetComponent<ItemUseStates>().button;
 		setOn();
 	}
 
@@ -44,6 +45,7 @@ public class StromAvbrott : MonoBehaviour {
 	void togglePowerON(){
 		if(!avbrott){
 			powerON = !powerON;
+			GetComponent<ItemUseStates>().button = !powerON;
 		}else{
 			powerON = false;
 		}
@@ -55,6 +57,10 @@ public class StromAvbrott : MonoBehaviour {
 		GameObject[] withtag = GameObject.FindGameObjectsWithTag("DarkLayer");
 		foreach(GameObject g in withtag){
 			g.renderer.enabled =!powerON;
+		}
+		GameObject[] withlighttag = GameObject.FindGameObjectsWithTag("LightLayer");
+		foreach(GameObject g in withlighttag){
+			g.renderer.enabled =powerON;
 		}
 	}
 

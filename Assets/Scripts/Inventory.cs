@@ -4,7 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 
 public class Inventory : MonoBehaviour {
-	
+
+	public List<string> itemsThatHaveBeenpickedUp = new List<string>();
 	
 	public List<Item> inventoryList;
 	private int startItem = 0;
@@ -50,6 +51,7 @@ public class Inventory : MonoBehaviour {
 	public void AddItem (GameObject itemPickup) {
 		itemPickup.SetActive(false);
 		Item item = new Item(itemPickup.name,itemPickup.GetComponent<ItemIconHolder>().itemIcon,ItemPickupCounter);
+		itemsThatHaveBeenpickedUp.Add(itemPickup.name);
 		inventoryList.Add(item);
 		ItemPickupCounter++;
 	}
@@ -61,6 +63,15 @@ public class Inventory : MonoBehaviour {
 		for(int i = 0; i < number;i++){
 			inventoryList.Remove(findItemByName(inventoryList,name));
 		}
+	}
+	public bool checkIfHaveBeenPickedUp(string name){
+		bool b = false;
+		foreach(string s in itemsThatHaveBeenpickedUp){
+			if(s == name){
+				b = true;
+			}
+		}
+		return b;
 	}
 
 	public bool checkItemSupply(string name,int number){
