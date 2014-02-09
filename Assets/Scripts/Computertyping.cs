@@ -30,6 +30,10 @@ public class Computertyping : MonoBehaviour {
 	List<Questpair> maillist = new List<Questpair>();
 	int currentmail = 1;
 	private GameObject screen;
+
+	//seans
+	public bool cPower = true;
+	public Transform desktopPic;
 	
 
 	// Use this for initialization
@@ -44,9 +48,11 @@ public class Computertyping : MonoBehaviour {
 	}
 
 	void ActivateStuff(){
-		Debug.Log ("OGGAAAABOOOGAAAGA");
-		setComputerScreen(true);
-		screen.renderer.enabled = true;
+		if(cPower){
+			Debug.Log ("OGGAAAABOOOGAAAGA");
+			setComputerScreen(true);
+			screen.renderer.enabled = true;
+		}
 	}
 	
 	void DeactivateStuff(){
@@ -55,24 +61,25 @@ public class Computertyping : MonoBehaviour {
 	
 	// Update is called once per frame
 	 void Update() {
-		
-		if(!loggedin){  									// Hanterar tangentbordets input
-        	foreach (char c in Input.inputString) {
-				if (c == "\n"[0] || c == "\r"[0]){  //enter, KANSKE BEHÖVER LÄGGA TILL ETT KLICK OCKSÅ
-					if(passwordinput == correctPassword){
-						loggedin = true;				//Loggat in!!!!f
-						currentLayout = inboxLayout;
+		if(cPower){
+			if(!loggedin){  									// Hanterar tangentbordets input
+	        	foreach (char c in Input.inputString) {
+					if (c == "\n"[0] || c == "\r"[0]){  //enter, KANSKE BEHÖVER LÄGGA TILL ETT KLICK OCKSÅ
+						if(passwordinput == correctPassword){
+							loggedin = true;				//Loggat in!!!!f
+							currentLayout = inboxLayout;
 
-						screen.renderer.material.SetTexture("_MainTex",inboxLayout);
-						addemails();
-						//SPELA UPP LJUD
-					}else{
-						passwordinput = "";
+							screen.renderer.material.SetTexture("_MainTex",inboxLayout);
+							addemails();
+							//SPELA UPP LJUD
+						}else{
+							passwordinput = "";
+						}
 					}
 				}
-			}
-			if(passwordinput.Length > maxPasswordLength){
-				passwordinput = passwordinput.Substring(0, passwordinput.Length - 1);
+				if(passwordinput.Length > maxPasswordLength){
+					passwordinput = passwordinput.Substring(0, passwordinput.Length - 1);
+				}
 			}
 		}
     }
@@ -169,4 +176,11 @@ public class Computertyping : MonoBehaviour {
 			}
 		}
 	}
+
+	void setPowerOut(bool power){
+		computerscreen = power;
+		cPower = power;
+		desktopPic.gameObject.SetActive(false);
+	}
+
 }

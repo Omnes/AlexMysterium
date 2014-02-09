@@ -5,10 +5,25 @@ public class StromAvbrott : MonoBehaviour {
 
 	public bool powerON = true;
 	public bool avbrott = false;
+	public Transform[] reactiveObjects;
+
+	public bool asdhjabsdkja = true;
 
 	void Start(){
 		powerON = !GetComponent<ItemUseStates>().button;
 		setOn();
+	}
+
+	void Update(){
+		if(Input.GetKey(KeyCode.J)){
+			//fråga sean
+			if(asdhjabsdkja){
+				powerOut();
+				Debug.Log("powerout!");
+				asdhjabsdkja = false;
+			}
+
+		}
 	}
 
 	void OnEnable(){
@@ -43,5 +58,13 @@ public class StromAvbrott : MonoBehaviour {
 		foreach(GameObject g in withtag){
 			g.renderer.enabled =!powerON;
 		}
+	}
+
+	void powerOut(){
+		for(int i  = 0; i < reactiveObjects.Length; i++){
+			reactiveObjects[i].SendMessage("setPowerOut", false);
+		}
+		avbrott = true;
+		togglePowerON();
 	}
 }

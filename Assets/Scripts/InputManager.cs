@@ -11,7 +11,7 @@ public class InputManager : MonoBehaviour {
 	//private
 	//public Transform player;
 	private MovementManager ptrMovementManager; 	//reference to pathfinding
-	private bool isPuzzle = false;					//True if outside puzzle, false if in puzzle
+	public bool isPuzzle = false;					//True if outside puzzle, false if in puzzle
 	private float buttonDelayCounter;
 	private Inventory ptrInventory;
 	
