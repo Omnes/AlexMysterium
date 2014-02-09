@@ -30,10 +30,10 @@ public class GUI_Return_Button : GUI_Button {
 			
 			//GUI.skin.button.onHover.textColor = Color.cyan;
 			
-	        if (GUI.Button(new Rect(XPos, YPos, Width, Height),aTexture , gui_style) && lastActivateTime + cooldown > Time.time)
+	        if (GUI.Button(new Rect(XPos, YPos, Width, Height),aTexture , gui_style) && lastActivateTime + cooldown < Time.time)
 			{//, ScaleMode.ScaleToFit, true);
 				lastActivateTime = Time.time;
-				GameObject.Find("MasterMind").SendMessage("");
+				GameObject.Find("MasterMind").SendMessage("Deactivate");
 				Debug.Log("You pressed the button, VICTORY!!!!");
 				//use a queue
 				
@@ -46,6 +46,10 @@ public class GUI_Return_Button : GUI_Button {
 			
 		}
     }
+
+	public void DeactivateStuff(){
+		enabled = false;
+	}
 	
 	public override void Activate(bool x){
 		enabled = x;

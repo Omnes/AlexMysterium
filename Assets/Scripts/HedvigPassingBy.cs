@@ -30,7 +30,7 @@ public class HedvigPassingBy : MonoBehaviour {
 			float temppos = instance.position.x + walkingspeed;
 			instance.position = new Vector3(temppos, instance.position.y, instance.position.z);
 			
-			Debug.Log ("ska ha flyttat sig framåt här");
+			//Debug.Log ("ska ha flyttat sig framåt här");
 			
 			if(Mathf.Abs(spawnposition.x - instance.position.x)> pathlength){
 				Destroy(instance.gameObject); //Vet inte om detta duger

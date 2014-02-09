@@ -10,6 +10,7 @@ public class StromAvbrott : MonoBehaviour {
 	public bool asdhjabsdkja = true;
 
 	void Start(){
+		powerON = !GetComponent<ItemUseStates>().button;
 		setOn();
 	}
 
@@ -44,6 +45,7 @@ public class StromAvbrott : MonoBehaviour {
 	void togglePowerON(){
 		if(!avbrott){
 			powerON = !powerON;
+			GetComponent<ItemUseStates>().button = !powerON;
 		}else{
 			powerON = false;
 		}
