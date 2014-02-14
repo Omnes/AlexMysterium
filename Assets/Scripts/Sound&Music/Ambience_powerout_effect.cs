@@ -5,6 +5,7 @@ public class Ambience_powerout_effect : MonoBehaviour {
 
 	private float poweroutVolumeBuff = 1.2f;
 	private float speakerVolume;
+
 	AudioSource speaker;
 	// Use this for initialization
 	void Start () {
