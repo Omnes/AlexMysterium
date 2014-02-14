@@ -31,7 +31,8 @@ public class Cardreader : MonoBehaviour {
 	private bool visited = false;
 	public AudioSource m_audioSource;
 	public AudioClip m_needCode_sound;
-
+	public AudioClip m_drawcard;
+	public AudioClip[] beeps = new AudioClip[4];
 	
 	// Use this for initialization
 	void Start () {
@@ -57,6 +58,7 @@ public class Cardreader : MonoBehaviour {
 
 	public void drawCard(){
 		carddrawn = true;
+		playSound(m_drawcard);
 		renderer.material.mainTexture = yellow;
 	}
 
@@ -138,6 +140,8 @@ public class Cardreader : MonoBehaviour {
 				if(GUILayout.Button("" + (j+1),GUILayout.ExpandHeight(true))){
 					if(carddrawn){
 						if(count < 4){
+							int rand = Random.Range(0,3);
+							playSound(beeps[rand]);
 							clicked.Add(j+1);
 							count++;
 						}
@@ -155,6 +159,8 @@ public class Cardreader : MonoBehaviour {
 		if(GUILayout.Button("" + 0,GUILayout.ExpandHeight(true))){
 			if(carddrawn){
 				if(count < 4){
+					int rand = Random.Range(0,3);
+					playSound(beeps[rand]);
 					clicked.Add(0);
 					count++;
 				}

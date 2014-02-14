@@ -57,8 +57,8 @@ public class Gui_Control : MonoBehaviour {
 		inventory.DoGUI();
 		GUI.DrawTexture(guiArea,gui_texture);
 		//GUI.Box(inventoryArea,"DONT FORGET TO REMOVE");
-		GUI.Box(inventoryArea,"inv");
-		GUI.Box(questLogArea,"quest");
+		//GUI.Box(inventoryArea,"inv");
+		//GUI.Box(questLogArea,"quest");
 		
 	}
 }
