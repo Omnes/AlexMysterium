@@ -3,7 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class Cardreader : MonoBehaviour {
-	
+
+	public GameObject DoorToOpen;
 	public Texture2D[] Digits = new Texture2D[10];
 	public Texture2D green;
 	public Texture2D red;
@@ -24,8 +25,12 @@ public class Cardreader : MonoBehaviour {
 	public List<int> clicked = new List<int>();
 	float clock;
 	bool clockhasstarted = false;
-	bool carddrawn = false;
+	public bool carddrawn = false;
 	MessageWindow quest;
+
+	private bool visited = false;
+	public AudioSource m_audioSource;
+	public AudioClip m_needCode_sound;
 
 	
 	// Use this for initialization
@@ -53,12 +58,19 @@ public class Cardreader : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
+		if(!visited){
+			if(!getCodeValid()){
+				playSound(m_needCode_sound);
+			}
+			visited = true;
+		}
+
 		if(Input.GetKeyUp(KeyCode.C)){
 
 			Debug.Log ("Key was pressed");
 			if(!carddrawn){
-			carddrawn = true;
-			renderer.material.mainTexture = yellow;
+				carddrawn = true;
+				renderer.material.mainTexture = yellow;
 			}
 
 		}
@@ -100,6 +112,7 @@ public class Cardreader : MonoBehaviour {
 		if(checkcode){
 			
 			renderer.material.mainTexture = green;
+			DoorToOpen.GetComponent<Interact_Door>().locked = false;
 			Debug.Log("UNLOCKED!");
 		}
 		else{
@@ -170,5 +183,15 @@ public class Cardreader : MonoBehaviour {
 		GUILayout.EndHorizontal();
 		GUILayout.EndArea();
 	//}
+	}
+
+	public bool getCodeValid(){
+		bool valid = GameObject.FindGameObjectWithTag("Mastermind").GetComponent<ItemUseStates>().passcode;
+		return valid;
+	}
+
+	public void playSound(AudioClip ac){
+		m_audioSource.clip = ac;
+		m_audioSource.Play();
 	}
 }

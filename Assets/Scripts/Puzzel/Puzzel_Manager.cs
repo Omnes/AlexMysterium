@@ -96,7 +96,7 @@ public class Puzzel_Manager : MonoBehaviour {
 				if(tempPiece.correct){
 					//Debug.Log (Input.mousePosition.x + " " + Input.mousePosition.y + " " + Input.mousePosition.z);
 					Vector3 newPos = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, Input.mousePosition.z));
-						newPos.z = transform.position.z/2;
+						newPos.z = -2;
 						tempPiece.transform.position = newPos;
 							
 				}
