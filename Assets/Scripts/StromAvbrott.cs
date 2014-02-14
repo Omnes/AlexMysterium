@@ -5,7 +5,7 @@ public class StromAvbrott : MonoBehaviour {
 
 	public bool powerON = false;
 	public bool avbrott = false;
-	public Transform[] reactiveObjects;
+	private Transform[] reactiveObjects;
 
 	public bool asdhjabsdkja = true;
 	private bool played = false;
@@ -24,7 +24,6 @@ public class StromAvbrott : MonoBehaviour {
 				Debug.Log("powerout!");
 				asdhjabsdkja = false;
 			}
-
 		}
 	}
 
@@ -73,6 +72,9 @@ public class StromAvbrott : MonoBehaviour {
 	}
 
 	void powerOut(){
+
+		reactiveObjects = GameObject.Find("currentSceneInfo").GetComponent<GetReactiveObjects>().reactiveObj_array;
+
 		for(int i  = 0; i < reactiveObjects.Length; i++){
 			reactiveObjects[i].SendMessage("setPowerOut", false);
 		}

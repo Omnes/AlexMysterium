@@ -28,6 +28,10 @@ public class Cardreader : MonoBehaviour {
 	public bool carddrawn = false;
 	MessageWindow quest;
 
+	private bool visited = false;
+	public AudioSource m_audioSource;
+	public AudioClip m_needCode_sound;
+
 	
 	// Use this for initialization
 	void Start () {
@@ -53,6 +57,13 @@ public class Cardreader : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
+
+		if(!visited){
+			if(!getCodeValid()){
+				playSound(m_needCode_sound);
+			}
+			visited = true;
+		}
 
 		if(Input.GetKeyUp(KeyCode.C)){
 
@@ -172,5 +183,15 @@ public class Cardreader : MonoBehaviour {
 		GUILayout.EndHorizontal();
 		GUILayout.EndArea();
 	//}
+	}
+
+	public bool getCodeValid(){
+		bool valid = GameObject.FindGameObjectWithTag("Mastermind").GetComponent<ItemUseStates>().passcode;
+		return valid;
+	}
+
+	public void playSound(AudioClip ac){
+		m_audioSource.clip = ac;
+		m_audioSource.Play();
 	}
 }
