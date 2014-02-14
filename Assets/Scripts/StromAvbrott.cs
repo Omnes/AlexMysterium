@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class StromAvbrott : MonoBehaviour {
@@ -9,7 +9,6 @@ public class StromAvbrott : MonoBehaviour {
 
 	public bool asdhjabsdkja = true;
 	private bool played = false;
-	public AudioSource notWorkSound;
 
 	void Start(){
 		powerON = GetComponent<ItemUseStates>().button;
@@ -49,15 +48,8 @@ public class StromAvbrott : MonoBehaviour {
 			GetComponent<ItemUseStates>().button = !powerON;
 		}else{
 			powerON = false;
-			if(!played){
-				notWorkSound.Play();
-				Debug.Log("OJYEAH");
-				played = true;
-			}
-
 		}
 		setOn();
-
 	}
 
 	void setOn(){
@@ -72,6 +64,8 @@ public class StromAvbrott : MonoBehaviour {
 	}
 
 	void powerOut(){
+
+		audio.Play();
 
 		reactiveObjects = GameObject.Find("currentSceneInfo").GetComponent<GetReactiveObjects>().reactiveObj_array;
 
