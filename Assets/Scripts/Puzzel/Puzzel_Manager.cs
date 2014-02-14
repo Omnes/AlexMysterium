@@ -3,21 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class Puzzel_Manager : MonoBehaviour {
-	
-	//public bool useAreaSnapping 			= true;
-	//public bool useAreaSnappingOnlyCorrect 	= false;
+
 	public bool enabled 					= false;
 	public bool Completed					= false;
 	
 	public List<Puzzel_piece> Ppiece_list;
-		// Vector3 	position;
-		// int 		piece_value;
-	
+
 	public List<Puzzel_slot> Pslot_list;
-		// Vector3 	position;
-		// float 	radius;
-		// int 		correct_slot_value;
-		// bool 	correct_piece;
+
 	
 	public float buttonDelay = 0.3f;
 	private float buttonDelayCounter;
@@ -25,9 +18,6 @@ public class Puzzel_Manager : MonoBehaviour {
 	public Puzzel_piece tempPiece; 
 	//private Vector3 tempPos;
 	// sounds
-	/*
-	 * 
-	 */
 	
 	
 	// Use this for initialization
@@ -78,16 +68,7 @@ public class Puzzel_Manager : MonoBehaviour {
 						// pressed a pussel piece
 						tempPiece 			= hit.transform.gameObject.GetComponent<Puzzel_piece>();
 						tempPiece.holding 	= true;
-						//(Input.GetMouseButtonDown(0)){
-						/*if(tempPiece.movable){
-								Debug.Log (Input.mousePosition.x + " " + Input.mousePosition.y + " " + Input.mousePosition.z);
-							Vector3 newPos = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, Input.mousePosition.z));
-							newPos.z = transform.position.z;
-							tempPiece.transform.position = newPos;
-							
-						}*/
-														//tempPiece.holding 	= false;
-						//tempPiece 			= null;
+
 					}
 				}
 			}
@@ -109,7 +90,8 @@ public class Puzzel_Manager : MonoBehaviour {
 			//-----------------------------------------------------------------------------------------------------------------------------------------------------
 			if(CheckIfCorrect() && !Completed){
 				Completed = true;
-				Debug.Log("SUCCESS YOU COMPLETED THE PUZZLE!!!");	
+				Debug.Log("SUCCESS YOU COMPLETED THE PUZZLE!!!");
+				GameObject.Find("MasterMind").SendMessage("setAvbrott",false);
 			}
 		}
 	}
@@ -125,23 +107,7 @@ public class Puzzel_Manager : MonoBehaviour {
 	void addSlotElement(Puzzel_slot x){ //add a element to the list
 		Pslot_list.Add(x);	
 	}
-	/*
-	// give a warning message if there is an uneven amount of pieces and slots?
-	void Do_GUI(){
-		foreach(Puzzel_piece Piece in Ppiece_list){
-			//Debug.Log("********************************************");
-			Rect pos = new Rect(Piece.transform.position.x, Piece.transform.position.y, Piece.size.x, Piece.size.y);
-			GUI.DrawTexture(pos, Piece.gui_texture);
-			//Piece. // return gui texture for the piece
-		}
-	}
-	
-	void OnGUI(){
-		if(enabled){
-			//Do_GUI();// use this for grouped gui-calls
-		}
-	}
-	*/
+
 	public bool CheckIfCorrect(){
 		bool isCorrect = true;
 		

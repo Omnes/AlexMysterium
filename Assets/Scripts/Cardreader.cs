@@ -55,6 +55,11 @@ public class Cardreader : MonoBehaviour {
 		return new Rect(Screen.width/r.x,Screen.height/r.y,Screen.width/r.width,Screen.height/r.height);
 	}
 
+	public void drawCard(){
+		carddrawn = true;
+		renderer.material.mainTexture = yellow;
+	}
+
 	// Update is called once per frame
 	void Update () {
 
@@ -63,16 +68,6 @@ public class Cardreader : MonoBehaviour {
 				playSound(m_needCode_sound);
 			}
 			visited = true;
-		}
-
-		if(Input.GetKeyUp(KeyCode.C)){
-
-			Debug.Log ("Key was pressed");
-			if(!carddrawn){
-				carddrawn = true;
-				renderer.material.mainTexture = yellow;
-			}
-
 		}
 
 		if(count == 4){
@@ -147,7 +142,7 @@ public class Cardreader : MonoBehaviour {
 							count++;
 						}
 					}else{
-						quest.addQuest("1"); //ändra siffran till rätt quest sen
+						//quest.addQuest("1"); //ändra siffran till rätt quest sen
 					}
 				}
 			}
@@ -164,7 +159,7 @@ public class Cardreader : MonoBehaviour {
 					count++;
 				}
 			}else{
-				quest.addQuest("1"); //ändra siffran till rätt quest sen
+			//	quest.addQuest("1"); //ändra siffran till rätt quest sen
 			}
 		}
 		GUILayout.Label("");

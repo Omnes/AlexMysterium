@@ -40,6 +40,7 @@ public class StromAvbrott : MonoBehaviour {
 		if(avbrott && powerON){
 			powerON = false;
 		}
+		GetComponent<ItemUseStates>().powerout = avbrott;
 		setOn();
 	}
 

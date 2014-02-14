@@ -7,7 +7,7 @@ public class Inventory : MonoBehaviour {
 
 	public List<string> itemsThatHaveBeenpickedUp = new List<string>();
 	
-	public List<Item> inventoryList;
+	public List<Item> inventoryList = new List<Item>();
 	private int startItem = 0;
 	public int displayCount = 5;
 	
