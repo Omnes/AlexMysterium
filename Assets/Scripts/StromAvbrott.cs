@@ -81,6 +81,7 @@ public class StromAvbrott : MonoBehaviour {
 			reactiveObjects[i].SendMessage("setPowerOut", false);
 		}
 		avbrott = true;
+		GetComponent<ItemUseStates>().powerout = avbrott;
 		powerON = false;
 		setOn();
 		
