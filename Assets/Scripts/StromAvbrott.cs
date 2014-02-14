@@ -23,6 +23,7 @@ public class StromAvbrott : MonoBehaviour {
 				Debug.Log("powerout!");
 				asdhjabsdkja = false;
 			}
+
 		}
 	}
 
@@ -39,6 +40,7 @@ public class StromAvbrott : MonoBehaviour {
 		if(avbrott && powerON){
 			powerON = false;
 		}
+		GetComponent<ItemUseStates>().powerout = avbrott;
 		setOn();
 	}
 
@@ -73,6 +75,7 @@ public class StromAvbrott : MonoBehaviour {
 			reactiveObjects[i].SendMessage("setPowerOut", false);
 		}
 		avbrott = true;
+		GetComponent<ItemUseStates>().powerout = avbrott;
 		powerON = false;
 		setOn();
 		

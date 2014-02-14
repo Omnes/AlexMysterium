@@ -17,6 +17,9 @@ public class MessageWindow : MonoBehaviour {
 	public int MainquestSize = 20;
 	public int SubquestSize = 15;
 	public float subQuestTab= 30;
+	public Rect textfield;
+	public Rect texturefield;
+
 	bool writeMessage;	
 	List<Questpair> questlog = new List<Questpair>(); //Array där alla quests ska sparas
 	
@@ -26,27 +29,26 @@ public class MessageWindow : MonoBehaviour {
 		newObjective = gameObject.GetComponent<AudioSource>();	
 		//print(asset.text);
 		bool writeMessage = false; 
-		addQuest ("2");
-		addQuest ("1");
-		addSubQuest("1a");
-		addSubQuest("1b");
-		addSubQuest("1c");
-		addSubQuest("1d");
-		addSubQuest("2a");
-		addSubQuest("2b");
-		finishedSubQuest("2b");
-		finishedSubQuest("2a");
-		
 	} 
 
-//Triggar Meddelandet 
-	void Interact(){
-		
+	void showMessageWindow(){
 		Debug.Log("Displaying Message");
 		writeMessage = true; 
 		Time.timeScale = 0; 
-	} 
-	
+	}
+
+	Rect makeRect(Rect r){
+		return new Rect(Screen.width/r.x,Screen.height/r.y,Screen.width/r.width,Screen.height/r.height);
+	}
+
+	public void Update(){
+
+		if(Input.GetKeyDown(KeyCode.Q)){
+
+			addQuest("1");
+		}
+	}
+
 // Lägg till en main-quest
 	public void addQuest(string id){
 		
@@ -66,6 +68,7 @@ public class MessageWindow : MonoBehaviour {
 		}	
 
 		if(!dontadd){
+			newObjective.Play();
 			questlog.Add(new Questpair(id, quest.InnerText));
 		}
 
@@ -79,7 +82,8 @@ public class MessageWindow : MonoBehaviour {
 	
 //Lägg till en subquest
 	void addSubQuest(string subquest){
-		
+
+		Debug.Log ("hej");
 		XmlDocument doc = new XmlDocument(); 
 		doc.LoadXml(asset.text);				//Laddar vår xml-fil
 		
@@ -88,21 +92,22 @@ public class MessageWindow : MonoBehaviour {
 		bool dontadd = false;
 
 		foreach(Questpair node in questlog){
-		
+			Debug.Log("1");
 			if(subquest.StartsWith(node.mID)){
-
+				Debug.Log ("2");
 				foreach(Questpair sub in node.mQuestlog){
-
+					Debug.Log("3");
 					if(sub.getID() == subquest){
-
+						Debug.Log("added nothing, already exists");
 						dontadd = true;
 					}
-
-					if(!dontadd){
+				}
+				if(!dontadd){
+					newObjective.Play();
 					node.addSubQuest(new Questpair(subquest, quest.InnerText));
+					Debug.Log ("added" + quest.InnerText + "quest");
 					//foreach(Questpair subNode in node.mQuestlog){
 					//	questlog.Add(new Questpair(subquest, ));
-					}
 				}
 			}
 		}
@@ -174,16 +179,17 @@ public class MessageWindow : MonoBehaviour {
 		if(writeMessage){ 
 			float tempposY = posY;
 			
-			GUI.DrawTexture(new Rect(posX,tempposY, Messagelayout.width,Messagelayout.height),Messagelayout);
-			GUILayout.BeginArea(new Rect(posX + 10,tempposY + 10,Messagelayout.width-10,Messagelayout.height-10));
+			GUI.DrawTexture(makeRect(texturefield),Messagelayout); //FUNKAR INTE?!
+			//GUILayout.BeginArea(new Rect(posX + 10,tempposY + 10,Messagelayout.width-10,Messagelayout.height-10));
+			GUILayout.BeginArea(makeRect(textfield));
 			GUILayout.BeginVertical();
+			//GUILayout.Space(distancetext);
 			
 			foreach(Questpair node in questlog){ //loopar igenom alla mainquests
 				
 				style.fontSize = MainquestSize;
 				GUILayout.Label(node.mContent,style);
 				GUILayout.BeginHorizontal();
-				GUILayout.Space(subQuestTab);
 				GUILayout.BeginVertical();
 				
 				foreach(Questpair subnode in node.mQuestlog){ //loopar igenom alla subquests
@@ -205,7 +211,7 @@ public class MessageWindow : MonoBehaviour {
 			GUILayout.FlexibleSpace();
 			GUILayout.EndVertical();
 			GUILayout.EndArea();
-			if(GUI.Button(new Rect(posX,posY, Messagelayout.width,Messagelayout.height),"",style)){ 
+			if(GUI.Button(makeRect(texturefield),"",style)){ //Stänger ner questlogen
 					
 					writeMessage = false; 
 					Time.timeScale = 1; 

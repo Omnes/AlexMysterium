@@ -3,7 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class Cardreader : MonoBehaviour {
-	
+
+	public GameObject DoorToOpen;
 	public Texture2D[] Digits = new Texture2D[10];
 	public Texture2D green;
 	public Texture2D red;
@@ -24,13 +25,14 @@ public class Cardreader : MonoBehaviour {
 	public List<int> clicked = new List<int>();
 	float clock;
 	bool clockhasstarted = false;
-	bool carddrawn = false;
+	public bool carddrawn = false;
 	MessageWindow quest;
 
 	private bool visited = false;
 	public AudioSource m_audioSource;
 	public AudioClip m_needCode_sound;
-
+	public AudioClip m_drawcard;
+	public AudioClip[] beeps = new AudioClip[4];
 	
 	// Use this for initialization
 	void Start () {
@@ -54,6 +56,12 @@ public class Cardreader : MonoBehaviour {
 		return new Rect(Screen.width/r.x,Screen.height/r.y,Screen.width/r.width,Screen.height/r.height);
 	}
 
+	public void drawCard(){
+		carddrawn = true;
+		playSound(m_drawcard);
+		renderer.material.mainTexture = yellow;
+	}
+
 	// Update is called once per frame
 	void Update () {
 
@@ -62,16 +70,6 @@ public class Cardreader : MonoBehaviour {
 				playSound(m_needCode_sound);
 			}
 			visited = true;
-		}
-
-		if(Input.GetKeyUp(KeyCode.C)){
-
-			Debug.Log ("Key was pressed");
-			if(!carddrawn){
-			carddrawn = true;
-			renderer.material.mainTexture = yellow;
-			}
-
 		}
 
 		if(count == 4){
@@ -111,6 +109,7 @@ public class Cardreader : MonoBehaviour {
 		if(checkcode){
 			
 			renderer.material.mainTexture = green;
+			DoorToOpen.GetComponent<Interact_Door>().locked = false;
 			Debug.Log("UNLOCKED!");
 		}
 		else{
@@ -141,11 +140,13 @@ public class Cardreader : MonoBehaviour {
 				if(GUILayout.Button("" + (j+1),GUILayout.ExpandHeight(true))){
 					if(carddrawn){
 						if(count < 4){
+							int rand = Random.Range(0,3);
+							playSound(beeps[rand]);
 							clicked.Add(j+1);
 							count++;
 						}
 					}else{
-						quest.addQuest("1"); //ändra siffran till rätt quest sen
+						//quest.addQuest("1"); //ändra siffran till rätt quest sen
 					}
 				}
 			}
@@ -158,11 +159,13 @@ public class Cardreader : MonoBehaviour {
 		if(GUILayout.Button("" + 0,GUILayout.ExpandHeight(true))){
 			if(carddrawn){
 				if(count < 4){
+					int rand = Random.Range(0,3);
+					playSound(beeps[rand]);
 					clicked.Add(0);
 					count++;
 				}
 			}else{
-				quest.addQuest("1"); //ändra siffran till rätt quest sen
+			//	quest.addQuest("1"); //ändra siffran till rätt quest sen
 			}
 		}
 		GUILayout.Label("");

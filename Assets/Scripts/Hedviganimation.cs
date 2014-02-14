@@ -16,6 +16,7 @@ public class Hedviganimation : MonoBehaviour {
 	Color color;
 	float currentalpha;
 	bool startfade = false;
+	public bool gone = false;
 
 	// Use this for initialization
 	void Start () {
@@ -50,6 +51,9 @@ public class Hedviganimation : MonoBehaviour {
 
 		if(startfade){
 			currentalpha -= alphadelta;
+			if(currentalpha <= 0){
+				gone = true;
+			}
 		}
 
 		playerMat.color = new Color(color.r, color.g, color.b, currentalpha);

@@ -9,6 +9,7 @@ public class Traveltothepast : MonoBehaviour {
 	public string objecttag;
 	public string darklayertag;
 	public string pastobjecttag;
+	public AudioSource fadesound;
 	bool fade = false;
 	float changeCount = 1;
 	Color alpha;
@@ -20,6 +21,7 @@ public class Traveltothepast : MonoBehaviour {
 
 	void Start(){
 
+		fadesound = gameObject.GetComponent<AudioSource>();	
 		alpha =  GameObject.Find ("Background").renderer.material.color;
 		objectcolor = GameObject.Find (pastobjecttag).renderer.material.color;
 		GameObject.Find (pastobjecttag).renderer.material.color = new Color(objectcolor.r,objectcolor.g,objectcolor.b,0);
@@ -33,7 +35,7 @@ public class Traveltothepast : MonoBehaviour {
 		if(fade == true) {
 
 			if(Time.time - tick >= 0.1f){
-				Debug.Log ("fade = true");
+				//Debug.Log ("fade = true");
 				changeCount = changeCount - fadedelta;
 				GameObject.Find(objecttag).renderer.material.color = new Color(alpha.r,alpha.g,alpha.b,changeCount);
 				GameObject.Find(darklayertag).renderer.material.color = new Color(alpha.r,alpha.g,alpha.b,changeCount);
@@ -57,6 +59,7 @@ public class Traveltothepast : MonoBehaviour {
 
 	public void timeTraveltoPast(){
 	
+		fadesound.Play();
 		Debug.Log ("Interractade");
 		fade = true;
 		tick = Time.time;
