@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using UnityEditor;
 
@@ -9,17 +9,20 @@ public class HedvigPassingBy : MonoBehaviour {
 	public Vector3 spawnposition;
 	public float walkingspeed;
 	public float pathlength; 
+	public AudioClip fadesound;		//Kanske får flytta till traveltothepast senar
+	public AudioSource soundsource;
 	bool instantiated = false;
 	float alpha;
 	Hedviganimation hedvigani; 
 	Traveltothepast past; 
 
+
 	// Use this for initialization
 	void Start () {
 	 
-		//alpha = 0.01f;
+		soundsource = gameObject.GetComponent<AudioSource>();
+	//	ghostsound = gameObject.GetComponent<AudioSource>();	
 		playAnimation();
-		//renderer.material.SetTexture("_MainTex",playerMat.GetTexture("_MainTex"));
 		hedvigani = instance.GetComponent<Hedviganimation>();
 	}
 	
@@ -39,17 +42,18 @@ public class HedvigPassingBy : MonoBehaviour {
 				instantiated = false;
 				past = gameObject.GetComponent<Traveltothepast>();
 				past.timeTraveltoPast();
-
 			}
 
 			if(Mathf.Abs(spawnposition.x - instance.position.x)> pathlength - 3){
 
 				hedvigani.startfadingaway();
 			}
-		//	alpha += 0.01f;
-			//prefab.transform.GetChild(0).renderer.material.color = new Color(renderer.material.color.r,renderer.material.color.g,renderer.material.color.b,alpha += 0.01f);
+
+			if(hedvigani.gone){
+
+				soundsource.clip = fadesound;
+			} 
 		}
-		//	}
 	}
 
 
@@ -58,6 +62,11 @@ public class HedvigPassingBy : MonoBehaviour {
 		Debug.Log ("Hallå ja");
 		instance = Instantiate(prefab,spawnposition,prefab.rotation) as Transform;
 		instantiated = true;
+		soundsource.Play();
+		//audio.clip = ghostsound;
+		Debug.Log("Nu spelas ljudet");
+		//audio.timeSamples = 5000;
+	//	audio.Play();
 		Debug.Log ("Instansiated ghost");
 	}
 
