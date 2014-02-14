@@ -33,7 +33,9 @@ public class ActivationSound : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		speaker = gameObject.GetComponent<AudioSource>();
-		nextDelay();
+		if(delays.Length > 0){
+			nextDelay();
+		}
 	}
 	
 	// Update is called once per frame
@@ -42,7 +44,9 @@ public class ActivationSound : MonoBehaviour {
 			if(!speaker.isPlaying){
 				if(currentDelay <= 0){
 					nextSound();
-					nextDelay();
+					if(delays.Length > 0){
+						nextDelay();
+					}
 				}
 				currentDelay -= Time.deltaTime;
 			}
@@ -59,7 +63,9 @@ public class ActivationSound : MonoBehaviour {
 	private void nextSound(){ // pick another random sound, not the same as the last one.
 		if(audioList.Length > 0){
 			speaker.clip = audioList[currentIndex];
-			nextPan();
+			if(pans.Length > 0){
+				nextPan();
+			}
 			//currentIndex++;
 			//currentIndex %= audioList.Length;
 			
