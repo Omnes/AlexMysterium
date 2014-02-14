@@ -7,4 +7,5 @@ public class ItemUseStates : MonoBehaviour {
 	public bool password = false;
 	public bool passcode = false;
 	public bool flashlight = false;
+	public bool powerout = false;
 }
