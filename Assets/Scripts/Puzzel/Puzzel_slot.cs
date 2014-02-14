@@ -22,10 +22,12 @@ public class Puzzel_slot : MonoBehaviour {
 	void Start () {
 		position = transform.position;
 		//centerPos = renderer.bounds.center;
-		centerPos = renderer.bounds.center;
+		centerPos = transform.position;
 		Debug.Log("Z: " + centerPos.z );
 		//centerPos.z += (int)gameObject.transform.localScale.z;
-		centerPos.z -= (int)((gameObject.collider.bounds.size.z/2)-(gameObject.collider.bounds.size.z/4));
+		Transform front = GameObject.Find ("front").transform;
+		//centerPos.z -= (int)((gameObject.collider.bounds.size.z/2)-(gameObject.collider.bounds.size.z/4));
+		centerPos.z = front.position.z + (renderer.bounds.size.z/2+0.1f);
 		Debug.Log("z: " + gameObject.collider.bounds.size.z/2 );
 		
 		speaker = gameObject.GetComponent<AudioSource>();
@@ -33,16 +35,14 @@ public class Puzzel_slot : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if(ptrPuzzel_Piece != null && !ptrPuzzel_Piece.holding && Vector3.Distance(ptrPuzzel_Piece.transform.position,centerPos) > 0.2){
+		if(ptrPuzzel_Piece != null && !ptrPuzzel_Piece.holding && Vector3.Distance(ptrPuzzel_Piece.transform.position,centerPos) > 0.5){
 			//Debug.Log("Current pos: " + ptrPuzzel_Piece.transform.position + " new pos: " + centerPos);
 			ptrPuzzel_Piece.transform.position = areaSnapping();
 			//Debug.Log(" AFTERSNAPCurrent pos: " + ptrPuzzel_Piece.transform.position + " new pos: " + centerPos);
 			//speaker.Play();
-			Debug.Log("PLAYING A SOUND");
+			Debug.Log("PLAYING A SOUND");// YESH
 		}
 		if(ptrPuzzel_Piece != null && ptrPuzzel_Piece.Piece_KeyValue == correct_slot_value && ptrPuzzel_Piece.correct && !ptrPuzzel_Piece.holding && !Correct){
-			//if(ptrPuzzel_Piece.movable){
-			//ptrPuzzel_Piece.correct = false;
 			Correct = true;
 			Debug.Log("Correct!");
 			//}
@@ -50,14 +50,6 @@ public class Puzzel_slot : MonoBehaviour {
 	}
 	
 	Vector3 areaSnapping(){// puzzel piece | puzzel target position and radius
-		/*
-		Vector3 directionVec 		= position - piece_position;// find the direction vector, then normalize it for your movment using vector length
-		float DirectionVecLength 	= Mathf.Sqrt((directionVec.x*directionVec.x + directionVec.y*directionVec.y + directionVec.z*directionVec.z));// vector length
-		
-		if(DirectionVecLength < radius){
-			piece_position = position;
-		}*/
-		//return piece_position;
 		return centerPos;
 	}
 	
@@ -81,23 +73,11 @@ public class Puzzel_slot : MonoBehaviour {
 					ptrPuzzel_Piece = other.GetComponent<Puzzel_piece>();
 					ptrPuzzel_Piece.inUse = true;
 					if( slot_empty && !ptrPuzzel_Piece.holding){
-						//ptrPuzzel_Piece = other.GetComponent<Puzzel_piece>();
 						slot_empty = false;
-					
-						//if(!ptrPuzzel_Piece.holding){
+
 							ptrPuzzel_Piece.transform.position = areaSnapping();
 							Debug.Log("pusselbit");
 							speaker.Play();
-							//ptrPuzzel_Piece.transform.position = areaSnapping();
-							
-						/*if(ptrPuzzel_Piece.Piece_KeyValue == correct_slot_value && ptrPuzzel_Piece.movable){
-							//if(ptrPuzzel_Piece.movable){
-								ptrPuzzel_Piece.movable = false;
-								Correct = true;
-								Debug.Log("Correct!");
-							//}
-						}*/
-						//}
 					}
 				//}
 			}else{ 
@@ -110,23 +90,6 @@ public class Puzzel_slot : MonoBehaviour {
 				}
 			}
 		}
-		/*if(ptrPuzzel_Piece != null && !ptrPuzzel_Piece.holding && Vector3.Distance(ptrPuzzel_Piece.transform.position,centerPos) < 0.2){
-			//Debug.Log("Current pos: " + ptrPuzzel_Piece.transform.position + " new pos: " + centerPos);
-			ptrPuzzel_Piece.transform.position = areaSnapping();
-			//Debug.Log(" AFTERSNAPCurrent pos: " + ptrPuzzel_Piece.transform.position + " new pos: " + centerPos);
-			speaker.Play();
-			Debug.Log("PLAYING A SOUND");
-		}
-		if(ptrPuzzel_Piece != null && ptrPuzzel_Piece.Piece_KeyValue == correct_slot_value && ptrPuzzel_Piece.correct && !ptrPuzzel_Piece.holding){
-			//if(ptrPuzzel_Piece.movable){
-				//ptrPuzzel_Piece.correct = false;
-				Correct = true;
-				Debug.Log("Correct!");
-			//}
-			}
-		}*/
-			//enter_exit = false;
-		//}
 	}
 	
 	void OnTriggerExit(Collider other){// om du tar bort en bit från dess rätta plats så får platsen ett "unfinished state"
@@ -144,12 +107,6 @@ public class Puzzel_slot : MonoBehaviour {
 			}
 		}
 	}
-	
-	/*void OnDrawGizmosSelected () {
-		// Display the explosion radius when selected
-		Gizmos.color = Color.white;
-		Gizmos.DrawWireSphere (transform.position, radius);
-	}*/
 	
 	bool getCorrect(){
 		return Correct;

@@ -3,7 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class Cardreader : MonoBehaviour {
-	
+
+	public GameObject DoorToOpen;
 	public Texture2D[] Digits = new Texture2D[10];
 	public Texture2D green;
 	public Texture2D red;
@@ -24,7 +25,7 @@ public class Cardreader : MonoBehaviour {
 	public List<int> clicked = new List<int>();
 	float clock;
 	bool clockhasstarted = false;
-	bool carddrawn = false;
+	public bool carddrawn = false;
 	MessageWindow quest;
 
 	
@@ -57,8 +58,8 @@ public class Cardreader : MonoBehaviour {
 
 			Debug.Log ("Key was pressed");
 			if(!carddrawn){
-			carddrawn = true;
-			renderer.material.mainTexture = yellow;
+				carddrawn = true;
+				renderer.material.mainTexture = yellow;
 			}
 
 		}
@@ -100,6 +101,7 @@ public class Cardreader : MonoBehaviour {
 		if(checkcode){
 			
 			renderer.material.mainTexture = green;
+			DoorToOpen.GetComponent<Interact_Door>().locked = false;
 			Debug.Log("UNLOCKED!");
 		}
 		else{
