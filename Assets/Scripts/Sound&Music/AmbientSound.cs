@@ -7,7 +7,7 @@ public class AmbientSound : MonoBehaviour {
 	public AudioSource speaker;
 	
 	public int currentIndex = 0;
-	public int panRange;
+	public int pan;
 	
 	public int minDelay;
 	public int maxDelay;
@@ -36,12 +36,12 @@ public class AmbientSound : MonoBehaviour {
 		}while(index == currentIndex);
 		currentIndex = index;
 		speaker.clip = audioList[currentIndex];
-		speaker.pan = panRange;
+		speaker.pan = pan;
 		speaker.Play();
 	}
 	
 	private void randomPan(){
-			panRange = Random.Range(-1,1);
+		pan = Random.Range(-1,1);
 	}
 	
 	private void randomDelay(){
