@@ -7,11 +7,12 @@ public class Ambience_powerout_effect : MonoBehaviour {
 	public float FadeOutTo = 0.0f;
 	public float increment = 0.01f;
 	private float speakerVolume;
+
 	private bool m_fadeIn = false;
 	private bool m_fadeOut = false;
 	//private float goalVolume;
-
 	private AudioSource speaker;
+
 	// Use this for initialization
 	void Start () {
 		speaker = gameObject.GetComponent<AudioSource>();
