@@ -31,13 +31,11 @@ public class MessageWindow : MonoBehaviour {
 		bool writeMessage = false; 
 	} 
 
-//Triggar Meddelandet 
-	void Interact(){
-		
+	void showMessageWindow(){
 		Debug.Log("Displaying Message");
 		writeMessage = true; 
 		Time.timeScale = 0; 
-	} 
+	}
 
 	Rect makeRect(Rect r){
 		return new Rect(Screen.width/r.x,Screen.height/r.y,Screen.width/r.width,Screen.height/r.height);
@@ -213,7 +211,7 @@ public class MessageWindow : MonoBehaviour {
 			GUILayout.FlexibleSpace();
 			GUILayout.EndVertical();
 			GUILayout.EndArea();
-			if(GUI.Button(new Rect(posX,posY, Messagelayout.width,Messagelayout.height),"",style)){ //Stänger ner questlogen
+			if(GUI.Button(makeRect(texturefield),"",style)){ //Stänger ner questlogen
 					
 					writeMessage = false; 
 					Time.timeScale = 1; 
