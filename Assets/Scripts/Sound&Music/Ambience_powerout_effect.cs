@@ -3,10 +3,16 @@ using System.Collections;
 
 public class Ambience_powerout_effect : MonoBehaviour {
 
-	private float poweroutVolumeBuff = 1.2f;
+	public float FadeInTo = 1.0f;
+	public float FadeOutTo = 0.0f;
+	public float increment = 0.01f;
 	private float speakerVolume;
 
-	AudioSource speaker;
+	private bool m_fadeIn = false;
+	private bool m_fadeOut = false;
+	//private float goalVolume;
+	private AudioSource speaker;
+
 	// Use this for initialization
 	void Start () {
 		speaker = gameObject.GetComponent<AudioSource>();
@@ -15,30 +21,40 @@ public class Ambience_powerout_effect : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
-	}
-
-	void setPowerOut(bool power){
-		if(power){
+		if(m_fadeIn && !m_fadeOut){
 			speakerVolume = speaker.volume;
 			fadeIn();
-		}else{
+		}else if(!m_fadeIn && m_fadeOut){
 			fadeOut();
 		}
 	}
 
+	void setPowerOut(bool power){
+		Debug.Log ("ambience-powerout");
+		if(!power){
+			speakerVolume = speaker.volume;
+			m_fadeIn 	= true;
+			m_fadeOut = false;
+		}else{
+			m_fadeIn 	= false;
+			m_fadeOut = true;
+		}
+	}
+
 	void fadeIn(){
-		speakerVolume = speaker.volume;
-		float goalVolume = speakerVolume*poweroutVolumeBuff;
-		while(speaker.volume < goalVolume){
-			speaker.volume += 0.1f*Time.deltaTime;
+
+		speaker.volume += increment*Time.deltaTime;
+		if(speaker.volume > FadeInTo){
+			m_fadeIn = false;
 		}
 	}
 
 	void fadeOut(){
-		float goalVolume = speakerVolume;
-		while(speaker.volume > goalVolume){
-			speaker.volume -= 0.1f*Time.deltaTime;
+
+		speaker.volume -= increment*Time.deltaTime;
+
+		if(speaker.volume < FadeOutTo){
+			m_fadeOut = false;
 		}
 	}
 }
