@@ -14,7 +14,7 @@ public class zoomManager : MonoBehaviour {
 	private Vector3 previous_cam_pos;
 	
 	//------------------------------------
-	void Start () {
+	void OnLevelWasLoaded () {
 		//zoomQueue = new Queue();
 		cam_ref = Camera.main;
 		zoomList = new List<ZDB>();

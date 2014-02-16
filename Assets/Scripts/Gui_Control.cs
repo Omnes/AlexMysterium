@@ -12,6 +12,7 @@ public class Gui_Control : MonoBehaviour {
 	private Vector2 startPosition = new Vector2(Screen.width,Screen.height);
 	Rect inventoryArea;
 	Rect questLogArea;
+	private float guiImageSize;
 	// Use this for initialization
 	void Start () {
 		startPosition = new Vector2(Screen.width,Screen.height);
@@ -19,7 +20,7 @@ public class Gui_Control : MonoBehaviour {
 		float w = Screen.width / 3;
 		float h = Screen.height / 5;
 		//guiArea = new Rect(Screen.width-w,Screen.height-w,w,w);
-		float guiImageSize = 256;
+		guiImageSize = 256;
 		guiArea = new Rect(Screen.width-guiImageSize,Screen.height-guiImageSize,guiImageSize,guiImageSize);
 		//ersätt med en knapp eller något som matchar guiknappen vi ska ha
 		inventoryArea = new Rect (startPosition.x-inventory.spriteSize.x, startPosition.y-inventory.spriteSize.y, inventory.spriteSize.x,inventory.spriteSize.y);
@@ -33,6 +34,11 @@ public class Gui_Control : MonoBehaviour {
 	}
 	// Update is called once per frame
 	void Update () {
+		startPosition = new Vector2(Screen.width,Screen.height);
+		guiArea = new Rect(Screen.width-guiImageSize,Screen.height-guiImageSize,guiImageSize,guiImageSize);
+		//ersätt med en knapp eller något som matchar guiknappen vi ska ha
+		inventoryArea = new Rect (startPosition.x-inventory.spriteSize.x, startPosition.y-inventory.spriteSize.y, inventory.spriteSize.x,inventory.spriteSize.y);
+		questLogArea = new Rect (startPosition.x-inventory.spriteSize.x, startPosition.y-inventory.spriteSize.y*2 - 15, inventory.spriteSize.x,inventory.spriteSize.y);
 		
 		Vector2 mousePos = Input.mousePosition;
 		mousePos.y = Screen.height-mousePos.y; 
