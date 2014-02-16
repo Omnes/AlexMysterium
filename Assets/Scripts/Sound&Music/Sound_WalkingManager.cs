@@ -6,6 +6,7 @@ public class Sound_WalkingManager : MonoBehaviour {
 	public AudioClip[] audioList;// minst 2 ljud
 	public AudioSource speaker;
 	public Animationator AnimationatorRef; // reference aqquired from animationator
+
 	
 	public int currentIndex = 0;
 	// Use this for initialization

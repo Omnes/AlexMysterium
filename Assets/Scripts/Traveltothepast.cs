@@ -43,7 +43,7 @@ public class Traveltothepast : MonoBehaviour {
 				GameObject.Find("Background").renderer.material.color = new Color(alpha.r,alpha.g,alpha.b,changeCount); 
 
 				if(changeCount <= 0) {	
-					musicRef.Enable(true);//HÄR SKA MUSIKEN BÖRJA SPELAS IGEN!!!!!!!!!!!
+					//musicRef.Enable(true);//HÄR SKA MUSIKEN BÖRJA SPELAS IGEN!!!!!!!!!!!
 					fade = false;
 					GameObject.Find ("Background").renderer.material.mainTexture = pastBackground;
 					GameObject.Find (pastobjecttag).renderer.material.color = new Color(objectcolor.r,objectcolor.g,objectcolor.b,1);

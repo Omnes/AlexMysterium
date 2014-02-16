@@ -53,7 +53,7 @@ public class Music_Master : MonoBehaviour {
 
 	public void Enable(bool x){
 		m_enabeld = x;
-		if(m_enabeld){
+		if(!m_enabeld){
 			speakerVolume = speaker.volume;
 			m_fadeIn 	= true;
 			m_fadeOut = false;
