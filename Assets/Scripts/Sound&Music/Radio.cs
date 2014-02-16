@@ -12,6 +12,9 @@ public class Radio : MonoBehaviour {
 	void Start () {
 		speaker = gameObject.GetComponent<AudioSource>();
 		speaker.clip = mainClip;
+		if(enabled){
+			speaker.Play ();
+		}
 	}
 
 	void Interact(){

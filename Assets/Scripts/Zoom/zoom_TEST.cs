@@ -12,7 +12,7 @@ public class zoom_TEST : MonoBehaviour {
 	public GameObject ZoomCamPrefab;
 	public string name; 			// name of the linked zoom
 	public GameObject childObject;	// The camerapos of the zoom
-	public GameObject Puzzel_cam;
+	private GameObject Puzzel_cam;
 	public string Puzzelmanager_Name;
 	
 	private Vector3 changePos;

@@ -7,8 +7,21 @@ public class GUI_Return_Button : GUI_Button {
 	float lastActivateTime = 0;
 	public float cooldown = 1;
 
+	public bool useSound = false;
+	public AudioClip backingSound;
+	public AudioSource speaker;
+
+	public void Awaken(){
+
+	}
+
 	public override void Start () {
 		enabled = false;
+
+		if(useSound){
+			speaker = gameObject.GetComponent<AudioSource>();
+			speaker.clip = backingSound;
+		}
 	}
 	
 	// Update is called once per frame
@@ -35,6 +48,9 @@ public class GUI_Return_Button : GUI_Button {
 				lastActivateTime = Time.time;
 				GameObject.Find("MasterMind").SendMessage("Deactivate");
 				SendMessage("DeactivateStuff");
+				if(useSound){
+					speaker.Play();
+				}
 				Debug.Log("You pressed the button, VICTORY!!!!");
 				//use a queue
 				
