@@ -139,6 +139,7 @@ public class Cardreader : MonoBehaviour {
 		float temppos = 0;
 		float newrow = 1;
 		float rowdistance = 0;
+		GUIStyle style = GUIStyle.none;
 
 		GUILayout.BeginArea(makeRect(buttonField));
 		GUILayout.BeginVertical();
@@ -148,7 +149,7 @@ public class Cardreader : MonoBehaviour {
 		//GUILayout.FlexibleSpace();//Knapparna
 			GUILayout.BeginHorizontal();
 			for(int j = 3*i; j < i*3 +3; j++){
-				if(GUILayout.Button("" + (j+1),GUILayout.ExpandHeight(true))){
+				if(GUILayout.Button("" + (j+1),style,GUILayout.ExpandHeight(true))){
 					if(carddrawn){
 						if(count < 4){
 							int rand = Random.Range(0,3);
@@ -167,7 +168,7 @@ public class Cardreader : MonoBehaviour {
 	//GUILayout.FlexibleSpace();
 		GUILayout.BeginHorizontal();
 		GUILayout.Label("");
-		if(GUILayout.Button("" + 0,GUILayout.ExpandHeight(true))){
+		if(GUILayout.Button("" + 0,style,GUILayout.ExpandHeight(true))){
 			if(carddrawn){
 				if(count < 4){
 					int rand = Random.Range(0,3);
@@ -190,7 +191,7 @@ public class Cardreader : MonoBehaviour {
 		GUILayout.BeginArea(makeRect(displayField));
 		GUILayout.BeginHorizontal();
 		for(int i = 0; i < clicked.Count; i++){
-			GUILayout.Box(Digits[clicked[i]],GUILayout.Width(Screen.width/numberSize.x),GUILayout.Height(Screen.height/numberSize.y));
+			GUILayout.Box(Digits[clicked[i]],style,GUILayout.Width(Screen.width/numberSize.x),GUILayout.Height(Screen.height/numberSize.y));
 		}
 		GUILayout.EndHorizontal();
 		GUILayout.EndArea();

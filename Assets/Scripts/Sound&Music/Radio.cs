@@ -12,12 +12,13 @@ public class Radio : MonoBehaviour {
 
 	public bool enabled = false;
 	public bool avbrott = false;
+	public ulong offset = 0;
 
 	void Start () {
 		//speaker = gameObject.GetComponent<AudioSource>();
 		//speaker.clip = mainClip;
 		if(enabled){
-			speaker.Play ();
+			speaker.Play(offset);
 		}
 	}
 
@@ -27,7 +28,7 @@ public class Radio : MonoBehaviour {
 			GameObject.Find ("MasterMind").GetComponent<ItemUseStates>().radio = enabled;
 			if(enabled){
 				if(!speaker.isPlaying){
-					speaker.Play();
+					speaker.Play(offset);
 				}
 			}else{
 				speaker.Pause();
@@ -54,6 +55,15 @@ public class Radio : MonoBehaviour {
 	void setPowerOut(bool power){
 		Debug.Log("Radio: powerOut!");
 		setPower(true);
+	}
+
+	public ulong sendOffset(){
+		offset = (ulong) speaker.clip.samples - (ulong) audio.timeSamples;
+		return offset;
+	}
+
+	public void receiveOffset(ulong x){
+		offset = x;
 	}
 
 }

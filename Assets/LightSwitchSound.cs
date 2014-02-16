@@ -11,7 +11,7 @@ public class LightSwitchSound : MonoBehaviour {
 		if(!played && !valid){
 			gameObject.audio.Play();
 			played = true;
-		}else{
+		}else if(valid){
 			gameObject.audio.clip = notWorking_sound;
 			if(!audio.isPlaying)
 				audio.Play();

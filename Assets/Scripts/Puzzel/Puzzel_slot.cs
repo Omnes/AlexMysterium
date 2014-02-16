@@ -7,6 +7,8 @@ public class Puzzel_slot : MonoBehaviour {
 	public Vector3		centerPos;
 	public float 		radius;
 	public int 			correct_slot_value;
+	public AudioClip insertFuse;
+	public AudioClip removeFuse;
 	
 	//public AudioClip	sound;
 	public AudioSource 	speaker;// finish to make it play sound when a piece is set.OBS!!!!!!!!!!!!!!!!!!!!!
@@ -39,7 +41,8 @@ public class Puzzel_slot : MonoBehaviour {
 			//Debug.Log("Current pos: " + ptrPuzzel_Piece.transform.position + " new pos: " + centerPos);
 			ptrPuzzel_Piece.transform.position = areaSnapping();
 			//Debug.Log(" AFTERSNAPCurrent pos: " + ptrPuzzel_Piece.transform.position + " new pos: " + centerPos);
-			//speaker.Play();
+			speaker.clip = insertFuse;
+			speaker.Play();
 			Debug.Log("PLAYING A SOUND");// YESH
 		}
 		if(ptrPuzzel_Piece != null && ptrPuzzel_Piece.Piece_KeyValue == correct_slot_value && ptrPuzzel_Piece.correct && !ptrPuzzel_Piece.holding && !Correct){
@@ -77,6 +80,7 @@ public class Puzzel_slot : MonoBehaviour {
 
 							ptrPuzzel_Piece.transform.position = areaSnapping();
 							Debug.Log("pusselbit");
+							speaker.clip = insertFuse;
 							speaker.Play();
 					}
 				//}
@@ -104,6 +108,8 @@ public class Puzzel_slot : MonoBehaviour {
 				ptrPuzzel_Piece.inUse = false;
 				ptrPuzzel_Piece = null;
 					//enter_exit = false;
+				speaker.clip = removeFuse;
+				speaker.Play();
 			}
 		}
 	}
