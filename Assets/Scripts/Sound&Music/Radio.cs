@@ -3,16 +3,19 @@ using System.Collections;
 
 public class Radio : MonoBehaviour {
 	
-	public AudioClip mainClip;
-	public AudioClip powerfailureClip;
-	public float powerOutVolume = 0.2f;
-	private AudioSource speaker;
+	//public AudioClip mainClip;
+	//public AudioClip powerfailureClip;
+	//public float powerOutVolume = 0.2f;
+
+	public AudioSource speaker;
+	public AudioSource powerOutRadio;
+
 	public bool enabled = false;
 	public bool avbrott = false;
 
 	void Start () {
-		speaker = gameObject.GetComponent<AudioSource>();
-		speaker.clip = mainClip;
+		//speaker = gameObject.GetComponent<AudioSource>();
+		//speaker.clip = mainClip;
 		if(enabled){
 			speaker.Play ();
 		}
@@ -36,15 +39,11 @@ public class Radio : MonoBehaviour {
 		avbrott = powerOff;
 		if(powerOff){
 			if(enabled){
-				speaker.clip = powerfailureClip;
-				speaker.volume = powerOutVolume;
-				speaker.Play();
-				speaker.loop = false;
+				powerOutRadio.Play();
 			}
 		}else{
 			if(enabled){
-				speaker.clip = mainClip;
-				speaker.volume = 1.0f;
+				//speaker.volume = 1.0f;
 				speaker.Play();
 				speaker.loop = true;
 			}
