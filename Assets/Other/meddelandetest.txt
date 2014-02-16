@@ -1,41 +1,49 @@
 <quests>
 	<quest>
 		<id>1</id>
-		<text>Enslave all the humans</text>
+		<text>I have to go to the Egypt exhibition. 
+Dad says that's where they've seen the ghost.
+		</text>
 	</quest>
 	
 	<quest>
 		<id>1a</id>
-		<text>Kill the king</text>
+		<text>I need a pass card, 
+the door to the Egypt exhibition is locked...
+		</text>
 	</quest>
 	
 	<quest>
 		<id>1b</id>
-		<text>Wear Crown</text>
+		<text>I have to find the code 
+for the pass card.
+		</text>
 	</quest>
 	
 	<quest>
 		<id>1c</id>
-		<text>??????</text>
+		<text>The computer needs a password.
+		</text>
 	</quest>
 	
 	<quest>
 		<id>1d</id>
-		<text>Profit!</text>
+		<text>The code to the door is 8939.
+		</text>
 	</quest>
 	
 	<quest>
-		<id>2</id>
-		<text>Comic Sans</text>
+		<id>1e</id>
+		<text>The power's out! I got to turn 
+it back on again somehow...
+		</text>
 	</quest>
 	
 	<quest>
-		<id>2a</id>
-		<text>Kill all fonts except comic sans</text>
+		<id>1f</id>
+		<text>I can't find anything without 
+some light...
+		</text>
 	</quest>
 	
-	<quest>
-		<id>2b</id>
-		<text>set all fonts to comic sans</text>
-	</quest>
 </quests>
