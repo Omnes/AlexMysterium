@@ -11,8 +11,10 @@ public class StromAvbrott : MonoBehaviour {
 	private bool played = false;
 
 	public AudioSource audioS;
+	MessageWindow quest;
 
 	void Start(){
+		quest = GameObject.Find ("MasterMind").GetComponent<MessageWindow>();
 		powerON = GetComponent<ItemUseStates>().button;
 		setOn();
 	}
@@ -25,7 +27,6 @@ public class StromAvbrott : MonoBehaviour {
 				Debug.Log("powerout!");
 				asdhjabsdkja = false;
 			}
-
 		}
 	}
 
@@ -41,6 +42,10 @@ public class StromAvbrott : MonoBehaviour {
 		avbrott = power;
 		if(avbrott && powerON){
 			powerON = false;
+		}
+		if(!avbrott){
+
+			quest.finishedSubQuest("1e");
 		}
 		GetComponent<ItemUseStates>().powerout = avbrott;
 		setOn();
@@ -70,6 +75,7 @@ public class StromAvbrott : MonoBehaviour {
 	void powerOut(){
 
 		audioS.Play();
+		quest.addSubQuest("1e");
 
 		reactiveObjects = GameObject.Find("currentSceneInfo").GetComponent<GetReactiveObjects>().reactiveObj_array;
 
