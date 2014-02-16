@@ -40,7 +40,8 @@ public class Cardreader : MonoBehaviour {
 
 	//	hascard = GetComponent<ItemUseStates>().;
 		renderer.material.mainTexture = idle;
-		quest = gameObject.GetComponent<MessageWindow>();
+		//quest = gameObject.GetComponent<MessageWindow>();
+		quest = GameObject.Find ("MasterMind").GetComponent<MessageWindow>();
 	}
 
 	/*void Interact(){}
