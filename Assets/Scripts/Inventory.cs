@@ -61,6 +61,7 @@ public class Inventory : MonoBehaviour {
 
 		if(itemPickup.name == "item_flashlight"){
 			GetComponent<ItemUseStates>().flashlight = true;
+			quest.finishedSubQuest("1f");
 		}
 		if(itemPickup.name == "item_card"){
 			GetComponent<ItemUseStates>().card = true;
