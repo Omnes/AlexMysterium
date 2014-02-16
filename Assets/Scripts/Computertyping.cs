@@ -37,7 +37,8 @@ public class Computertyping : MonoBehaviour {
 	public int correctMail = 2;
 	private bool played = false;
 
-	public AudioSource audioS;
+	public AudioSource audioS_sound;
+	public AudioSource audioS_voice;
 
 	public AudioClip mail_sound;
 	public AudioClip key_space_sound;
@@ -68,10 +69,13 @@ public class Computertyping : MonoBehaviour {
 	}
 
 	void ActivateStuff(){
-		if(compPower){
-			setComputerScreen(true);
-			screen.renderer.enabled = true;
-			gameObject.GetComponent<ComputerSound_script>().playSound();
+		bool valid = GameObject.FindGameObjectWithTag("Mastermind").GetComponent<ItemUseStates>().powerout;
+		if(!valid){
+			if(compPower){
+				setComputerScreen(true);
+				screen.renderer.enabled = true;
+				gameObject.GetComponent<ComputerSound_script>().playSound();
+			}
 		}
 	}
 	
@@ -178,8 +182,8 @@ public class Computertyping : MonoBehaviour {
 						if(GUILayout.Button(node.mID,style)){ //klicka på rubriken för att läsa
 								currentmail = node.getID2();
 							if(currentmail == correctMail && !played){
-								audioS.clip = mail_sound;
-								audioS.Play();
+								audioS_voice.clip = mail_sound;
+								audioS_voice.Play();
 								quest.finishedSubQuest("1b");
 								quest.addSubQuest("1d");
 								foundcode = true;
@@ -245,13 +249,13 @@ public class Computertyping : MonoBehaviour {
 	IEnumerator playSoundInOrder(){
 		for(int i = 0; i < clip_array.Length; i++){
 			if(i != clip_array.Length-1){
-				audioS.clip = clip_array[i];
-				audioS.Play();
+				audioS_voice.clip = clip_array[i];
+				audioS_voice.Play();
 			}else{
 				yield return new WaitForSeconds(1f);
 				if(!haveFlashlight){
-					audioS.clip = clip_array[i];
-					audioS.Play();
+					audioS_voice.clip = clip_array[i];
+					audioS_voice.Play();
 					quest.addSubQuest("1f");
 				}
 			}
@@ -266,16 +270,16 @@ public class Computertyping : MonoBehaviour {
 			int i = pass.Length-1;
 			char c = pass[i];
 			if(c == ' '){
-				audioS.clip = key_space_sound;
-				audioS.Play();
+				audioS_sound.clip = key_space_sound;
+				audioS_sound.Play();
 			}else{
-				audioS.clip = key_any_sound;
-				audioS.Play();
+				audioS_sound.clip = key_any_sound;
+				audioS_sound.Play();
 			}
 			enterKey = true;
 		}else if(pass.Length == 0 && enterKey){
-			audioS.clip = key_enter_sound;
-			audioS.Play();
+			audioS_sound.clip = key_enter_sound;
+			audioS_sound.Play();
 			enterKey = false;
 		}
 		tempPass = pass;
