@@ -6,7 +6,8 @@ public class Sound_WalkingManager : MonoBehaviour {
 	public AudioClip[] audioList;// minst 2 ljud
 	public AudioSource speaker;
 	public Animationator AnimationatorRef; // reference aqquired from animationator
-
+	public float lastStepTime = 0;
+	public float stepDelay = 0.7;
 	
 	public int currentIndex = 0;
 	// Use this for initialization
@@ -18,8 +19,9 @@ public class Sound_WalkingManager : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if(AnimationatorRef.walk){
-			if(!speaker.isPlaying){
+			if(Time.time > lastStepTime + stepDelay){
 				nextSound();
+				lastStepTime = Time.time;
 			}
 		}
 	}
