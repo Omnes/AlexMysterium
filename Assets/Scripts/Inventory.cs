@@ -31,6 +31,9 @@ public class Inventory : MonoBehaviour {
 	//seans holding item icon thingy
 	public Texture2D cursorImage;
 	Mouse_Animation mo_anim;
+	public AudioSource itemPickupAudioSource;
+	public AudioClip itemPickupSound;
+	MessageWindow quest;
 	
 	
 	
@@ -40,6 +43,7 @@ public class Inventory : MonoBehaviour {
 		holdingItem = nullItem;
 		paddingFromEdge = new Vector2(Screen.width/100,Screen.width/100);
 		startPosition = new Vector2(Screen.width,Screen.height);
+		quest = GameObject.Find ("MasterMind").GetComponent<MessageWindow>();
 		//slidyUnpacked = new Texture2D(1500,156);
 		//slidyUnpacked.SetPixels(slidyThingie.GetPixels(547,1893,1500,156));
 		//slidyThingie.pixelInset = new Rect(547,1893,1500,156);
@@ -57,7 +61,15 @@ public class Inventory : MonoBehaviour {
 
 		if(itemPickup.name == "item_flashlight"){
 			GetComponent<ItemUseStates>().flashlight = true;
+			quest.finishedSubQuest("1f");
 		}
+		if(itemPickup.name == "item_card"){
+			GetComponent<ItemUseStates>().card = true;
+			quest.finishedSubQuest("1a");
+			 
+		}
+		itemPickupAudioSource.clip = itemPickupSound;
+		itemPickupAudioSource.Play();
 	}
 	
 	public void RemoveItem(Item item){

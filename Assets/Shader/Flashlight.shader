@@ -6,6 +6,7 @@ Shader "Alex Shaders/Flashlight" {
         _yStrech ("yStrech", Range(0.0, 5.0)) = 1.0
         _TimeMulti ("SinTime", Range(1.0, 50.0)) = 1.0
         _MousePos ("MousePos", Vector) = (1,1,1,1)
+        _alphaValue ("alphaValue", Range(0.0, 2.0)) = 0.0
 	}
    SubShader {
       Tags { "Queue" = "Transparent" } 
@@ -48,6 +49,7 @@ Shader "Alex Shaders/Flashlight" {
 			float _TimeMulti;
 			float4 _MousePos;
 			float _yStrech;
+			float _alphaValue;
 			
 			
 			float4 frag(vertexOutput input) : COLOR 
@@ -61,8 +63,10 @@ Shader "Alex Shaders/Flashlight" {
    				float sinTime = clamp(sin(_Time.x * _TimeMulti), 0.0, 1.0);
    				sinTime += 0.001;
    				waterDrop = waterDrop * (1-trunc(sinTime));
+   				
+   				waterDrop = clamp(waterDrop, 0.0, 1.0);
 				
-				return float4(0.0,0.0,0.0,(1-waterDrop));
+				return float4(0.0,0.0,0.0,(1-waterDrop) * _alphaValue);
 				//return dist;
 			}
 		

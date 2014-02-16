@@ -43,7 +43,10 @@ public class LevelInitation : MonoBehaviour {
 		Debug.Log ("Level Initiation worked!");
 		
 		GameObject spawn = GameObject.Find(spawnpointName);
-		Vector3 spawnPosition = spawn.transform.position;
+		Vector3 spawnPosition = new Vector3(0,0,0);
+		if(spawn != null){
+			spawnPosition = spawn.transform.position;
+		}
 			
 		Transform player = (Transform)Instantiate(playerPrefab,spawnPosition,Quaternion.identity);
 		GetComponent<InputManager>().SetPlayer(player);
