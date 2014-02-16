@@ -15,7 +15,6 @@ public class ComputerSound_script : MonoBehaviour {
 			audioS.clip = passSound;
 			audioS.Play ();
 			isDone = true;
-			Debug.Log("PLAAAAY");
 		}
 	}
 }
