@@ -28,6 +28,7 @@ public class MessageWindow : MonoBehaviour {
 
 // Use this for initialization 
 	void Start () { 
+		addQuest("1");
 		//newObjective = gameObject.GetComponent<AudioSource>();	
 		//print(asset.text);
 		bool writeMessage = false; 
@@ -133,19 +134,20 @@ public class MessageWindow : MonoBehaviour {
 	}
 	
 //Klarat en mainquest
-	void finishedQuest(string id){
+	public void finishedQuest(string id){
 		
 		foreach(Questpair node in questlog){
 		
 			if(node.mID == id){
 				
 				node.mContent =  node.mContent;
+				newObjective.Play();
 			}
 		}
 	}
 
 //Klarat en subquest
-	void finishedSubQuest(string subquest){
+	public void finishedSubQuest(string subquest){
 	
 		foreach(Questpair node in questlog){
 		
@@ -156,6 +158,7 @@ public class MessageWindow : MonoBehaviour {
 					if(subNode.mID == subquest){ 
 						
 						subNode.mFinished = true;
+						newObjective.Play();
 					}
 				}
 			}
