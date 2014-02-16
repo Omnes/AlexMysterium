@@ -34,7 +34,7 @@ public class GUI_Return_Button : GUI_Button {
 		if(enabled)
 		{
 	        if (!aTexture) {
-	            Debug.LogError("Assign a Texture in the inspector.");
+	            //Debug.LogError("Assign a Texture in the inspector.");
 	            return;
 	        }
 			// rect(x,y,w,h)
@@ -51,7 +51,7 @@ public class GUI_Return_Button : GUI_Button {
 				if(useSound){
 					speaker.Play();
 				}
-				Debug.Log("You pressed the button, VICTORY!!!!");
+				//Debug.Log("You pressed the button, VICTORY!!!!");
 				//use a queue
 				
 				

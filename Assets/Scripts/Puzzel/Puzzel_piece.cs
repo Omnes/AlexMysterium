@@ -25,7 +25,7 @@ public class Puzzel_piece : MonoBehaviour {
 		
 		if(!inUse && !holding){
 			if(transform.position != position && correct){
-				Debug.Log("Repositioning:" + position);
+				//Debug.Log("Repositioning:" + position);
 				transform.position = position;	
 			}
 		}
@@ -33,19 +33,19 @@ public class Puzzel_piece : MonoBehaviour {
 		if(movable){
 		  	if(Input.GetAxis("Mouse X")<0){
     			//Code for action on mouse moving left
-   			 	Debug.Log("Mouse moved left");
+   			 	//Debug.Log("Mouse moved left");
    			 }
     		else if(Input.GetAxis("Mouse X")>0){
    		 		//Code for action on mouse moving right
-   				 Debug.Log("Mouse moved right");
+   				 //Debug.Log("Mouse moved right");
     		}
 			if(Input.GetAxis("Mouse Y")<0){
     			//Code for action on mouse moving left
-   			 	Debug.Log("Mouse moved left");
+   			 	//Debug.Log("Mouse moved left");
    			 }
     		else if(Input.GetAxis("Mouse Y")>0){
    		 		//Code for action on mouse moving right
-   				 Debug.Log("Mouse moved right");
+   				 //Debug.Log("Mouse moved right");
     		}
 		}
 		*/

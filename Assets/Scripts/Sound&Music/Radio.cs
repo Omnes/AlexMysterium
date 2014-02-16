@@ -18,7 +18,7 @@ public class Radio : MonoBehaviour {
 		//speaker = gameObject.GetComponent<AudioSource>();
 		//speaker.clip = mainClip;
 		if(enabled){
-			Debug.Log (offset);
+			//Debug.Log (offset);
 			bool t =  GameObject.Find ("MasterMind").GetComponent<ItemUseStates>().powerout;
 			if(!t){
 				speaker.Play(offset);
@@ -59,7 +59,7 @@ public class Radio : MonoBehaviour {
 
 	//eh, this is a bit odd but okey, should revert this
 	void setPowerOut(bool power){
-		Debug.Log("Radio: powerOut!");
+		//Debug.Log("Radio: powerOut!");
 		setPower(true);
 	}
 

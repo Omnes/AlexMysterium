@@ -81,7 +81,7 @@ public class MovementManager : MonoBehaviour {
 			}
 		}
 		if(!foundWaypoint){
-			Debug.LogError("Gameobject " + target.name + " is missing a child with a ´Waypoint´ tag"); //
+			//Debug.LogError("Gameobject " + target.name + " is missing a child with a ´Waypoint´ tag"); //
 		}
 		pathfindToPosition(targetPosition);
 		return targetPosition;
@@ -94,14 +94,14 @@ public class MovementManager : MonoBehaviour {
 		while(true){
 			if(pathfinder.worldposToGridpos(targetPosition) == pathfinder.worldposToGridpos(transform.position)){
 				target.SendMessage("Interact"); // se till att matcha med de enskilda scripten bara 
-				Debug.Log("Interact message sent! to " + target);
+				//Debug.Log("Interact message sent! to " + target);
 				break;
 				
 			}
 
 			if(!pathfinder.worldposToGridpos(targetPosition).Equals(pathfinder.worldposToGridpos(path.Last()))){
 				//StopCoroutine("pathfindToObjectAndActivate");
-				Debug.Log("Activate aborted!");
+				//Debug.Log("Activate aborted!");
 				break;
 			}
 			

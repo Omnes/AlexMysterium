@@ -17,7 +17,7 @@ public class ActivateCardReader : MonoBehaviour {
 		if(!ius.powerout){
 			trans.GetComponent<Cardreader>().enabled = true;
 			if(!hascard){
-				Debug.Log ("DOES NOT HAVE CARD");
+				//Debug.Log ("DOES NOT HAVE CARD");
 				GameObject.Find ("MasterMind").GetComponent<MessageWindow>().addSubQuest("1a");
 			}
 		}

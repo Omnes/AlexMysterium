@@ -114,7 +114,7 @@ public class Pathfinding : MonoBehaviour {
 			//	mapclosed.Add(map[x,y]);
 			//}
 		}
-		//Debug.Log("map initiated");
+		////Debug.Log("map initiated");
 	}
 	
 	void cleanmap(){
@@ -136,18 +136,18 @@ public class Pathfinding : MonoBehaviour {
 		}
 		
 		findPath2d(worldposToGridpos(start),worldposToGridpos(end));
-		//Debug.Log ("end in: " + end);
-		//Debug.Log ("end grid in: " + worldposToGridpos(end));
+		////Debug.Log ("end in: " + end);
+		////Debug.Log ("end grid in: " + worldposToGridpos(end));
 		
 		List<Vector3> vec3path = new List<Vector3>();
 		vec3path.Clear();
 		foreach(Node node in path){
-			//Debug.Log("x = " + node.x + " y = " + node.y);
+			////Debug.Log("x = " + node.x + " y = " + node.y);
 			vec3path.Add(gridposToWorld(node.pos));
 			
 		}
-		//Debug.Log ("end grid out: " + path[0].pos);
-		//Debug.Log ("end out: " + vec3path[0]);
+		////Debug.Log ("end grid out: " + path[0].pos);
+		////Debug.Log ("end out: " + vec3path[0]);
 		vec3path.Reverse();
 		if(vec3path.Count > 0)
 			vec3path.RemoveAt(0);
@@ -160,16 +160,16 @@ public class Pathfinding : MonoBehaviour {
 	private void findPath2d(Vector2 startv2,Vector2 endv2){
 		Vector2Int start = new Vector2Int(Mathf.Clamp(startv2.x,0,width-1),Mathf.Clamp(startv2.y,0,height-1));
 		Vector2Int end = new Vector2Int(Mathf.Clamp(endv2.x,0,width-1),Mathf.Clamp(endv2.y,0,height-1));
-		//Debug.Log("input end " + endv2.x + " " + endv2.y);
+		////Debug.Log("input end " + endv2.x + " " + endv2.y);
 		cleanmap();
-		//Debug.Log("Start x = " + (int)start.x + " y = " + (int)start.y);
-		//Debug.Log("End x = " + (int)end.x + " y = " + (int)end.y);
+		////Debug.Log("Start x = " + (int)start.x + " y = " + (int)start.y);
+		////Debug.Log("End x = " + (int)end.x + " y = " + (int)end.y);
 		Node startNode = map[start.x,start.y];
 		Node endNode = map[end.x,end.y];
 		
 		//bryt ur om slutnoden inte går att nå
 		if(endNode.Closed){
-			//Debug.Log("could not find path. end node closed");
+			////Debug.Log("could not find path. end node closed");
 			return;
 		}
 		
@@ -190,7 +190,7 @@ public class Pathfinding : MonoBehaviour {
 			//så den inte fastnar i ett försök att hitta till en path till en plats som inte går att nå 
 			//tries++;
 			//if(tries > 5000){
-			//	Debug.Log("failed");
+			//	//Debug.Log("failed");
 			//	return;
 			//}
 			//if(cur == null || cur == endNode)
@@ -226,12 +226,12 @@ public class Pathfinding : MonoBehaviour {
 		//går baklänges igenom alla parents
 		while(cur != null){
 			path.Add(cur);
-			//Debug.Log("x = " + cur.x + " y = " + cur.y);
+			////Debug.Log("x = " + cur.x + " y = " + cur.y);
 			Node curp = cur.parent;
 			cur.parent = null;
 			cur = curp;
 		}
-		//Debug.Log("steps taken: " + path.Count);
+		////Debug.Log("steps taken: " + path.Count);
 		
 		
 		
@@ -250,7 +250,7 @@ public class Pathfinding : MonoBehaviour {
 		//Vector3 floorPos = worldposition + localOrginOffset;
 		Vector3 floorPos = worldposition + localOrginOffset + walkmesh.position;
 		Vector2 gridpos = new Vector2(Mathf.Floor(floorPos.x/nodeArea.x+0.5f),Mathf.Floor(floorPos.z/nodeArea.z+0.5f));
-		//Debug.Log("in: wp " + worldposition + " gp " + gridpos);
+		////Debug.Log("in: wp " + worldposition + " gp " + gridpos);
 		return gridpos;
 	}
 	
@@ -266,7 +266,7 @@ public class Pathfinding : MonoBehaviour {
 		
 		Vector3 worldPos = new Vector3(nodeArea.x*gridposition.x,0,nodeArea.z*gridposition.y);
 		worldPos += floorOrgin;
-		//Debug.Log("out: wp " + worldPos + " gp " + gridposition);
+		////Debug.Log("out: wp " + worldPos + " gp " + gridposition);
 		return worldPos;
 	}
 	
@@ -526,7 +526,7 @@ public class Pathfinding : MonoBehaviour {
 				//	mapclosed.Add(map[x,y]);
 				//}
 		}
-		//Debug.Log("map initiated");
+		////Debug.Log("map initiated");
 	}
 	
 	void cleanmap(){
@@ -548,18 +548,18 @@ public class Pathfinding : MonoBehaviour {
 		}
 		
 		findPath2d(worldposToGridpos(start),worldposToGridpos(end));
-		//Debug.Log ("end in: " + end);
-		//Debug.Log ("end grid in: " + worldposToGridpos(end));
+		////Debug.Log ("end in: " + end);
+		////Debug.Log ("end grid in: " + worldposToGridpos(end));
 		
 		List<Vector3> vec3path = new List<Vector3>();
 		vec3path.Clear();
 		foreach(Node node in path){
-			//Debug.Log("x = " + node.x + " y = " + node.y);
+			////Debug.Log("x = " + node.x + " y = " + node.y);
 			vec3path.Add(gridposToWorld(node.pos));
 			
 		}
-		//Debug.Log ("end grid out: " + path[0].pos);
-		//Debug.Log ("end out: " + vec3path[0]);
+		////Debug.Log ("end grid out: " + path[0].pos);
+		////Debug.Log ("end out: " + vec3path[0]);
 		vec3path.Reverse();
 		if(vec3path.Count > 0)
 			vec3path.RemoveAt(0);
@@ -572,16 +572,16 @@ public class Pathfinding : MonoBehaviour {
 	private void findPath2d(Vector2 startv2,Vector2 endv2){
 		Vector2Int start = new Vector2Int(Mathf.Clamp(startv2.x,0,width-1),Mathf.Clamp(startv2.y,0,height-1));
 		Vector2Int end = new Vector2Int(Mathf.Clamp(endv2.x,0,width-1),Mathf.Clamp(endv2.y,0,height-1));
-		//Debug.Log("input end " + endv2.x + " " + endv2.y);
+		////Debug.Log("input end " + endv2.x + " " + endv2.y);
 		cleanmap();
-		//Debug.Log("Start x = " + (int)start.x + " y = " + (int)start.y);
-		//Debug.Log("End x = " + (int)end.x + " y = " + (int)end.y);
+		////Debug.Log("Start x = " + (int)start.x + " y = " + (int)start.y);
+		////Debug.Log("End x = " + (int)end.x + " y = " + (int)end.y);
 		Node startNode = map[start.x,start.y];
 		Node endNode = map[end.x,end.y];
 		
 		//bryt ur om slutnoden inte går att nå
 		if(endNode.Closed){
-			//Debug.Log("could not find path. end node closed");
+			////Debug.Log("could not find path. end node closed");
 			return;
 		}
 		
@@ -602,7 +602,7 @@ public class Pathfinding : MonoBehaviour {
 			//så den inte fastnar i ett försök att hitta till en path till en plats som inte går att nå 
 			//tries++;
 			//if(tries > 5000){
-			//	Debug.Log("failed");
+			//	//Debug.Log("failed");
 			//	return;
 			//}
 			//if(cur == null || cur == endNode)
@@ -654,17 +654,17 @@ public class Pathfinding : MonoBehaviour {
 
 		}
 		
-		//Debug.Log("Path found! cells in open: " + openNodes.Count + " value on last node: " + cur.G + cur.H);
-		//Debug.Log("output end " + cur.x + " " + cur.y);
+		////Debug.Log("Path found! cells in open: " + openNodes.Count + " value on last node: " + cur.G + cur.H);
+		////Debug.Log("output end " + cur.x + " " + cur.y);
 		//går baklänges igenom alla parents
 		while(cur != null){
 			path.Add(cur);
-			//Debug.Log("x = " + cur.x + " y = " + cur.y);
+			////Debug.Log("x = " + cur.x + " y = " + cur.y);
 			Node curp = cur.parent;
 			cur.parent = null;
 			cur = curp;
 		}
-		//Debug.Log("steps taken: " + path.Count);
+		////Debug.Log("steps taken: " + path.Count);
 		
 		
 		
@@ -677,7 +677,7 @@ public class Pathfinding : MonoBehaviour {
 		
 		Vector2 gridpos = new Vector2(Mathf.Floor(worldposition.x + offset.x)*mapscale.x,Mathf.Floor(worldposition.z + offset.z)*mapscale.z) * 2;
 		gridpos += new Vector2(walkmesh.position.x,walkmesh.position.y);
-		//Debug.Log("WtG -> " + " x " + worldposition.x + " y " + worldposition.z + " x -> " + gridpos.x + " y " + gridpos.y);
+		////Debug.Log("WtG -> " + " x " + worldposition.x + " y " + worldposition.z + " x -> " + gridpos.x + " y " + gridpos.y);
 		return gridpos;
 	}*/
 	/*
@@ -692,7 +692,7 @@ public class Pathfinding : MonoBehaviour {
 		Vector3 worldpos = new Vector3((gridposition.x - offset.x + midpointoffset) ,0 ,(gridposition.y - offset.z + midpointoffset))/2 ;
 		worldpos += walkmesh.position;
 		worldpos = new Vector3(worldpos.x*mapscale.x ,0,worldpos.z*mapscale.z);
-		//Debug.Log("GtW -> " + " x " + gridposition.x + " y " + gridposition.y + " x -> " + worldpos.x + " y " + worldpos.z);
+		////Debug.Log("GtW -> " + " x " + gridposition.x + " y " + gridposition.y + " x -> " + worldpos.x + " y " + worldpos.z);
 		return worldpos;
 	}
 	*/
@@ -703,7 +703,7 @@ public class Pathfinding : MonoBehaviour {
 		
 		Vector2 gridpos = new Vector2(Mathf.Floor(worldposition.x + offset.x)*mapscale.x,Mathf.Floor(worldposition.z + offset.z)*mapscale.z) * 2;
 		gridpos += new Vector2(walkmesh.position.x,walkmesh.position.y);
-		Debug.Log("wp " + worldposition + " gp " + gridpos);
+		//Debug.Log("wp " + worldposition + " gp " + gridpos);
 		return gridpos;
 	}*//*
 	
@@ -719,7 +719,7 @@ public class Pathfinding : MonoBehaviour {
 		//Vector3 floorPos = worldposition + localOrginOffset;
 		Vector3 floorPos = worldposition + localOrginOffset + walkmesh.position;
 		Vector2 gridpos = new Vector2(Mathf.Floor(floorPos.x/nodeArea.x+0.5f),Mathf.Floor(floorPos.z/nodeArea.z+0.5f));
-		//Debug.Log("in: wp " + worldposition + " gp " + gridpos);
+		////Debug.Log("in: wp " + worldposition + " gp " + gridpos);
 		return gridpos;
 	}
 	
@@ -735,7 +735,7 @@ public class Pathfinding : MonoBehaviour {
 		
 		Vector3 worldPos = new Vector3(nodeArea.x*gridposition.x,0,nodeArea.z*gridposition.y);
 		worldPos += floorOrgin;
-		//Debug.Log("out: wp " + worldPos + " gp " + gridposition);
+		////Debug.Log("out: wp " + worldPos + " gp " + gridposition);
 		return worldPos;
 	}
 	

@@ -40,7 +40,7 @@ public class LevelInitation : MonoBehaviour {
 	
 	void OnLevelWasLoaded(){
 		
-		Debug.Log ("Level Initiation worked!");
+		//Debug.Log ("Level Initiation worked!");
 		
 		GameObject spawn = GameObject.Find(spawnpointName);
 		Vector3 spawnPosition = new Vector3(0,0,0);
@@ -57,7 +57,7 @@ public class LevelInitation : MonoBehaviour {
 
 		Transform floor = GameObject.Find("floor").transform;
 		player.GetComponent<Pathfinding>().pixelMap = (Texture2D)floor.renderer.material.GetTexture("_MainTex");
-		Debug.Log(floor);
+		//Debug.Log(floor);
 
 		player.GetComponent<Pathfinding>().walkmesh = floor;
 	}

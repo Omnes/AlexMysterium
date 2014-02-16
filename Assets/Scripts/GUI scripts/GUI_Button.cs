@@ -34,7 +34,7 @@ public class GUI_Button : GUI_Element {
 		/*if(enabled)
 		{
 	        if (!aTexture) {
-	            Debug.LogError("Assign a Texture in the inspector.");
+	            //Debug.LogError("Assign a Texture in the inspector.");
 	            return;
 	        }
 			// rect(x,y,w,h)
@@ -45,7 +45,7 @@ public class GUI_Button : GUI_Element {
 			
 	        if (GUI.Button(new Rect(XPos, YPos, Width, Height),aTexture , gui_style))
 			{//, ScaleMode.ScaleToFit, true);
-				Debug.LogError("You pressed the button, VICTORY!!!!");
+				//Debug.LogError("You pressed the button, VICTORY!!!!");
 				
 			}
 			

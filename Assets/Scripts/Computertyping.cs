@@ -55,6 +55,9 @@ public class Computertyping : MonoBehaviour {
 	private bool enterKey = false;
 	MessageWindow quest;
 
+	bool added1 = false;
+	bool added2 = false;
+
 	// Use this for initialization
 	
 	void Start () {
@@ -79,7 +82,7 @@ public class Computertyping : MonoBehaviour {
 	}
 	
 	void DeactivateStuff(){
-		Debug.Log ("OUTOFTHIS");
+		//Debug.Log ("OUTOFTHIS");
 		setComputerScreen(false);
 	}
 	
@@ -126,7 +129,7 @@ public class Computertyping : MonoBehaviour {
 			XmlNode mail = headline.NextSibling; 																	//noden för brevtexten
 			maillist.Add(new Questpair(headline.InnerText, mail.InnerText));
 			maillist[i-1].setID2(i);
-			Debug.Log("Added mail"+i);
+			//Debug.Log("Added mail"+i);
 		}
 	}
 
@@ -153,15 +156,17 @@ public class Computertyping : MonoBehaviour {
 			//GUI.DrawTexture(new Rect(backgroundPosX,backgroundPosY, currentLayout.width,currentLayout.height),currentLayout);
 
 			if (!loggedin){ 					//Lösenord-gui
-
-				quest.addSubQuest("1c");
+				if(!added1){
+					quest.addSubQuest("1c");
+					added1 = true;
+				}
 				style.font = PasswordFont;
 				style.fontSize = passwordSize;
 				GUI.SetNextControlName ("PasswordField");
 				passwordinput = GUI.TextField(makeRect(passwordField), passwordinput,maxPasswordLength, style);
 				checkKeyPress(passwordinput);
 				passwordinput = Regex.Replace(passwordinput, @"[^a-zA-Z0-9 ]", "");  //remove unallowed Chars
-				Debug.Log("REG :"+passwordinput+"#");
+				////Debug.Log("REG :"+passwordinput+"#");
 
 				GUI.FocusControl("PasswordField");
 

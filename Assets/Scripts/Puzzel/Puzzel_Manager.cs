@@ -47,7 +47,7 @@ public class Puzzel_Manager : MonoBehaviour {
 	void Update () {
 		if(enabled){// should be ENABLED
 			//on collision enter
-				//Debug.Log ("mouse " + Input.GetMouseButtonDown(0));
+				////Debug.Log ("mouse " + Input.GetMouseButtonDown(0));
 			//--------------------------------------------------------------------------------------------------------------------------------------------------
 			if(Input.GetMouseButton(0) && tempPiece == null){// if we don't have a piece, try to find one
 				//reset mousecounter
@@ -75,7 +75,7 @@ public class Puzzel_Manager : MonoBehaviour {
 			//-----------------------------------------------------------------------------------------------------------------------------------------------------
 			if(Input.GetMouseButton(0) && tempPiece != null){// We are holding a piece
 				if(tempPiece.correct){
-					//Debug.Log (Input.mousePosition.x + " " + Input.mousePosition.y + " " + Input.mousePosition.z);
+					////Debug.Log (Input.mousePosition.x + " " + Input.mousePosition.y + " " + Input.mousePosition.z);
 					Vector3 newPos = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, Input.mousePosition.z));
 						newPos.z = -2;
 						tempPiece.transform.position = newPos;
@@ -90,7 +90,7 @@ public class Puzzel_Manager : MonoBehaviour {
 			//-----------------------------------------------------------------------------------------------------------------------------------------------------
 			if(CheckIfCorrect() && !Completed){
 				Completed = true;
-				Debug.Log("SUCCESS YOU COMPLETED THE PUZZLE!!!");
+				//Debug.Log("SUCCESS YOU COMPLETED THE PUZZLE!!!");
 
 			}
 		}

@@ -7,10 +7,10 @@ public class CombinableTest : MonoBehaviour {
 	void UseItem(Item item){
 		if(item.name == "Key"){
 			transform.position += Vector3.up*3;
-			Debug.Log ("Used item " + item.name);
+			//Debug.Log ("Used item " + item.name);
 			GameObject.Find ("MasterMind").GetComponent<Inventory>().RemoveItem(item);
 		}else{
-			Debug.Log (item.name + " is the wrong item!");
+			//Debug.Log (item.name + " is the wrong item!");
 		}
 	}
 }

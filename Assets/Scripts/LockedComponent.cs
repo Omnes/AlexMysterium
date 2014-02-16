@@ -16,7 +16,7 @@ public class LockedComponent : MonoBehaviour {
 	}
 
 	void UseItem(Item item){
-		Debug.Log(item.name);
+		//Debug.Log(item.name);
 		if(item.name == key){
 			GameObject.Find("MasterMind").GetComponent<Inventory>().useItem(key,consumeKey);
 			setlock(false);

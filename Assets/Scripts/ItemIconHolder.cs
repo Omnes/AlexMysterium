@@ -8,7 +8,7 @@ public class ItemIconHolder : MonoBehaviour {
 	void Start(){
 		Inventory inv = GameObject.Find("MasterMind").GetComponent<Inventory>();
 		if(inv.checkIfHaveBeenPickedUp(gameObject.name)){
-			Debug.Log("this item is already pickedup. Removing...");
+			//Debug.Log("this item is already pickedup. Removing...");
 			Destroy (gameObject);
 			
 		}

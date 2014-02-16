@@ -1,6 +1,6 @@
 using UnityEngine;
 using System.Collections;
-using UnityEditor;
+//using UnityEditor;
 
 public class HedvigPassingBy : MonoBehaviour {
 
@@ -36,7 +36,7 @@ public class HedvigPassingBy : MonoBehaviour {
 			float temppos = instance.position.x + walkingspeed;
 			instance.position = new Vector3(temppos, instance.position.y, instance.position.z);
 			
-			//Debug.Log ("ska ha flyttat sig framåt här");
+			////Debug.Log ("ska ha flyttat sig framåt här");
 			
 			if(Mathf.Abs(spawnposition.x - instance.position.x)> pathlength){
 				Destroy(instance.gameObject); //Vet inte om detta duger
@@ -64,15 +64,15 @@ public class HedvigPassingBy : MonoBehaviour {
 
 	public void playAnimation(){
 
-		Debug.Log ("Hallå ja");
+		//Debug.Log ("Hallå ja");
 		instance = Instantiate(prefab,spawnposition,prefab.rotation) as Transform;
 		instantiated = true;
 		soundsource.Play();
 		//audio.clip = ghostsound;
-		Debug.Log("Nu spelas ljudet");
+		//Debug.Log("Nu spelas ljudet");
 		//audio.timeSamples = 5000;
 	//	audio.Play();
-		Debug.Log ("Instansiated ghost");
+		//Debug.Log ("Instansiated ghost");
 	}
 
 }

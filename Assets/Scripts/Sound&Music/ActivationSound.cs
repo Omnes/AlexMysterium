@@ -84,7 +84,7 @@ public class ActivationSound : MonoBehaviour {
 				playedOnce 	= true;
 			}
 		}else{
-			Debug.Log("Audiolist has no soundObjects");	
+			//Debug.Log("Audiolist has no soundObjects");	
 		}
 	}
 	

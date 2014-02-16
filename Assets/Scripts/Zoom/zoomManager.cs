@@ -26,7 +26,7 @@ public class zoomManager : MonoBehaviour {
 	}
 	
 	void reciveZDB(ZDB newZoom){// add new ZDB to the queue
-		//Debug.Log(newZoom.name);
+		////Debug.Log(newZoom.name);
 		//zoomQueue.Enqueue(newZoom);
 		Deactivate();
 		zoomList.Add(newZoom);
@@ -50,7 +50,7 @@ public class zoomManager : MonoBehaviour {
 	//*************************** Look over the camera shifting with the new way of creating cameras. *******************************************
 	void Activate(){// activate current ZDB
 		if(zoomList.Count == 1){ // we only need to say we are in a puzzel the firt time we enter one, not when we go deeper into the puzzel/zoom
-			Debug.Log("You entered the zoom");
+			//Debug.Log("You entered the zoom");
 			GameObject.Find("MasterMind").SendMessage("SetIsPuzzle", true);				// Let the input manager know we are in a puzzel.
 		}
 		//ZDB temp = zoomQueue.Peek() as ZDB;// use the latest zoom
@@ -73,7 +73,7 @@ public class zoomManager : MonoBehaviour {
 			if(temp.current_manager != null){
 				temp.current_manager.Active(true);// activate the current pussel-manager	
 			}else{
-					Debug.LogError("Pussel-manager couldn't be activated");
+					//Debug.LogError("Pussel-manager couldn't be activated");
 				}
 			}
 	}
@@ -86,13 +86,13 @@ public class zoomManager : MonoBehaviour {
 					if(temp.current_manager != null){
 						temp.current_manager.Active(false);// activate the current pussel-manager	
 					}else{
-						Debug.LogError("Pussel-manager couldn't be activated");
+						//Debug.LogError("Pussel-manager couldn't be activated");
 					}
 				}
 			GameObject.Find(temp.name).GetComponent<GUI_Parent>().Activate(false);	// activates the GUI-components of the current zoom.
 			
 			if(zoomList.Count == 1){
-				Debug.Log("You left the zoom");
+				//Debug.Log("You left the zoom");
 				GameObject.Find("MasterMind").SendMessage("SetIsPuzzle", false);				// Let the input manager know we are in a puzzel.
 			}
 			//-------------------------
@@ -112,7 +112,7 @@ public class zoomManager : MonoBehaviour {
 			if(zoomList.Count != 0){// if there is another 
 				Activate ();	
 			}else{
-				Debug.Log ("Can't deactivate the zoom because the is no zoom active (the queue is empty)");
+				//Debug.Log ("Can't deactivate the zoom because the is no zoom active (the queue is empty)");
 			}
 		}
 	}

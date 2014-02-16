@@ -31,7 +31,7 @@ public class Ambience_powerout_effect : MonoBehaviour {
 	}
 
 	void setPowerOut(bool power){
-		Debug.Log ("ambience-powerout");
+		//Debug.Log ("ambience-powerout");
 		if(!power){
 			speakerVolume = speaker.volume;
 			m_fadeIn 	= true;

@@ -21,12 +21,12 @@ public class GUI_Graphic_Label : GUI_Element {
 		if(useScreenHeight)
 		{
 			Width = Screen.width;
-			Debug.LogError("useScreenHeight: " + Screen.width);
+			//Debug.LogError("useScreenHeight: " + Screen.width);
 		}
 		if(useScreenWidth)
 		{
 			Height = Screen.height;
-			Debug.LogError("Screen.width: " + Screen.height);
+			//Debug.LogError("Screen.width: " + Screen.height);
 		}
 		
 		//GUI.depth = guiDepth;
@@ -41,7 +41,7 @@ public class GUI_Graphic_Label : GUI_Element {
 		if(enabled)
 		{
 	        if (!aTexture) {
-	            Debug.LogError("Assign a Texture in the inspector.");
+	            //Debug.LogError("Assign a Texture in the inspector.");
 	            return;
 	        }// rect(x,y,w,h)
 			

@@ -38,7 +38,7 @@ public class zoom_TEST : MonoBehaviour {
 			Quaternion.FromToRotation(new Vector3(0, 0, 0), new Vector3(0, 0, 1)) 		// Rotation
 			) as GameObject;
 
-		Debug.Log("hejseas ");
+		//Debug.Log("hejseas ");
 		Puzzel_cam.gameObject.SetActive(false);	// Activate if needed
 		//Puzzel_cam.position = changePos;
 		//Puzzel_cam.GetComponent<AudioListener>().enabled = false;
@@ -80,7 +80,7 @@ public class zoom_TEST : MonoBehaviour {
 		if(current_Manager != null){
 			zoom.current_manager= current_Manager;
 		}else{
-			Debug.LogWarning("puzzel_Manager not used");
+			//Debug.LogWarning("puzzel_Manager not used");
 		}
 		
 		return zoom;

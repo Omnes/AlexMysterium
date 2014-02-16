@@ -49,7 +49,7 @@ public class Cardreader : MonoBehaviour {
 	/*void Interact(){}
 
 	void UseItem(Item item){
-		Debug.Log(item.name);
+		//Debug.Log(item.name);
 		if(item.name == keycard){
 			carddrawn = true;
 			renderer.material.mainTexture = yellow;
@@ -71,9 +71,9 @@ public class Cardreader : MonoBehaviour {
 	void Update () {
 
 		if(!visited){
-			Debug.Log("visisted");
+			//Debug.Log("visisted");
 			if(!getCodeValid()){
-				Debug.Log("valid code");
+				//Debug.Log("valid code");
 				if(!checkifgotcode.foundCode){
 				playSound(m_needCode_sound);
 					quest.addSubQuest("1b");
@@ -121,7 +121,7 @@ public class Cardreader : MonoBehaviour {
 			renderer.material.mainTexture = green;
 			DoorToOpen.GetComponent<Interact_Door>().locked = false;
 			quest.finishedSubQuest("1d");
-			Debug.Log("UNLOCKED!");
+			//Debug.Log("UNLOCKED!");
 		}
 		else{
 			

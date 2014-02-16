@@ -75,7 +75,7 @@ public class Animationator : MonoBehaviour {
 	public void setWalkAnimation(Vector2 direction){
 		
 		//float degrees = Mathf.Atan2(direction.x, direction.y) * Mathf.Rad2Deg; //omvandlar riktningskoordinaterna till antalet grader riktningen går i
-		//Debug.Log (degrees);
+		////Debug.Log (degrees);
 		
 		//yOffset = (degrees/(360/Animations))/Animations; 
 		

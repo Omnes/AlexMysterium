@@ -25,12 +25,12 @@ public class Puzzel_slot : MonoBehaviour {
 		position = transform.position;
 		//centerPos = renderer.bounds.center;
 		centerPos = transform.position;
-		Debug.Log("Z: " + centerPos.z );
+		//Debug.Log("Z: " + centerPos.z );
 		//centerPos.z += (int)gameObject.transform.localScale.z;
 		Transform front = GameObject.Find ("front").transform;
 		//centerPos.z -= (int)((gameObject.collider.bounds.size.z/2)-(gameObject.collider.bounds.size.z/4));
 		centerPos.z = front.position.z + (renderer.bounds.size.z/2+0.1f);
-		Debug.Log("z: " + gameObject.collider.bounds.size.z/2 );
+		//Debug.Log("z: " + gameObject.collider.bounds.size.z/2 );
 		
 		speaker = gameObject.GetComponent<AudioSource>();
 	}
@@ -38,16 +38,16 @@ public class Puzzel_slot : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if(ptrPuzzel_Piece != null && !ptrPuzzel_Piece.holding && Vector3.Distance(ptrPuzzel_Piece.transform.position,centerPos) > 0.5){
-			//Debug.Log("Current pos: " + ptrPuzzel_Piece.transform.position + " new pos: " + centerPos);
+			////Debug.Log("Current pos: " + ptrPuzzel_Piece.transform.position + " new pos: " + centerPos);
 			ptrPuzzel_Piece.transform.position = areaSnapping();
-			//Debug.Log(" AFTERSNAPCurrent pos: " + ptrPuzzel_Piece.transform.position + " new pos: " + centerPos);
+			////Debug.Log(" AFTERSNAPCurrent pos: " + ptrPuzzel_Piece.transform.position + " new pos: " + centerPos);
 			speaker.clip = insertFuse;
 			speaker.Play();
-			Debug.Log("PLAYING A SOUND");// YESH
+			//Debug.Log("PLAYING A SOUND");// YESH
 		}
 		if(ptrPuzzel_Piece != null && ptrPuzzel_Piece.Piece_KeyValue == correct_slot_value && ptrPuzzel_Piece.correct && !ptrPuzzel_Piece.holding && !Correct){
 			Correct = true;
-			Debug.Log("Correct!");
+			//Debug.Log("Correct!");
 			//}
 		}
 	}
@@ -79,7 +79,7 @@ public class Puzzel_slot : MonoBehaviour {
 						slot_empty = false;
 
 							ptrPuzzel_Piece.transform.position = areaSnapping();
-							Debug.Log("pusselbit");
+							//Debug.Log("pusselbit");
 							speaker.clip = insertFuse;
 							speaker.Play();
 					}
@@ -90,7 +90,7 @@ public class Puzzel_slot : MonoBehaviour {
 					temp.inUse = false;
 					//speaker.Play();
 					temp.Reposition();
-					Debug.LogWarning("Pussel-spot occupied");
+					//Debug.LogWarning("Pussel-spot occupied");
 				}
 			}
 		}

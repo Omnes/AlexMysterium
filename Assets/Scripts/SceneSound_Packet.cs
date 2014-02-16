@@ -34,7 +34,7 @@ public class SceneSound_Packet : MonoBehaviour {
 			audioList.GetEnumerator().MoveNext();// enumeration == not thread-safe
 			++temp;
 		}
-		Debug.Log("Current Song Name: " + (AudioClip)audioList.GetEnumerator().Current);
+		//Debug.Log("Current Song Name: " + (AudioClip)audioList.GetEnumerator().Current);
 		return (AudioClip)audioList.GetEnumerator().Current;
 	}
 	*/

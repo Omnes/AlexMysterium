@@ -35,7 +35,7 @@ public class MessageWindow : MonoBehaviour {
 	} 
 
 	void showMessageWindow(){
-		Debug.Log("Displaying Message");
+		//Debug.Log("Displaying Message");
 		writeMessage = true; 
 		Time.timeScale = 0; 
 	}
@@ -72,7 +72,7 @@ public class MessageWindow : MonoBehaviour {
 // Lägg till en main-quest
 	public void addQuest(string id){
 		
-		Debug.Log("quest added");
+		//Debug.Log("quest added");
 		
 		XmlDocument doc = new XmlDocument(); 
 		doc.LoadXml(asset.text);				//Laddar vår xml-fil
@@ -92,18 +92,18 @@ public class MessageWindow : MonoBehaviour {
 			questlog.Add(new Questpair(id, quest.InnerText));
 		}
 
-		Debug.Log("about to play audio");
+		//Debug.Log("about to play audio");
 	//	audio.clip = addQuestSound;
 	//	audio.timeSamples = 5000;
 	//	audio.Play();
 
-		Debug.Log ("audio played");
+		//Debug.Log ("audio played");
 	}
 	
 //Lägg till en subquest
 	public void addSubQuest(string subquest){
 
-		Debug.Log ("hej");
+		////Debug.Log ("hej");
 		XmlDocument doc = new XmlDocument(); 
 		doc.LoadXml(asset.text);				//Laddar vår xml-fil
 		
@@ -112,20 +112,20 @@ public class MessageWindow : MonoBehaviour {
 		bool dontadd = false;
 
 		foreach(Questpair node in questlog){
-			Debug.Log("1");
+			//Debug.Log("1");
 			if(subquest.StartsWith(node.mID)){
-				Debug.Log ("2");
+				//Debug.Log ("2");
 				foreach(Questpair sub in node.mQuestlog){
-					Debug.Log("3");
+					//Debug.Log("3");
 					if(sub.getID() == subquest){
-						Debug.Log("added nothing, already exists");
+						//Debug.Log("added nothing, already exists");
 						dontadd = true;
 					}
 				}
 				if(!dontadd){
 					newObjective.Play();
 					node.addSubQuest(new Questpair(subquest, quest.InnerText));
-					Debug.Log ("added" + quest.InnerText + "quest");
+					//Debug.Log ("added" + quest.InnerText + "quest");
 					//foreach(Questpair subNode in node.mQuestlog){
 					//	questlog.Add(new Questpair(subquest, ));
 				}
@@ -177,7 +177,7 @@ public class MessageWindow : MonoBehaviour {
 			if(node.FirstChild.InnerText == "2"){  //Vettefan
 				
 				//questlog.Add(node.FirstChild.NextSibling.InnerText); //Återigen vettefan
-				//Debug.Log(node.FirstChild.NextSibling.InnerText);
+				////Debug.Log(node.FirstChild.NextSibling.InnerText);
 			}
 		}
 		*/
@@ -194,7 +194,7 @@ public class MessageWindow : MonoBehaviour {
 			
 			foreach(Questpair node in questlog){  //Tillfällig testsak woo
 		
-				Debug.Log (node.mContent);
+				//Debug.Log (node.mContent);
 			}
 		}
 		*/

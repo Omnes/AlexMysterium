@@ -87,7 +87,7 @@ public class Music_Master : MonoBehaviour {
 	}
 	
 	public void switchSong(){
-		Debug.Log ("clipCount:" + current.clipCount);
+		//Debug.Log ("clipCount:" + current.clipCount);
 		index = index%current.clipCount;
 			//index = index - (current.clipCount * int(index/current.clipCount));
 		currentlyPlaying = current.getElement(index);

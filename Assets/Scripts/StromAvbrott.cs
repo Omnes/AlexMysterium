@@ -24,7 +24,7 @@ public class StromAvbrott : MonoBehaviour {
 			//fråga sean
 			if(asdhjabsdkja){
 				powerOut();
-				Debug.Log("powerout!");
+				//Debug.Log("powerout!");
 				asdhjabsdkja = false;
 			}
 		}

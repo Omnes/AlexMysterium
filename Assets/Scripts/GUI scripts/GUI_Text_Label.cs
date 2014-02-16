@@ -20,7 +20,7 @@ public class GUI_Text_Label : GUI_Element {
 		print(asset.text);
 		
 		 /*if (!f) {
-            Debug.LogError("No font found, assign one in the inspector.");
+            //Debug.LogError("No font found, assign one in the inspector.");
             return;
         }*/
 	}

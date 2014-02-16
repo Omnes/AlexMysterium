@@ -112,7 +112,7 @@ public class Inventory : MonoBehaviour {
 	public bool useItem(string name,bool consume){
 		Item i = findItemByName(inventoryList,name);
 		if(i.id == -1){
-			Debug.Log("Item was not found: " + name);
+			//Debug.Log("Item was not found: " + name);
 			return false;
 		}
 		if(consume) inventoryList.Remove(i);
@@ -128,7 +128,7 @@ public class Inventory : MonoBehaviour {
 		
 		if(offset > 0){
 			Rect slidy = new Rect(Screen.width - offset - 64 - paddingFromEdge.x*2, Screen.height - spriteSize.y - paddingFromEdge.y, (spriteSize.y + paddingFromEdge.y*2)/slidyThingie.height * slidyThingie.width ,  spriteSize.y + paddingFromEdge.y);
-			//Debug.Log(slidy);
+			////Debug.Log(slidy);
 			GUI.DrawTexture(slidy,slidyThingie);
 			//GUI.Box(slidy,"yo");
 			Vector2 sp = startPosition - new Vector2(64,0);
@@ -200,7 +200,7 @@ public class Inventory : MonoBehaviour {
 						//plocka upp
 						holdingItemNr = startItem + (int)Mathf.Floor((Screen.width - spriteSize.x - mousePos.x - paddingFromEdge.x)/spriteSize.x);
 						holdingItem = inventoryList[holdingItemNr];
-						Debug.Log("plockade upp: " + holdingItem.name);
+						//Debug.Log("plockade upp: " + holdingItem.name);
 					}
 				}
 			}
@@ -217,7 +217,7 @@ public class Inventory : MonoBehaviour {
 						}
 					}	
 					
-					Debug.Log("släpper: " + holdingItem.name);
+					//Debug.Log("släpper: " + holdingItem.name);
 					mo_anim.isDrawing = true;
 					holdingItem = nullItem;
 					holdingItemNr = -1;

@@ -19,9 +19,9 @@ public class testarljudet : MonoBehaviour {
 	
 	void Interact(){
 		
-		Debug.Log ("Interracted");
+		//Debug.Log ("Interracted");
 		meswin.addQuest("1");
-		Debug.Log("ljud spelats");
+		//Debug.Log("ljud spelats");
 	
 	}
 }

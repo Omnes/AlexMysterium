@@ -20,11 +20,11 @@ public class Interact_Door : MonoBehaviour {
 		
 		if(locked){
 			if(inv.useItem(key,true)){
-				Debug.Log("The Door is open!");
+				//Debug.Log("The Door is open!");
 				locked = false;
 				//Application.LoadLevel(nextLevelName);
 			}else{
-				Debug.Log("The Door is locked :(");
+				//Debug.Log("The Door is locked :(");
 				//need to change this if we got more locked doors
 				gameObject.GetComponent<DoorLocked>().playDoorLocked_corridor1();
 			}
