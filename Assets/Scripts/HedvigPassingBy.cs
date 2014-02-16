@@ -48,7 +48,7 @@ public class HedvigPassingBy : MonoBehaviour {
 				hedvigani.startfadingaway();
 			}
 
-			if(hedvigani.gone && hasplayedfade == false){
+			if(hedvigani.gone && hasplayedfade == false){				//HÄR SKA BAKGRUNDSMUSIKEN INTE SPELAS
 
 				soundsource.clip = fadesound;
 				soundsource.Play();
