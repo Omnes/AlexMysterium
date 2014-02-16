@@ -7,7 +7,14 @@ public class Music_Master : MonoBehaviour {
 	private static Music_Master singleton_instance = null;
 	public SceneSound_Packet current;	// current sound_pack (for the scene) in use.
 	public int index = 0;
+	public float increment = 0.1f;
+	private float speakerVolume;
 	
+	public float FadeInTo = 1.0f;
+	public float FadeOutTo = 0.0f;
+	private bool m_fadeIn = false;
+	private bool m_fadeOut = false;
+	private bool m_enabeld;
 	public AudioClip currentlyPlaying;
 	public AudioSource speaker;
 	//private AudioSettings settings;
@@ -25,6 +32,8 @@ public class Music_Master : MonoBehaviour {
 	}
 	// Use this for initialization
 	void Start () {
+		speakerVolume = speaker.volume;
+
 		newScene();
 		switchSong();
 	}
@@ -34,8 +43,26 @@ public class Music_Master : MonoBehaviour {
 		if(Input.GetKeyDown(KeyCode.A)){
 			switchSong();
 		}
+		if(m_fadeIn && !m_fadeOut){
+			speakerVolume = speaker.volume;
+			fadeIn();
+		}else if(!m_fadeIn && m_fadeOut){
+			fadeOut();
+		}
 	}
-	
+
+	public void Enable(bool x){
+		m_enabeld = x;
+		if(m_enabeld){
+			speakerVolume = speaker.volume;
+			m_fadeIn 	= true;
+			m_fadeOut = false;
+		}else{
+			m_fadeIn 	= false;
+			m_fadeOut = true;
+		}
+	}
+
 	void newScene(){
 		current = GameObject.FindWithTag("Music_pack").GetComponent<SceneSound_Packet>();
 	}
@@ -45,13 +72,18 @@ public class Music_Master : MonoBehaviour {
 	}
 	
 	public void fadeIn(){
-		if(currentlyPlaying){
-			
+		speaker.volume += increment*Time.deltaTime;
+		if(speaker.volume > FadeInTo){
+			m_fadeIn = false;
 		}
 	}
 	
 	public void fadeOut(){
-			
+		speaker.volume -= increment*Time.deltaTime;
+		
+		if(speaker.volume < FadeOutTo){
+			m_fadeOut = false;
+		}	
 	}
 	
 	public void switchSong(){
