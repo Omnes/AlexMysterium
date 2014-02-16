@@ -19,6 +19,7 @@ public class Door_OC : MonoBehaviour {
 	void OnLevelWasLoaded(){
 		audio.clip = closeSound;
 		audio.Play();
+		Debug.Log ("DoorWas closed");
 	}
 
 	void Interact(){
