@@ -100,7 +100,7 @@ public class MessageWindow : MonoBehaviour {
 	}
 	
 //Lägg till en subquest
-	void addSubQuest(string subquest){
+	public void addSubQuest(string subquest){
 
 		Debug.Log ("hej");
 		XmlDocument doc = new XmlDocument(); 

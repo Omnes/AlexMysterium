@@ -27,6 +27,7 @@ public class Cardreader : MonoBehaviour {
 	bool clockhasstarted = false;
 	public bool carddrawn = false;
 	MessageWindow quest;
+	bool hascard;
 
 	private bool visited = false;
 	public AudioSource m_audioSource;
@@ -36,7 +37,8 @@ public class Cardreader : MonoBehaviour {
 	
 	// Use this for initialization
 	void Start () {
-		
+
+	//	hascard = GetComponent<ItemUseStates>().;
 		renderer.material.mainTexture = idle;
 		quest = gameObject.GetComponent<MessageWindow>();
 	}
@@ -70,7 +72,7 @@ public class Cardreader : MonoBehaviour {
 			if(!getCodeValid()){
 				Debug.Log("valid code");
 				playSound(m_needCode_sound);
-
+				quest.addSubQuest("1b");
 			}
 			visited = true;
 		}
