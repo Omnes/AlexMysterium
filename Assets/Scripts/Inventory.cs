@@ -31,6 +31,8 @@ public class Inventory : MonoBehaviour {
 	//seans holding item icon thingy
 	public Texture2D cursorImage;
 	Mouse_Animation mo_anim;
+	public AudioSource itemPickupAudioSource;
+	public AudioClip itemPickupSound;
 	
 	
 	
@@ -58,6 +60,11 @@ public class Inventory : MonoBehaviour {
 		if(itemPickup.name == "item_flashlight"){
 			GetComponent<ItemUseStates>().flashlight = true;
 		}
+		if(itemPickup.name == "item_card"){
+			GetComponent<ItemUseStates>().card = true;
+		}
+		itemPickupAudioSource.clip = itemPickupSound;
+		itemPickupAudioSource.Play();
 	}
 	
 	public void RemoveItem(Item item){

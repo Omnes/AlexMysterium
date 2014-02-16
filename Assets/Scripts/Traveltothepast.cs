@@ -31,6 +31,7 @@ public class Traveltothepast : MonoBehaviour {
 		gui.drawGUI = false;
 		Color blackcolor = blacklayertag.renderer.material.color;
 		blacklayertag.renderer.material.color = new Color(blackcolor.r, blackcolor.g, blackcolor.b,0);
+		Debug.Log (blacklayertag.renderer.material.color.a);
 		logocolor = logotag.renderer.material.color;
 		logotag.renderer.material.color = new Color(logocolor.r,logocolor.g,logocolor.b,0);
 	//	fadesound = gameObject.GetComponent<AudioSource>();	
