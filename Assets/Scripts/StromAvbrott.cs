@@ -10,6 +10,8 @@ public class StromAvbrott : MonoBehaviour {
 	public bool asdhjabsdkja = true;
 	private bool played = false;
 
+	public AudioSource audioS;
+
 	void Start(){
 		powerON = GetComponent<ItemUseStates>().button;
 		setOn();
@@ -67,7 +69,7 @@ public class StromAvbrott : MonoBehaviour {
 
 	void powerOut(){
 
-		audio.Play();
+		audioS.Play();
 
 		reactiveObjects = GameObject.Find("currentSceneInfo").GetComponent<GetReactiveObjects>().reactiveObj_array;
 

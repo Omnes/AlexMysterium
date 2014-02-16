@@ -45,13 +45,14 @@ public class Hedviganimation : MonoBehaviour {
 			clock = Time.time; //Starta om klockan
 		}
 
-		if(!startfade){
+		if(!startfade && currentalpha < 1){
 			currentalpha += alphadelta;
 		}
 
 		if(startfade){
 			currentalpha -= alphadelta;
 			if(currentalpha <= 0){
+		
 				gone = true;
 			}
 		}

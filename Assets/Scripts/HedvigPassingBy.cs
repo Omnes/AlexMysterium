@@ -12,6 +12,7 @@ public class HedvigPassingBy : MonoBehaviour {
 	public AudioClip fadesound;		//Kanske får flytta till traveltothepast senar
 	public AudioSource soundsource;
 	bool instantiated = false;
+	bool hasplayedfade = false;
 	float alpha;
 	Hedviganimation hedvigani; 
 	Traveltothepast past; 
@@ -40,8 +41,6 @@ public class HedvigPassingBy : MonoBehaviour {
 				Destroy(instance.gameObject); //Vet inte om detta duger
 				//PrefabUtility.DisconnectPrefabInstance(prefab);
 				instantiated = false;
-				past = gameObject.GetComponent<Traveltothepast>();
-				past.timeTraveltoPast();
 			}
 
 			if(Mathf.Abs(spawnposition.x - instance.position.x)> pathlength - 3){
@@ -49,9 +48,13 @@ public class HedvigPassingBy : MonoBehaviour {
 				hedvigani.startfadingaway();
 			}
 
-			if(hedvigani.gone){
+			if(hedvigani.gone && hasplayedfade == false){				//HÄR SKA BAKGRUNDSMUSIKEN INTE SPELAS
 
 				soundsource.clip = fadesound;
+				soundsource.Play();
+				hasplayedfade = true;
+				past = gameObject.GetComponent<Traveltothepast>();
+				past.timeTraveltoPast();
 			} 
 		}
 	}

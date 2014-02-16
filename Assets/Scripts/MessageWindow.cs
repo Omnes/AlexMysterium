@@ -9,7 +9,7 @@ public class MessageWindow : MonoBehaviour {
 	public Texture2D FinishedQuest;
 	public TextAsset asset; //tillfällig
 	public AudioSource newObjective;
-	public AudioClip addQuestSound;
+	//public AudioClip addQuestSound;
 	public float posX = 150;
 	public float posY = 50;
 	public Font font;
@@ -20,13 +20,15 @@ public class MessageWindow : MonoBehaviour {
 	public Rect textfield;
 	public Rect texturefield;
 
+
+
 	bool writeMessage;	
 	List<Questpair> questlog = new List<Questpair>(); //Array där alla quests ska sparas
 	
 
 // Use this for initialization 
 	void Start () { 
-		newObjective = gameObject.GetComponent<AudioSource>();	
+		//newObjective = gameObject.GetComponent<AudioSource>();	
 		//print(asset.text);
 		bool writeMessage = false; 
 	} 

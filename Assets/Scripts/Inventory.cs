@@ -32,7 +32,7 @@ public class Inventory : MonoBehaviour {
 	public Texture2D cursorImage;
 	Mouse_Animation mo_anim;
 	
-	
+	public AudioSource audioS;
 	
 	void Start () {
 		inventoryList = new List<Item>();
@@ -54,6 +54,10 @@ public class Inventory : MonoBehaviour {
 		itemsThatHaveBeenpickedUp.Add(itemPickup.name);
 		inventoryList.Add(item);
 		ItemPickupCounter++;
+
+		if(itemPickup.name == "item_flashlight"){
+			GetComponent<ItemUseStates>().flashlight = true;
+		}
 	}
 	
 	public void RemoveItem(Item item){
@@ -171,6 +175,9 @@ public class Inventory : MonoBehaviour {
 		}
 
 		if(showInventory){
+
+			audioS.Play();
+
 			//tells mouseanimation that inventory is open
 			mo_anim.isInInventory = true;
 			

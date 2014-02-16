@@ -5,6 +5,7 @@ public class Radio : MonoBehaviour {
 	
 	public AudioClip mainClip;
 	public AudioClip powerfailureClip;
+	public float powerOutVolume = 0.2f;
 	private AudioSource speaker;
 	public bool enabled = false;
 	public bool avbrott = false;
@@ -12,6 +13,9 @@ public class Radio : MonoBehaviour {
 	void Start () {
 		speaker = gameObject.GetComponent<AudioSource>();
 		speaker.clip = mainClip;
+		if(enabled){
+			speaker.Play ();
+		}
 	}
 
 	void Interact(){
@@ -33,12 +37,14 @@ public class Radio : MonoBehaviour {
 		if(powerOff){
 			if(enabled){
 				speaker.clip = powerfailureClip;
+				speaker.volume = powerOutVolume;
 				speaker.Play();
 				speaker.loop = false;
 			}
 		}else{
 			if(enabled){
 				speaker.clip = mainClip;
+				speaker.volume = 1.0f;
 				speaker.Play();
 				speaker.loop = true;
 			}

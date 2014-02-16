@@ -66,8 +66,11 @@ public class Cardreader : MonoBehaviour {
 	void Update () {
 
 		if(!visited){
+			Debug.Log("visisted");
 			if(!getCodeValid()){
+				Debug.Log("valid code");
 				playSound(m_needCode_sound);
+
 			}
 			visited = true;
 		}
