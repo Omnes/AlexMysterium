@@ -46,6 +46,23 @@ public class MessageWindow : MonoBehaviour {
 		if(Input.GetKeyDown(KeyCode.Q)){
 
 			addQuest("1");
+			addSubQuest("1a");
+			addSubQuest("1b");
+			addSubQuest("1c");
+			addSubQuest("1d");
+			addSubQuest("1e");
+			addSubQuest("1f");
+		}
+
+		if(Input.GetKeyDown(KeyCode.F)){
+			
+			finishedQuest("1");
+			finishedSubQuest("1a");
+			finishedSubQuest("1b");
+			finishedSubQuest("1c");
+			finishedSubQuest("1d");
+			finishedSubQuest("1e");
+			finishedSubQuest("1f");
 		}
 	}
 
@@ -120,7 +137,7 @@ public class MessageWindow : MonoBehaviour {
 		
 			if(node.mID == id){
 				
-				node.mContent = "hej" + node.mContent + "hej";
+				node.mContent =  node.mContent;
 			}
 		}
 	}
@@ -194,6 +211,7 @@ public class MessageWindow : MonoBehaviour {
 				
 				foreach(Questpair subnode in node.mQuestlog){ //loopar igenom alla subquests
 					GUILayout.BeginHorizontal();
+					GUILayout.Space(subQuestTab);
 					style.fontSize = SubquestSize;
 					if(subnode.mFinished == true){
 						GUILayout.Space(-FinishedQuest.width);
