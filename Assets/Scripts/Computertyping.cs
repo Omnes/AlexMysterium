@@ -37,6 +37,8 @@ public class Computertyping : MonoBehaviour {
 	public int correctMail = 2;
 	private bool played = false;
 
+	public AudioSource audioS;
+
 	public AudioClip mail_sound;
 	public AudioClip key_space_sound;
 	public AudioClip key_enter_sound;
@@ -171,8 +173,8 @@ public class Computertyping : MonoBehaviour {
 						if(GUILayout.Button(node.mID,style)){ //klicka på rubriken för att läsa
 								currentmail = node.getID2();
 							if(currentmail == correctMail && !played){
-								audio.clip = mail_sound;
-								audio.Play();
+								audioS.clip = mail_sound;
+								audioS.Play();
 								//Activate sound
 								currentTime = Time.time;
 								initiatePOut = true;
@@ -235,12 +237,13 @@ public class Computertyping : MonoBehaviour {
 	IEnumerator playSoundInOrder(){
 		for(int i = 0; i < clip_array.Length; i++){
 			if(i != clip_array.Length-1){
-				audio.clip = clip_array[i];
-				audio.Play();
+				audioS.clip = clip_array[i];
+				audioS.Play();
 			}else{
+				yield return new WaitForSeconds(1f);
 				if(!haveFlashlight){
-					audio.clip = clip_array[i];
-					audio.Play();
+					audioS.clip = clip_array[i];
+					audioS.Play();
 				}
 			}
 
@@ -254,16 +257,16 @@ public class Computertyping : MonoBehaviour {
 			int i = pass.Length-1;
 			char c = pass[i];
 			if(c == ' '){
-				audio.clip = key_space_sound;
-				audio.Play();
+				audioS.clip = key_space_sound;
+				audioS.Play();
 			}else{
-				audio.clip = key_any_sound;
-				audio.Play();
+				audioS.clip = key_any_sound;
+				audioS.Play();
 			}
 			enterKey = true;
 		}else if(pass.Length == 0 && enterKey){
-			audio.clip = key_enter_sound;
-			audio.Play();
+			audioS.clip = key_enter_sound;
+			audioS.Play();
 			enterKey = false;
 		}
 		tempPass = pass;
