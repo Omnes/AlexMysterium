@@ -13,6 +13,7 @@ public class HedvigPassingBy : MonoBehaviour {
 	public AudioSource soundsource;
 	bool instantiated = false;
 	bool hasplayedfade = false;
+	public Music_Master musicRef;
 	float alpha;
 	Hedviganimation hedvigani; 
 	Traveltothepast past; 
@@ -48,7 +49,8 @@ public class HedvigPassingBy : MonoBehaviour {
 				hedvigani.startfadingaway();
 			}
 
-			if(hedvigani.gone && hasplayedfade == false){				//HÄR SKA BAKGRUNDSMUSIKEN INTE SPELAS
+			if(hedvigani.gone && hasplayedfade == false){
+				musicRef.Enable(false);//HÄR SKA BAKGRUNDSMUSIKEN INTE SPELAS
 
 				soundsource.clip = fadesound;
 				soundsource.Play();
