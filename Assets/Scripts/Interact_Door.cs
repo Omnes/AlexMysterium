@@ -25,6 +25,7 @@ public class Interact_Door : MonoBehaviour {
 				//Application.LoadLevel(nextLevelName);
 			}else{
 				Debug.Log("The Door is locked :(");
+				//need to change this if we got more locked doors
 				gameObject.GetComponent<DoorLocked>().playDoorLocked_corridor1();
 			}
 		}
