@@ -32,7 +32,7 @@ public class Inventory : MonoBehaviour {
 	public Texture2D cursorImage;
 	Mouse_Animation mo_anim;
 	
-	
+	public AudioSource audioS;
 	
 	void Start () {
 		inventoryList = new List<Item>();
@@ -175,6 +175,9 @@ public class Inventory : MonoBehaviour {
 		}
 
 		if(showInventory){
+
+			audioS.Play();
+
 			//tells mouseanimation that inventory is open
 			mo_anim.isInInventory = true;
 			
