@@ -8,4 +8,5 @@ public class ItemUseStates : MonoBehaviour {
 	public bool passcode = false;
 	public bool flashlight = false;
 	public bool powerout = false;
+	public bool card = false;
 }
