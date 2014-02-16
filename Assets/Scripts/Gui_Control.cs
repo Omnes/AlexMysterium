@@ -6,6 +6,7 @@ public class Gui_Control : MonoBehaviour {
 	public Texture2D gui_texture;
 	
 	Inventory inventory;
+	public bool drawGUI = true;
 	
 	private Rect guiArea;
 	
@@ -53,12 +54,13 @@ public class Gui_Control : MonoBehaviour {
 	}
 	
 	void OnGUI(){
-
-		inventory.DoGUI();
-		GUI.DrawTexture(guiArea,gui_texture);
-		//GUI.Box(inventoryArea,"DONT FORGET TO REMOVE");
+		if(drawGUI){
+			inventory.DoGUI();
+			GUI.DrawTexture(guiArea,gui_texture);
+			//GUI.Box(inventoryArea,"DONT FORGET TO REMOVE");
 		//GUI.Box(inventoryArea,"inv");
 		//GUI.Box(questLogArea,"quest");
+		}
 		
 	}
 }
