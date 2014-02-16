@@ -52,10 +52,12 @@ public class Computertyping : MonoBehaviour {
 	private bool haveFlashlight = false; // ändra denna så den är falsk
 	private string tempPass = null;
 	private bool enterKey = false;
+	MessageWindow quest;
 
 	// Use this for initialization
 	
 	void Start () {
+		quest = GameObject.Find ("MasterMind").GetComponent<MessageWindow>();
 		screen = GameObject.Find ("computerscreen");
 		screen.renderer.enabled = false;
 	}
@@ -175,6 +177,7 @@ public class Computertyping : MonoBehaviour {
 							if(currentmail == correctMail && !played){
 								audioS.clip = mail_sound;
 								audioS.Play();
+								quest.finishedSubQuest("1b");
 								//Activate sound
 								currentTime = Time.time;
 								initiatePOut = true;
