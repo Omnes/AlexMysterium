@@ -34,10 +34,12 @@ public class Cardreader : MonoBehaviour {
 	public AudioClip m_needCode_sound;
 	public AudioClip m_drawcard;
 	public AudioClip[] beeps = new AudioClip[4];
+	Computertyping checkifgotcode;
 	
 	// Use this for initialization
 	void Start () {
 
+		checkifgotcode = GameObject.Find ("MasterMind").GetComponent<Computertyping>();
 	//	hascard = GetComponent<ItemUseStates>().;
 		renderer.material.mainTexture = idle;
 		//quest = gameObject.GetComponent<MessageWindow>();
@@ -72,8 +74,10 @@ public class Cardreader : MonoBehaviour {
 			Debug.Log("visisted");
 			if(!getCodeValid()){
 				Debug.Log("valid code");
+				if(!checkifgotcode.foundcode){
 				playSound(m_needCode_sound);
-				quest.addSubQuest("1b");
+					quest.addSubQuest("1b");
+				}
 			}
 			visited = true;
 		}
@@ -116,6 +120,7 @@ public class Cardreader : MonoBehaviour {
 			
 			renderer.material.mainTexture = green;
 			DoorToOpen.GetComponent<Interact_Door>().locked = false;
+			quest.finishedSubQuest("1d");
 			Debug.Log("UNLOCKED!");
 		}
 		else{

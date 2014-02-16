@@ -53,6 +53,7 @@ public class Computertyping : MonoBehaviour {
 	private string tempPass = null;
 	private bool enterKey = false;
 	MessageWindow quest;
+	public bool foundcode = false;
 
 	// Use this for initialization
 	
@@ -91,7 +92,8 @@ public class Computertyping : MonoBehaviour {
 	        	foreach (char c in Input.inputString) {
 					if (c == "\n"[0] || c == "\r"[0]){  //enter, KANSKE BEHÖVER LÄGGA TILL ETT KLICK OCKSÅ
 						if(passwordinput == correctPassword){
-							loggedin = true;				//Loggat in!!!!f
+							loggedin = true;				//Loggat in!!!!
+							quest.finishedSubQuest("1c");
 							currentLayout = inboxLayout;
 
 							screen.renderer.material.SetTexture("_MainTex",inboxLayout);
@@ -149,6 +151,7 @@ public class Computertyping : MonoBehaviour {
 
 			if (!loggedin){ 					//Lösenord-gui
 
+				quest.addSubQuest("1c");
 				style.font = PasswordFont;
 				style.fontSize = passwordSize;
 				GUI.SetNextControlName ("PasswordField");
@@ -178,6 +181,8 @@ public class Computertyping : MonoBehaviour {
 								audioS.clip = mail_sound;
 								audioS.Play();
 								quest.finishedSubQuest("1b");
+								quest.addSubQuest("1d");
+								foundcode = true;
 								//Activate sound
 								currentTime = Time.time;
 								initiatePOut = true;
@@ -247,6 +252,7 @@ public class Computertyping : MonoBehaviour {
 				if(!haveFlashlight){
 					audioS.clip = clip_array[i];
 					audioS.Play();
+					quest.addSubQuest("1f");
 				}
 			}
 
