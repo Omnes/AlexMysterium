@@ -36,19 +36,20 @@ public class Computertyping : MonoBehaviour {
 	public Transform desktopPic;
 	public int correctMail = 2;
 	private bool played = false;
-	public AudioSource aSource;
-	public AudioClip mailClip;
-	public AudioClip powerOutSound;
-	public AudioClip flashAudio;
-	//
+
+	public AudioClip mail_sound;
+	public AudioClip key_space_sound;
+	public AudioClip key_enter_sound;
+	public AudioClip key_any_sound;
+
+	public AudioClip[] clip_array;
+
 	private float currentTime;
-	public float powerOutTime = 1f;
+	public float powerOutDelay = 8f;
 	private bool initiatePOut = false;
-	private float timeBeforeGasp = 0.3f;
-	private bool playFlashSound = false;
-	private float currentFlashTime;
 	private bool haveFlashlight = false; // ändra denna så den är falsk
-	
+	private string tempPass = null;
+	private bool enterKey = false;
 
 	// Use this for initialization
 	
@@ -80,14 +81,7 @@ public class Computertyping : MonoBehaviour {
 		if(initiatePOut){
 			initiatePowerOut();
 		}
-
-		//haveFlashlight ska sättas i initiatePowerOut
-		if(playFlashSound && !haveFlashlight){
-			if(currentFlashTime + powerOutSound.length + 1f < Time.time){
-				doPlayFlashSound();
-			}
-		}
-
+			
 		if(compPower){
 			if(!loggedin){  									// Hanterar tangentbordets input
 	        	foreach (char c in Input.inputString) {
@@ -155,7 +149,10 @@ public class Computertyping : MonoBehaviour {
 				style.fontSize = passwordSize;
 				GUI.SetNextControlName ("PasswordField");
 				passwordinput = GUI.TextField(makeRect(passwordField), passwordinput,maxPasswordLength, style);
-				passwordinput = Regex.Replace(passwordinput, @"[^a-zA-Z0-9]", "");  //remove unallowed Chars
+				checkKeyPress(passwordinput);
+				passwordinput = Regex.Replace(passwordinput, @"[^a-zA-Z0-9 ]", "");  //remove unallowed Chars
+				Debug.Log("REG :"+passwordinput+"#");
+
 				GUI.FocusControl("PasswordField");
 
 			}
@@ -174,9 +171,9 @@ public class Computertyping : MonoBehaviour {
 						if(GUILayout.Button(node.mID,style)){ //klicka på rubriken för att läsa
 								currentmail = node.getID2();
 							if(currentmail == correctMail && !played){
-								aSource.clip = mailClip;
+								audio.clip = mail_sound;
+								audio.Play();
 								//Activate sound
-								aSource.Play();
 								currentTime = Time.time;
 								initiatePOut = true;
 								played = true;
@@ -220,22 +217,56 @@ public class Computertyping : MonoBehaviour {
 	}
 
 	void initiatePowerOut(){
-		if(currentTime + powerOutTime < Time.time && initiatePOut){
+
+		if(currentTime + powerOutDelay < Time.time){
+
 			GameObject mastermind = GameObject.FindGameObjectWithTag("Mastermind");
 			mastermind.SendMessage("powerOut");
-			aSource.clip = powerOutSound;
-			aSource.PlayDelayed(timeBeforeGasp);
-			initiatePOut = false;
-			//for flashlightsoudn
 			haveFlashlight = mastermind.GetComponent<Inventory>().checkItemSupply("item_flashlight",1);
-			currentFlashTime = Time.time;
-			playFlashSound = true;
+			playSounds();
+			initiatePOut = false;
 		}
 	}
-	void doPlayFlashSound(){
-		aSource.clip = flashAudio;
-		aSource.Play();
-		playFlashSound = false;
+
+	void playSounds(){
+		StartCoroutine("playSoundInOrder");
+	}
+
+	IEnumerator playSoundInOrder(){
+		for(int i = 0; i < clip_array.Length; i++){
+			if(i != clip_array.Length-1){
+				audio.clip = clip_array[i];
+				audio.Play();
+			}else{
+				if(!haveFlashlight){
+					audio.clip = clip_array[i];
+					audio.Play();
+				}
+			}
+
+			yield return new WaitForSeconds(clip_array[i].length);
+		}
+		StopCoroutine("playSoundInOrder");
+	}
+
+	public void checkKeyPress(string pass){
+		if(tempPass != pass && pass.Length > 0){
+			int i = pass.Length-1;
+			char c = pass[i];
+			if(c == ' '){
+				audio.clip = key_space_sound;
+				audio.Play();
+			}else{
+				audio.clip = key_any_sound;
+				audio.Play();
+			}
+			enterKey = true;
+		}else if(pass.Length == 0 && enterKey){
+			audio.clip = key_enter_sound;
+			audio.Play();
+			enterKey = false;
+		}
+		tempPass = pass;
 	}
 
 }

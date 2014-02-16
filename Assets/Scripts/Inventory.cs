@@ -54,6 +54,10 @@ public class Inventory : MonoBehaviour {
 		itemsThatHaveBeenpickedUp.Add(itemPickup.name);
 		inventoryList.Add(item);
 		ItemPickupCounter++;
+
+		if(itemPickup.name == "item_flashlight"){
+			GetComponent<ItemUseStates>().flashlight = true;
+		}
 	}
 	
 	public void RemoveItem(Item item){

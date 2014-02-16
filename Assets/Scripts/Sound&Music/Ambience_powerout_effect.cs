@@ -3,6 +3,7 @@ using System.Collections;
 
 public class Ambience_powerout_effect : MonoBehaviour {
 
+
 	public float FadeInTo = 1.0f;
 	public float FadeOutTo = 0.0f;
 	public float increment = 0.01f;
@@ -43,6 +44,7 @@ public class Ambience_powerout_effect : MonoBehaviour {
 
 	void fadeIn(){
 
+
 		speaker.volume += increment*Time.deltaTime;
 		if(speaker.volume > FadeInTo){
 			m_fadeIn = false;
@@ -50,6 +52,7 @@ public class Ambience_powerout_effect : MonoBehaviour {
 	}
 
 	void fadeOut(){
+
 
 		speaker.volume -= increment*Time.deltaTime;
 
