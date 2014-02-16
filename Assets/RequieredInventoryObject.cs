@@ -15,7 +15,9 @@ public class RequieredInventoryObject : MonoBehaviour {
 	void Update () {
 		counter++;
 		if(counter % 30 == 0){
-			gameObject.SetActive(inv.checkItemSupply(reqItem,1));
+			bool active = inv.checkItemSupply(reqItem,1);
+			transform.GetChild(0).renderer.enabled = active;
+			gameObject.collider.enabled = active;
 		}
 	}
 }
