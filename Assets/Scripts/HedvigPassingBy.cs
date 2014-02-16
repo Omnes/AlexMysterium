@@ -50,7 +50,7 @@ public class HedvigPassingBy : MonoBehaviour {
 			}
 
 			if(hedvigani.gone && hasplayedfade == false){
-				musicRef.Enable(false);//HÄR SKA BAKGRUNDSMUSIKEN INTE SPELAS
+				//musicRef.Enable(false);//HÄR SKA BAKGRUNDSMUSIKEN INTE SPELAS
 
 				soundsource.clip = fadesound;
 				soundsource.Play();
