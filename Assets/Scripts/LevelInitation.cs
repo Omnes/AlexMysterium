@@ -51,7 +51,7 @@ public class LevelInitation : MonoBehaviour {
 		Transform player = (Transform)Instantiate(playerPrefab,spawnPosition,Quaternion.identity);
 		GetComponent<InputManager>().SetPlayer(player);
 		player.gameObject.GetComponent<Animationator>().Size = PlayerSizesPerLevel[Application.loadedLevel];
-		player.gameObject.GetComponent<Animationator>().Size = PlayerDeltasPerLevel[Application.loadedLevel];
+		player.gameObject.GetComponent<Animationator>().distanceDelta = PlayerDeltasPerLevel[Application.loadedLevel];
 		player.gameObject.GetComponent<Animationator>().MastermindRunsThisStartFunction();
         Camera.main.GetComponent<CameraSmoothFollowScript>().Player = player.gameObject;
 

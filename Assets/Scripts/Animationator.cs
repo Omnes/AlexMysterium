@@ -35,7 +35,6 @@ public class Animationator : MonoBehaviour {
 		clock = Time.time; //Startar klockan
 		xOffset = 0;
 		yOffset = 0;
-		orgSpriteSize = orgSpriteSize += orgSpriteSize*Size;
 		
 		walk = false;
 	}
@@ -66,7 +65,7 @@ public class Animationator : MonoBehaviour {
 		
 		float spriteSize = distanceDelta * transform.GetChild(0).position.z;
 
-		transform.GetChild(0).localScale = new Vector3(orgSpriteSize.x - orgSpriteSize.x*spriteSize, orgSpriteSize.y, orgSpriteSize.z - orgSpriteSize.z*spriteSize);
+		transform.GetChild(0).localScale = new Vector3((2*(orgSpriteSize)*Size).x - (2*(orgSpriteSize)*Size).x*spriteSize, (2*(orgSpriteSize)*Size).y, (2*(orgSpriteSize)*Size).z - (2*(orgSpriteSize)*Size).z*spriteSize);
 		transform.GetChild(0).localPosition = new Vector3(0, transform.GetChild(0).localScale.z*10/2 - downOffset, 0);
 		
 		//transform.localScale = spriteSize/(transform.position.z/distanceDelta); //Bildens storlek anpassas efter djupet(Z)

@@ -14,7 +14,7 @@ public class RequieredInventoryObject : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		counter++;
-		if(counter % 30 == 0){
+		if(counter % 30 == 0 && gameObject.collider.enabled == false){
 			bool active = inv.checkItemSupply(reqItem,1);
 			transform.GetChild(0).renderer.enabled = active;
 			gameObject.collider.enabled = active;

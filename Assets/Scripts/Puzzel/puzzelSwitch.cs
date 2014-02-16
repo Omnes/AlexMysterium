@@ -26,6 +26,12 @@ public class puzzelSwitch : MonoBehaviour {
 		if(managerRef.CheckIfCorrect() && leverStatus){
 			light_on.SetActive(true);
 			light_off.SetActive(false);
+			GameObject.Find("MasterMind").GetComponent<Inventory>().removeItems("item_propp1",1);
+			GameObject.Find("MasterMind").GetComponent<Inventory>().removeItems("item_propp2",1);
+			GameObject.Find("MasterMind").GetComponent<Inventory>().removeItems("item_propp3",1);
+			GameObject.Find("MasterMind").GetComponent<Inventory>().removeItems("item_propp4",1);
+			GameObject.Find("MasterMind").GetComponent<Inventory>().removeItems("item_propp5",1);
+			GameObject.Find("MasterMind").SendMessage("setAvbrott",false);
 		}else{
 			light_off.SetActive(true);
 			light_on.SetActive(false);
@@ -39,6 +45,7 @@ public class puzzelSwitch : MonoBehaviour {
 				leverStatus = true;
 				switchOn.SetActive(true);
 				switchOff.SetActive(false);
+
 			}else{
 				leverStatus = false;
 				switchOff.SetActive(true);

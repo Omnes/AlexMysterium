@@ -34,12 +34,12 @@ public class Cardreader : MonoBehaviour {
 	public AudioClip m_needCode_sound;
 	public AudioClip m_drawcard;
 	public AudioClip[] beeps = new AudioClip[4];
-	Computertyping checkifgotcode;
+	ItemUseStates checkifgotcode;
 	
 	// Use this for initialization
 	void Start () {
 
-		checkifgotcode = GameObject.Find ("MasterMind").GetComponent<Computertyping>();
+		checkifgotcode = GameObject.Find ("MasterMind").GetComponent<ItemUseStates>();
 	//	hascard = GetComponent<ItemUseStates>().;
 		renderer.material.mainTexture = idle;
 		//quest = gameObject.GetComponent<MessageWindow>();
@@ -74,7 +74,7 @@ public class Cardreader : MonoBehaviour {
 			Debug.Log("visisted");
 			if(!getCodeValid()){
 				Debug.Log("valid code");
-				if(!checkifgotcode.foundcode){
+				if(!checkifgotcode.foundCode){
 				playSound(m_needCode_sound);
 					quest.addSubQuest("1b");
 				}
@@ -149,7 +149,7 @@ public class Cardreader : MonoBehaviour {
 		//GUILayout.FlexibleSpace();//Knapparna
 			GUILayout.BeginHorizontal();
 			for(int j = 3*i; j < i*3 +3; j++){
-				if(GUILayout.Button("" + (j+1),style,GUILayout.ExpandHeight(true))){
+				if(GUILayout.Button("",style,GUILayout.ExpandHeight(true))){
 					if(carddrawn){
 						if(count < 4){
 							int rand = Random.Range(0,3);
@@ -168,7 +168,7 @@ public class Cardreader : MonoBehaviour {
 	//GUILayout.FlexibleSpace();
 		GUILayout.BeginHorizontal();
 		GUILayout.Label("");
-		if(GUILayout.Button("" + 0,style,GUILayout.ExpandHeight(true))){
+		if(GUILayout.Button("",style,GUILayout.ExpandHeight(true))){
 			if(carddrawn){
 				if(count < 4){
 					int rand = Random.Range(0,3);

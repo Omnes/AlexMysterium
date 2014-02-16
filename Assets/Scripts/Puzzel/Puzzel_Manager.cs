@@ -91,7 +91,7 @@ public class Puzzel_Manager : MonoBehaviour {
 			if(CheckIfCorrect() && !Completed){
 				Completed = true;
 				Debug.Log("SUCCESS YOU COMPLETED THE PUZZLE!!!");
-				GameObject.Find("MasterMind").SendMessage("setAvbrott",false);
+
 			}
 		}
 	}

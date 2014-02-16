@@ -54,7 +54,6 @@ public class Computertyping : MonoBehaviour {
 	private string tempPass = null;
 	private bool enterKey = false;
 	MessageWindow quest;
-	public bool foundcode = false;
 
 	// Use this for initialization
 	
@@ -186,7 +185,7 @@ public class Computertyping : MonoBehaviour {
 								audioS_voice.Play();
 								quest.finishedSubQuest("1b");
 								quest.addSubQuest("1d");
-								foundcode = true;
+							GameObject.Find("MasterMind").GetComponent<ItemUseStates>().foundCode = true;
 								//Activate sound
 								currentTime = Time.time;
 								initiatePOut = true;

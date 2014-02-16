@@ -9,4 +9,5 @@ public class ItemUseStates : MonoBehaviour {
 	public bool flashlight = false;
 	public bool powerout = false;
 	public bool card = false;
+	public bool foundCode = false;
 }

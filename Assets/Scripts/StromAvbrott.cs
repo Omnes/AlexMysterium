@@ -48,7 +48,14 @@ public class StromAvbrott : MonoBehaviour {
 			quest.finishedSubQuest("1e");
 		}
 		GetComponent<ItemUseStates>().powerout = avbrott;
-		setOn();
+		GameObject[] withtag = GameObject.FindGameObjectsWithTag("DarkLayer");
+		foreach(GameObject g in withtag){
+			g.renderer.enabled =false;
+		}
+		GameObject[] withlighttag = GameObject.FindGameObjectsWithTag("LightLayer");
+		foreach(GameObject g in withlighttag){
+			g.renderer.enabled =true;
+		}
 	}
 
 	void togglePowerON(){
