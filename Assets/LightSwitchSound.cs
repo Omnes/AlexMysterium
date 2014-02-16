@@ -13,7 +13,8 @@ public class LightSwitchSound : MonoBehaviour {
 			played = true;
 		}else{
 			gameObject.audio.clip = notWorking_sound;
-			audio.Play();
+			if(!audio.isPlaying)
+				audio.Play();
 		}
 	}
 }
