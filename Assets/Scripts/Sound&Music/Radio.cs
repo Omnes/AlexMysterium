@@ -12,7 +12,7 @@ public class Radio : MonoBehaviour {
 
 	public bool enabled = false;
 	public bool avbrott = false;
-	public ulong offset = 0;
+	public static int offset = 0;
 
 	void Start () {
 		//speaker = gameObject.GetComponent<AudioSource>();
@@ -21,9 +21,14 @@ public class Radio : MonoBehaviour {
 			//Debug.Log (offset);
 			bool t =  GameObject.Find ("MasterMind").GetComponent<ItemUseStates>().powerout;
 			if(!t){
-				speaker.Play(offset);
+				speaker.timeSamples = offset;
+				speaker.Play();
 			}
 		}
+	}
+
+	void Update(){
+		offset = speaker.timeSamples;
 	}
 
 	void Interact(){
@@ -32,7 +37,8 @@ public class Radio : MonoBehaviour {
 			GameObject.Find ("MasterMind").GetComponent<ItemUseStates>().radio = enabled;
 			if(enabled){
 				if(!speaker.isPlaying){
-					speaker.Play(offset);
+					speaker.timeSamples = offset;
+					speaker.Play();
 				}
 			}else{
 				speaker.Pause();
@@ -51,6 +57,7 @@ public class Radio : MonoBehaviour {
 		}else{
 			if(enabled){
 				//speaker.volume = 1.0f;
+				speaker.timeSamples = offset;
 				speaker.Play();
 				speaker.loop = true;
 			}
@@ -63,12 +70,12 @@ public class Radio : MonoBehaviour {
 		setPower(true);
 	}
 
-	public ulong sendOffset(){
-		offset = (ulong) speaker.clip.samples - (ulong) speaker.timeSamples;
+	public int sendOffset(){
+		offset =  speaker.clip.samples -  speaker.timeSamples;
 		return offset;
 	}
 
-	public void receiveOffset(ulong x){
+	public void receiveOffset(int x){
 		offset = x;
 	}
 

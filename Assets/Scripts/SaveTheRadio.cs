@@ -2,7 +2,7 @@
 using System.Collections;
 
 public class SaveTheRadio : MonoBehaviour {
-	public ulong offset = 0;
+	public int offset = 0;
 	public Radio radioRef = null;
 
 
@@ -17,7 +17,7 @@ public class SaveTheRadio : MonoBehaviour {
 		}
 
 
-		saveOffset();
+		//saveOffset();
 	}
 
 	public void saveOffset(){
@@ -29,7 +29,7 @@ public class SaveTheRadio : MonoBehaviour {
 
 	public void OnDestroy(){
 		if(radioRef != null){
-			offset = (ulong) radioRef.sendOffset();
+			offset = radioRef.sendOffset();
 		}
 	}
 }
