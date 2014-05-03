@@ -24,7 +24,6 @@ public class Computertyping : MonoBehaviour {
 	float mailquantity = 3;
 	public bool computerscreen = false; 
 	bool loggedin = false;
-	bool readingmail = false;
 	string passwordinput = "";
 	TextAsset passwordGUI;
 	List<Questpair> maillist = new List<Questpair>();
@@ -58,12 +57,25 @@ public class Computertyping : MonoBehaviour {
 	bool added1 = false;
 	bool added2 = false;
 
+	//realk mastermind uknow
+	GameObject m_mastermind;
+
+
 	// Use this for initialization
 	
 	void Start () {
-		quest = GameObject.Find ("MasterMind").GetComponent<MessageWindow>();
+	
+		m_mastermind = GameObject.Find("MasterMind");
+		loggedin = m_mastermind.GetComponent<ItemUseStates>().isLoggedIn;
 		screen = GameObject.Find ("computerscreen");
 		screen.renderer.enabled = false;
+		if(loggedin){
+			screen.renderer.material.SetTexture("_MainTex",inboxLayout);
+			addemails();
+		}
+
+		quest = GameObject.Find ("MasterMind").GetComponent<MessageWindow>();
+
 	}
 
 	public void setComputerScreen(bool toggle){
@@ -99,6 +111,7 @@ public class Computertyping : MonoBehaviour {
 					if (c == "\n"[0] || c == "\r"[0]){  //enter, KANSKE BEHÖVER LÄGGA TILL ETT KLICK OCKSÅ
 						if(passwordinput == correctPassword){
 							loggedin = true;				//Loggat in!!!!
+							m_mastermind.GetComponent<ItemUseStates>().isLoggedIn = loggedin;
 							quest.finishedSubQuest("1c");
 							currentLayout = inboxLayout;
 
@@ -171,7 +184,7 @@ public class Computertyping : MonoBehaviour {
 				GUI.FocusControl("PasswordField");
 
 			}
-			else if(loggedin && !readingmail){ 			//Inbox-gui
+			else if(loggedin){ 			//Inbox-gui
 				
 				//float tempposY = headlinePosY;
 				GUILayout.BeginArea(makeRect(headlineField));
