@@ -13,4 +13,5 @@ public class ItemUseStates : MonoBehaviour {
 	public bool drawerUnlocked = false;
 	public bool poweroutOcurred = false;
 	public bool isLoggedIn = false;
+	public ulong radioOffset = 0;
 }
