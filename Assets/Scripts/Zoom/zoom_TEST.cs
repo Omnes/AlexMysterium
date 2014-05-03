@@ -59,8 +59,10 @@ public class zoom_TEST : MonoBehaviour {
 	}
 		
 	void Interact(){
-		if(!enabled) return;
-		Activate();
+		if(enabled)
+		{
+			Activate();
+		}
 	}
 	
 	void Deactivate()
