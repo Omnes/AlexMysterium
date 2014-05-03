@@ -19,6 +19,7 @@ public class MessageWindow : MonoBehaviour {
 	public float subQuestTab= 30;
 	public Rect textfield;
 	public Rect texturefield;
+	public float checkoffset;
 
 
 
@@ -194,7 +195,7 @@ public class MessageWindow : MonoBehaviour {
 					GUILayout.Space(subQuestTab);
 					style.fontSize = SubquestSize;
 					if(subnode.mFinished == true){
-						GUILayout.Space(-FinishedQuest.width);
+						GUILayout.Space(-FinishedQuest.width*checkoffset);
 						GUILayout.Box(FinishedQuest,style);
 					}
 					GUILayout.Label(subnode.mContent,style);
