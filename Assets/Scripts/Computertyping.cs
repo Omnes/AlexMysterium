@@ -73,6 +73,7 @@ public class Computertyping : MonoBehaviour {
 			screen.renderer.material.SetTexture("_MainTex",inboxLayout);
 			addemails();
 		}
+		played = m_mastermind.GetComponent<ItemUseStates>().poweroutOcurred;
 
 		quest = GameObject.Find ("MasterMind").GetComponent<MessageWindow>();
 
@@ -110,6 +111,7 @@ public class Computertyping : MonoBehaviour {
 	        	foreach (char c in Input.inputString) {
 					if (c == "\n"[0] || c == "\r"[0]){  //enter, KANSKE BEHÖVER LÄGGA TILL ETT KLICK OCKSÅ
 						if(passwordinput == correctPassword){
+							m_mastermind.GetComponent<ItemUseStates>().password = true;
 							loggedin = true;				//Loggat in!!!!
 							m_mastermind.GetComponent<ItemUseStates>().isLoggedIn = loggedin;
 							quest.finishedSubQuest("1c");
@@ -250,14 +252,15 @@ public class Computertyping : MonoBehaviour {
 	}
 
 	void initiatePowerOut(){
-
-		if(currentTime + powerOutDelay < Time.time){
-			GameObject.Find("MasterMind").GetComponent<ItemUseStates>().poweroutOcurred =true;
-			GameObject mastermind = GameObject.FindGameObjectWithTag("Mastermind");
-			mastermind.SendMessage("powerOut");
-			haveFlashlight = mastermind.GetComponent<Inventory>().checkItemSupply("item_flashlight",1);
-			playSounds();
-			initiatePOut = false;
+		if(!m_mastermind.GetComponent<ItemUseStates>().poweroutOcurred){
+			if(currentTime + powerOutDelay < Time.time){
+				GameObject.Find("MasterMind").GetComponent<ItemUseStates>().poweroutOcurred =true;
+				GameObject mastermind = GameObject.FindGameObjectWithTag("Mastermind");
+				mastermind.SendMessage("powerOut");
+				haveFlashlight = mastermind.GetComponent<Inventory>().checkItemSupply("item_flashlight",1);
+				playSounds();
+				initiatePOut = false;
+			}
 		}
 	}
 
