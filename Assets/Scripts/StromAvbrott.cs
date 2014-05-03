@@ -19,6 +19,7 @@ public class StromAvbrott : MonoBehaviour {
 		setOn();
 	}
 
+	/*
 	void Update(){
 		if(Input.GetKey(KeyCode.J)){
 			//fråga sean
@@ -29,6 +30,7 @@ public class StromAvbrott : MonoBehaviour {
 			}
 		}
 	}
+	*/
 
 	void OnEnable(){
 

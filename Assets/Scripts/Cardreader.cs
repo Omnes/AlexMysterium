@@ -62,9 +62,11 @@ public class Cardreader : MonoBehaviour {
 	}
 
 	public void drawCard(){
-		carddrawn = true;
 		playSound(m_drawcard);
-		renderer.material.mainTexture = yellow;
+		if(!GameObject.Find("MasterMind").GetComponent<ItemUseStates>().powerout){
+			carddrawn = true;
+			renderer.material.mainTexture = yellow;
+		}
 	}
 
 	// Update is called once per frame
