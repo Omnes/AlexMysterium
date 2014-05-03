@@ -10,6 +10,9 @@ public class Mouse_Animation : MonoBehaviour {
 	public Texture2D doorCursor;
 	public Texture2D interactiveCursor;
 	public Texture2D standardCursor;
+
+	//new texure for highlight. sean 2014-05-03
+	public Texture2D highlightCursor;
 	
 	public Vector2 mouseDisp = new Vector2(3.0f,3.0f);
 	
@@ -43,6 +46,8 @@ public class Mouse_Animation : MonoBehaviour {
 						cursorImage = doorCursor;
 					}else if(hit.transform.gameObject.layer == 9  && !isInInventory){//9 == Interactive Layer
 						cursorImage = interactiveCursor;
+					}else if(hit.transform.gameObject.layer == 12  && !isInInventory){//9 == Interactive Layer
+						cursorImage = highlightCursor;
 					}else{
 						cursorImage = standardCursor;
 					}
