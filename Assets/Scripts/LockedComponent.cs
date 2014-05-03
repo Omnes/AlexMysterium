@@ -11,8 +11,7 @@ public class LockedComponent : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		setlock(locked);
-	
+		setlock(!GameObject.Find("MasterMind").GetComponent<ItemUseStates>().drawerUnlocked);
 	}
 
 	void UseItem(Item item){
@@ -20,13 +19,14 @@ public class LockedComponent : MonoBehaviour {
 		if(item.name == key){
 			GameObject.Find("MasterMind").GetComponent<Inventory>().useItem(key,consumeKey);
 			setlock(false);
-			KeyInTheLock.SetActive(true);
+			GameObject.Find("MasterMind").GetComponent<ItemUseStates>().drawerUnlocked = true;
 		}
 	}
 
 	void setlock(bool state){
 		locked = state;
 		component.enabled = !locked;
+		KeyInTheLock.SetActive(!state);
 	}
 
 }
