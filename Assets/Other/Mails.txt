@@ -1,18 +1,18 @@
 <mails>
 	<mail>
 		<id>1</id>
-		<rubrik>Alex's football practise</rubrik>
-		<text>Subject: Alex's football practise
+		<rubrik>Alex's football practice</rubrik>
+		<text>Subject: Alex's football practice
 From: Yue
 
 Hi dear, I'm going to be late today. 
-Sorry. Could you give Alex a ride to her football practise? 
+Sorry. Could you give Alex a ride to her football practice? 
 I don't want her to take the buss all alone. 
 Don't forget to pack her water bottle, she always forgets it. 
 And her shin guards. And please pack a sweater, 
 she says she doesn't need one because it's summer but it's 
 going to be cold tonight. Also, makes sure she eats something 
-before the practise. 
+before the practice. 
 
 Love you, 
 Yue
