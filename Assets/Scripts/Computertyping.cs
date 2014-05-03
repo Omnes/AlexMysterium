@@ -193,7 +193,9 @@ public class Computertyping : MonoBehaviour {
 							GameObject.Find("MasterMind").GetComponent<ItemUseStates>().foundCode = true;
 								//Activate sound
 								currentTime = Time.time;
-								initiatePOut = true;
+							if(GameObject.Find("MasterMind").GetComponent<ItemUseStates>().poweroutOcurred == false){
+									initiatePOut = true;
+								}
 								played = true;
 								
 							}
@@ -237,7 +239,7 @@ public class Computertyping : MonoBehaviour {
 	void initiatePowerOut(){
 
 		if(currentTime + powerOutDelay < Time.time){
-
+			GameObject.Find("MasterMind").GetComponent<ItemUseStates>().poweroutOcurred =true;
 			GameObject mastermind = GameObject.FindGameObjectWithTag("Mastermind");
 			mastermind.SendMessage("powerOut");
 			haveFlashlight = mastermind.GetComponent<Inventory>().checkItemSupply("item_flashlight",1);
