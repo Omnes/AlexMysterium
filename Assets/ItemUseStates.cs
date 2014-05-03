@@ -10,4 +10,7 @@ public class ItemUseStates : MonoBehaviour {
 	public bool powerout = false;
 	public bool card = false;
 	public bool foundCode = false;
+	public bool drawerUnlocked = false;
+	public bool poweroutOcurred = false;
+	public bool isLoggedIn = false;
 }

@@ -9,6 +9,9 @@ public class RequieredInventoryObject : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		inv = GameObject.Find ("MasterMind").GetComponent<Inventory>();
+		bool active = inv.checkItemSupply(reqItem,1);
+		transform.GetChild(0).renderer.enabled = active;
+		gameObject.collider.enabled = active;
 	}
 	
 	// Update is called once per frame
